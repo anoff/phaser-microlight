@@ -24,4 +24,5 @@ function randomCar() {
   const index = Math.floor(Math.random() * keys.length);
   return list[index];
 }
+
 exports { loadSprites, randomCar };

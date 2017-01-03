@@ -1,0 +1,45 @@
+{
+  "name": "phaser-microlight",
+  "version": "1.0.0",
+  "description": "traffic light simulation",
+  "main": "main.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server --open --port 3030",
+    "test": "xo",
+    "lint": "xo",
+    "lint:fix": "xo --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anoff/phaser-microlight.git"
+  },
+  "author": "anoff <offenhaeuser@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anoff/phaser-microlight/issues"
+  },
+  "homepage": "https://github.com/anoff/phaser-microlight#readme",
+  "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-polyfill": "^6.20.0",
+    "babel-preset-es2015": "^6.18.0",
+    "cz-emoji": "^0.1.0",
+    "expose-loader": "^0.7.1",
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2",
+    "xo": "^0.17.1"
+  },
+  "dependencies": {
+    "phaser": "^2.6.2"
+  },
+  "xo": {
+    "esnext": true
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-emoji"
+    }
+  }
+}
