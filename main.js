@@ -4,42 +4,35 @@ import 'p2';
 /* eslint-enable */
 import Phaser from 'phaser';
 import config from './lib/config';
-import * as street from './lib/street';
 import Car from './lib/car';
+import {createMap, streets} from './lib/street';
 
 // Initialize Phaser
 const game = new Phaser.Game(config.MAX_SIZE, config.MAX_SIZE);
+global.game = game;
 
 // Create our 'main' state that will contain the game
 class MainState {
-	constructor() {
-		this.carSize = 40;
-	}
-
 	preload() {
 		game.load.image('car', 'assets/Car.png');
 		this.cars = game.add.group();
+		this.graphics = game.add.graphics(0, 0);
 	}
 
 	create() {
 		game.stage.backgroundColor = '#ececec';
 		game.physics.startSystem(Phaser.Physics.ARCADE);
-
-		this.street = game.add.graphics(0, 0);
-		street.createStreet(this.street);
-
-		const newPos = street.randomPos();
-		const newCar = new Car(game, newPos.x, newPos.y);
-		newCar.rotateTo(newPos.heading);
-		newCar.setVelocity(20);
-		game.add.existing(newCar);
+		createMap(this.graphics);
+		const car = new Car(game);
+		game.add.existing(car);
+		const replaceCar = () => {
+			const street = streets[Math.floor(Math.random() * streets.length)];
+			car.setStreet(street);
+		};
+		replaceCar();
+		car.setVelocity(20);
 		const spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		spaceKey.onDown.add(() => {
-			const newPos = street.randomPos();
-			newCar.x = newPos.x;
-			newCar.y = newPos.y;
-			newCar.rotateTo(newPos.heading);
-		});
+		spaceKey.onDown.add(replaceCar);
 	}
 
 	update() {
