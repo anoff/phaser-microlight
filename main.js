@@ -27,17 +27,17 @@ class MainState {
 		game.add.existing(this.car);
 		this.replaceCar = () => {
 			const street = streets[Math.floor(Math.random() * streets.length)];
-			this.car.setStreet(street);
+			this.car.setStreet(street, Math.random());
 		};
 		this.replaceCar();
-		this.car.setVelocity(20);
+		this.car.setVelocity(70);
 		const spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		spaceKey.onDown.add(this.replaceCar);
 	}
 
 	update() {
-		const distance = this.car.street.end.distance(this.car);
-		if (distance <= 5) {
+		const distance = this.car.street.getCovered(this.car).toFixed(3);
+		if (distance >= 1) {
 			this.replaceCar();
 		}
 	}
