@@ -23,21 +23,23 @@ class MainState {
 		game.stage.backgroundColor = '#ececec';
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		createMap(this.graphics);
-		const car = new Car(game);
-		game.add.existing(car);
-		const replaceCar = () => {
+		this.car = new Car(game);
+		game.add.existing(this.car);
+		this.replaceCar = () => {
 			const street = streets[Math.floor(Math.random() * streets.length)];
-			car.setStreet(street);
+			this.car.setStreet(street);
 		};
-		replaceCar();
-		car.setVelocity(20);
+		this.replaceCar();
+		this.car.setVelocity(20);
 		const spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		spaceKey.onDown.add(replaceCar);
+		spaceKey.onDown.add(this.replaceCar);
 	}
 
 	update() {
-    // This function is called 60 times per second
-    // It contains the game's logic
+		const distance = this.car.street.end.distance(this.car);
+		if (distance <= 5) {
+			this.replaceCar();
+		}
 	}
 }
 
