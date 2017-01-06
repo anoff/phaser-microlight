@@ -8882,6 +8882,10 @@
 				(0, _street.createMap)(this.graphics);
 				var spaceKey = game.input.keyboard.addKey(_phaser2.default.Keyboard.SPACEBAR);
 				spaceKey.onDown.add(this.carManager.addCar.bind(this.carManager));
+				// init the world with 3 cars
+				for (var i = 3; i > 0; i--) {
+					this.carManager.addCar();
+				}
 			}
 		}, {
 			key: 'update',
@@ -112070,7 +112074,9 @@
 	exports.default = {
 		MAX_SIZE: 600,
 		STREET_WIDTH: 10,
-		CAR_SIZE: 40
+		CAR_SIZE: 40,
+		CAR_MAXSPEED: 300,
+		CAR_ACCELERATION: 170
 	};
 
 /***/ },
@@ -112090,6 +112096,10 @@
 	var _car = __webpack_require__(310);
 
 	var _car2 = _interopRequireDefault(_car);
+
+	var _config = __webpack_require__(306);
+
+	var _config2 = _interopRequireDefault(_config);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -112111,7 +112121,7 @@
 
 				var car = new _car2.default(this.game);
 				car.setStreet(street, position);
-				car.setVelocity(200);
+				car.setAcceleration(_config2.default.CAR_ACCELERATION);
 				this.game.add.existing(car);
 				this.cars.add(car);
 			}
@@ -112358,6 +112368,12 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var splitValByAngle = function splitValByAngle(val, angle) {
+		var sin = Math.sin(angle);
+		var cos = Math.cos(angle);
+		return new _phaser2.default.Point(val * sin, -val * cos);
+	};
+
 	var Car = function (_Phaser$Sprite) {
 		_inherits(Car, _Phaser$Sprite);
 
@@ -112388,12 +112404,24 @@
 		}, {
 			key: 'setVelocity',
 			value: function setVelocity(val) {
-				var angle = this.rotation;
-				var sin = Math.sin(angle);
-				var cos = Math.cos(angle);
-				this.body.velocity.x = val * sin;
-				this.body.velocity.y = -val * cos;
+				var values = splitValByAngle(val, this.rotation);
+				this.body.velocity = Object.assign(this.body.velocity, values);
+				var max = splitValByAngle(_config2.default.CAR_MAXSPEED, this.rotation);
+				// max velcoity needs to be absolute
+				this.body.maxVelocity = new _phaser2.default.Point(Math.abs(max.x), Math.abs(max.y));
 				return this;
+			}
+		}, {
+			key: 'setAcceleration',
+			value: function setAcceleration(val) {
+				var values = splitValByAngle(val, this.rotation);
+				this.body.acceleration = Object.assign(this.body.acceleration, values);
+				return this;
+			}
+		}, {
+			key: 'getAcceleration',
+			value: function getAcceleration() {
+				return Math.sqrt(Math.pow(this.body.acceleration.x, 2) + Math.pow(this.body.acceleration.y, 2));
 			}
 		}, {
 			key: 'rotateTo',
@@ -112401,6 +112429,7 @@
 				this.rotation = val;
 				// update velocity vectors
 				this.setVelocity(this.getVelocity());
+				this.setAcceleration(this.getAcceleration());
 				return this;
 			}
 		}, {

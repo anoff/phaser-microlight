@@ -26,6 +26,10 @@ class MainState {
 		createMap(this.graphics);
 		const spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		spaceKey.onDown.add(this.carManager.addCar.bind(this.carManager));
+		// init the world with 3 cars
+		for (let i = 3; i > 0; i--) {
+			this.carManager.addCar();
+		}
 	}
 
 	update() {
