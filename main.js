@@ -15,8 +15,8 @@ global.game = game;
 class MainState {
 	preload() {
 		game.load.image('car', 'assets/Car.png');
-		this.carManager = new CarManager(game);
 		this.graphics = game.add.graphics(0, 0);
+		this.carManager = new CarManager(game);
 	}
 
 	create() {

@@ -8869,8 +8869,8 @@
 			key: 'preload',
 			value: function preload() {
 				game.load.image('car', 'assets/Car.png');
-				this.carManager = new _carmanager2.default(game);
 				this.graphics = game.add.graphics(0, 0);
+				this.carManager = new _carmanager2.default(game);
 			}
 		}, {
 			key: 'create',
