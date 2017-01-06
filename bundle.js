@@ -8887,7 +8887,7 @@
 					_this.car.setStreet(street, Math.random());
 				};
 				this.replaceCar();
-				this.car.setVelocity(70);
+				this.car.setVelocity(200);
 				var spaceKey = game.input.keyboard.addKey(_phaser2.default.Keyboard.SPACEBAR);
 				spaceKey.onDown.add(this.replaceCar);
 			}
@@ -8895,21 +8895,7 @@
 			key: 'update',
 			value: function update() {
 				var car = this.car;
-				var distance = car.street.getCovered(car, car.getTravelDirection()).toFixed(3);
-				if (distance >= 1 && !car.states.turning) {
-					car.states.turning = true;
-					setTimeout(function () {
-						car.states.turning = false;
-					}, 100);
-					var pos = car.street.getCovered(car) > 0.5 ? 'end' : 'start';
-					var nextStreet = car.street.getNeighbor(pos);
-					console.log(nextStreet);
-					if (nextStreet) {
-						car.setStreet(nextStreet, 0);
-					} else {
-						car.rotateTo(car.rotation + Math.PI);
-					}
-				}
+				car.checkTurn();
 			}
 		}]);
 
@@ -112170,7 +112156,30 @@
 		}, {
 			key: 'getTravelDirection',
 			value: function getTravelDirection() {
-				return Math.abs(this.street.orientation - this.rotation) > 0.1;
+				var diff = this.rotation - this.street.orientation;
+				var dir = Math.round(Math.abs(diff) / Math.PI) % 2 === 0;
+				return dir;
+			}
+		}, {
+			key: 'checkTurn',
+			value: function checkTurn() {
+				var car = this;
+				var distance = car.street.getCovered(car, !car.getTravelDirection()).toFixed(3);
+				if (distance >= 1 && !car.states.turning) {
+					car.states.turning = true;
+					setTimeout(function () {
+						car.states.turning = false;
+					}, 10);
+					var pos = car.street.getCovered(car) > 0.5 ? 'end' : 'start';
+					var nextStreet = car.street.getNeighbor(pos);
+					if (nextStreet) {
+						// determine if car should be placed at start/end of segments
+						var atStart = nextStreet.start.distance(car) < nextStreet.end.distance(car);
+						car.setStreet(nextStreet, atStart ? 0 : 1);
+					} else {
+						car.rotateTo(car.rotation + Math.PI);
+					}
+				}
 			}
 		}]);
 
@@ -112297,14 +112306,17 @@
 				}
 				return pct;
 			}
+
+			// position is a string 'start' or 'end'
+
 		}, {
 			key: 'addNeighbor',
 			value: function addNeighbor(position, street) {
-				var existing = this.neighbors.position;
+				var existing = this.neighbors[position];
 				if (!existing.find(function (elm) {
 					return elm === street.id;
 				})) {
-					this.neighbors.position.push(street.id);
+					this.neighbors[position].push(street.id);
 				}
 			}
 		}, {
@@ -112319,7 +112331,7 @@
 		}, {
 			key: 'getNeighbors',
 			value: function getNeighbors(position) {
-				var ids = this.neighbors[position];
+				var ids = this.neighbors[position] || [];
 				return streets.filter(function (elm) {
 					return ids.indexOf(elm.id) > -1;
 				});
@@ -112337,7 +112349,19 @@
 			street.draw(graphics);
 			street.drawIntersections(graphics);
 			streets.push(street);
-
+			// populate neighbors of each street
+			streets.forEach(function (street) {
+				['start', 'end'].forEach(function (position) {
+					var point = street[position];
+					streets.filter(function (elm) {
+						return street.id !== elm.id;
+					}).filter(function (elm) {
+						var sameStart = elm.start.x === point.x && elm.start.y === point.y;
+						var sameEnd = elm.end.x === point.x && elm.end.y === point.y;
+						return sameStart || sameEnd;
+					}).forEach(street.addNeighbor.bind(street, position));
+				});
+			});
 			// draw numbers on street
 			var pos = street.getPositionAt(0.13);
 			var text = game.add.text(pos.x, pos.y, ix.toString(), { align: 'center', fill: '#ff00ff', fontSize: '14px', backgroundColor: '#fff' });

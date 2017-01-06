@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
+		"stage:bundle": "git add bundle.js",
     "start": "webpack-dev-server --open --port 3030",
     "test": "xo",
     "lint": "xo",
@@ -12,7 +13,8 @@
   },
   "pre-commit": [
     "test",
-    "build"
+    "build",
+		"stage:bundle"
   ],
   "repository": {
     "type": "git",
