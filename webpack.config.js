@@ -23,7 +23,6 @@ module.exports = {
 			{test: /phaser-split\.js$/, loader: 'expose?Phaser'}
 		]
 	},
-	watch: true,
 	node: {
 		fs: 'empty'
 	},
