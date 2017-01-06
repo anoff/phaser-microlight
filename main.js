@@ -6,6 +6,7 @@ import Phaser from 'phaser';
 import config from './lib/config';
 import CarManager from './lib/carmanager';
 import {createMap} from './lib/street';
+import {loadSprites as loadCars} from './assets/cars';
 
 // Initialize Phaser
 const game = new Phaser.Game(config.MAX_SIZE, config.MAX_SIZE);
@@ -14,7 +15,7 @@ global.game = game;
 // Create our 'main' state that will contain the game
 class MainState {
 	preload() {
-		game.load.image('car', 'assets/Car.png');
+		loadCars(game);
 		this.graphics = game.add.graphics(0, 0);
 		this.carManager = new CarManager(game);
 	}

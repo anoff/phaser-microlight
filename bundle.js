@@ -8850,6 +8850,8 @@
 
 	var _street = __webpack_require__(308);
 
+	var _cars = __webpack_require__(311);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8868,7 +8870,7 @@
 		_createClass(MainState, [{
 			key: 'preload',
 			value: function preload() {
-				game.load.image('car', 'assets/Car.png');
+				(0, _cars.loadSprites)(game);
 				this.graphics = game.add.graphics(0, 0);
 				this.carManager = new _carmanager2.default(game);
 			}
@@ -112342,6 +112344,8 @@
 
 	var _phaser2 = _interopRequireDefault(_phaser);
 
+	var _cars = __webpack_require__(311);
+
 	var _config = __webpack_require__(306);
 
 	var _config2 = _interopRequireDefault(_config);
@@ -112366,7 +112370,7 @@
 
 			_classCallCheck(this, Car);
 
-			var _this = _possibleConstructorReturn(this, (Car.__proto__ || Object.getPrototypeOf(Car)).call(this, game, x, y, 'car'));
+			var _this = _possibleConstructorReturn(this, (Car.__proto__ || Object.getPrototypeOf(Car)).call(this, game, x, y, (0, _cars.randomCar)()));
 
 			game.physics.arcade.enable(_this);
 			_this.anchor.setTo(0.5, 0.5);
@@ -112445,6 +112449,45 @@
 	}(_phaser2.default.Sprite);
 
 	exports.default = Car;
+
+/***/ },
+/* 311 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var list = {
+		ambulance: 'Ambulance',
+		audi: 'Audi',
+		viper: 'Black_viper',
+		car: 'Car',
+		truck: 'Mini_truck',
+		van: 'Mini_van',
+		taxi: 'taxi',
+		police: 'Police'
+	};
+
+	Object.keys(list).forEach(function (elm) {
+		list[elm] += '.png';
+	});
+
+	function loadSprites(game) {
+		Object.keys(list).forEach(function (elm) {
+			game.load.image(elm, 'assets/' + list[elm]);
+		});
+	}
+
+	function randomCar() {
+		var keys = Object.keys(list);
+		var index = Math.floor(Math.random() * keys.length);
+		return keys[index];
+	}
+
+	exports.loadSprites = loadSprites;
+	exports.randomCar = randomCar;
 
 /***/ }
 /******/ ]);

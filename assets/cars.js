@@ -5,8 +5,8 @@ const list = {
 	car: 'Car',
 	truck: 'Mini_truck',
 	van: 'Mini_van',
-	taxi: 'taxi.png',
-	police: 'Police.png'
+	taxi: 'taxi',
+	police: 'Police'
 };
 
 Object.keys(list).forEach(elm => {
@@ -14,7 +14,7 @@ Object.keys(list).forEach(elm => {
 });
 
 function loadSprites(game) {
-	list.forEach(elm => {
+	Object.keys(list).forEach(elm => {
 		game.load.image(elm, `assets/${list[elm]}`);
 	});
 }
@@ -22,7 +22,7 @@ function loadSprites(game) {
 function randomCar() {
 	const keys = Object.keys(list);
 	const index = Math.floor(Math.random() * keys.length);
-	return list[index];
+	return keys[index];
 }
 
 export {loadSprites, randomCar};
