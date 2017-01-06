@@ -36,9 +36,21 @@ class MainState {
 	}
 
 	update() {
-		const distance = this.car.street.getCovered(this.car).toFixed(3);
-		if (distance >= 1) {
-			this.replaceCar();
+		const car = this.car;
+		const distance = car.street.getCovered(car, car.getTravelDirection()).toFixed(3);
+		if (distance >= 1 && !car.states.turning) {
+			car.states.turning = true;
+			setTimeout(() => {
+				car.states.turning = false;
+			}, 100);
+			const pos = car.street.getCovered(car) > 0.5 ? 'end' : 'start';
+			const nextStreet = car.street.getNeighbor(pos);
+			console.log(nextStreet);
+			if (nextStreet) {
+				car.setStreet(nextStreet, 0);
+			} else {
+				car.rotateTo(car.rotation + Math.PI);
+			}
 		}
 	}
 }
