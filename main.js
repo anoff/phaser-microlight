@@ -4,8 +4,8 @@ import 'p2';
 /* eslint-enable */
 import Phaser from 'phaser';
 import config from './lib/config';
-import Car from './lib/car';
-import {createMap, streets} from './lib/street';
+import CarManager from './lib/carmanager';
+import {createMap} from './lib/street';
 
 // Initialize Phaser
 const game = new Phaser.Game(config.MAX_SIZE, config.MAX_SIZE);
@@ -15,7 +15,7 @@ global.game = game;
 class MainState {
 	preload() {
 		game.load.image('car', 'assets/Car.png');
-		this.cars = game.add.group();
+		this.carManager = new CarManager(game);
 		this.graphics = game.add.graphics(0, 0);
 	}
 
@@ -23,21 +23,12 @@ class MainState {
 		game.stage.backgroundColor = '#ececec';
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		createMap(this.graphics);
-		this.car = new Car(game);
-		game.add.existing(this.car);
-		this.replaceCar = () => {
-			const street = streets[Math.floor(Math.random() * streets.length)];
-			this.car.setStreet(street, Math.random());
-		};
-		this.replaceCar();
-		this.car.setVelocity(200);
 		const spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		spaceKey.onDown.add(this.replaceCar);
+		spaceKey.onDown.add(this.carManager.addCar.bind(this.carManager));
 	}
 
 	update() {
-		const car = this.car;
-		car.checkTurn();
+		this.carManager.cars.children.forEach(car => car.checkTurn());
 	}
 }
 

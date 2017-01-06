@@ -8844,9 +8844,9 @@
 
 	var _config2 = _interopRequireDefault(_config);
 
-	var _car = __webpack_require__(307);
+	var _carmanager = __webpack_require__(307);
 
-	var _car2 = _interopRequireDefault(_car);
+	var _carmanager2 = _interopRequireDefault(_carmanager);
 
 	var _street = __webpack_require__(308);
 
@@ -8869,33 +8869,24 @@
 			key: 'preload',
 			value: function preload() {
 				game.load.image('car', 'assets/Car.png');
-				this.cars = game.add.group();
+				this.carManager = new _carmanager2.default(game);
 				this.graphics = game.add.graphics(0, 0);
 			}
 		}, {
 			key: 'create',
 			value: function create() {
-				var _this = this;
-
 				game.stage.backgroundColor = '#ececec';
 				game.physics.startSystem(_phaser2.default.Physics.ARCADE);
 				(0, _street.createMap)(this.graphics);
-				this.car = new _car2.default(game);
-				game.add.existing(this.car);
-				this.replaceCar = function () {
-					var street = _street.streets[Math.floor(Math.random() * _street.streets.length)];
-					_this.car.setStreet(street, Math.random());
-				};
-				this.replaceCar();
-				this.car.setVelocity(200);
 				var spaceKey = game.input.keyboard.addKey(_phaser2.default.Keyboard.SPACEBAR);
-				spaceKey.onDown.add(this.replaceCar);
+				spaceKey.onDown.add(this.carManager.addCar.bind(this.carManager));
 			}
 		}, {
 			key: 'update',
 			value: function update() {
-				var car = this.car;
-				car.checkTurn();
+				this.carManager.cars.children.forEach(function (car) {
+					return car.checkTurn();
+				});
 			}
 		}]);
 
@@ -112080,113 +112071,42 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _phaser = __webpack_require__(304);
+	var _street = __webpack_require__(308);
 
-	var _phaser2 = _interopRequireDefault(_phaser);
+	var _car = __webpack_require__(310);
 
-	var _config = __webpack_require__(306);
-
-	var _config2 = _interopRequireDefault(_config);
+	var _car2 = _interopRequireDefault(_car);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	var CarManager = function () {
+		function CarManager(game) {
+			_classCallCheck(this, CarManager);
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Car = function (_Phaser$Sprite) {
-		_inherits(Car, _Phaser$Sprite);
-
-		function Car(game) {
-			var x = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -100;
-
-			var _ret;
-
-			var y = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -100;
-
-			_classCallCheck(this, Car);
-
-			var _this = _possibleConstructorReturn(this, (Car.__proto__ || Object.getPrototypeOf(Car)).call(this, game, x, y, 'car'));
-
-			game.physics.arcade.enable(_this);
-			_this.anchor.setTo(0.5, 0.5);
-			_this.width = _config2.default.CAR_SIZE;
-			_this.height = _config2.default.CAR_SIZE;
-			_this.states = {};
-			return _ret = _this, _possibleConstructorReturn(_this, _ret);
+			this.game = game;
+			this.cars = game.add.group();
 		}
 
-		_createClass(Car, [{
-			key: 'getVelocity',
-			value: function getVelocity() {
-				return Math.sqrt(Math.pow(this.body.velocity.x, 2) + Math.pow(this.body.velocity.y, 2));
-			}
-		}, {
-			key: 'setVelocity',
-			value: function setVelocity(val) {
-				var angle = this.rotation;
-				var sin = Math.sin(angle);
-				var cos = Math.cos(angle);
-				this.body.velocity.x = val * sin;
-				this.body.velocity.y = -val * cos;
-				return this;
-			}
-		}, {
-			key: 'rotateTo',
-			value: function rotateTo(val) {
-				this.rotation = val;
-				// update velocity vectors
-				this.setVelocity(this.getVelocity());
-				return this;
-			}
-		}, {
-			key: 'setStreet',
-			value: function setStreet(street) {
-				var pct = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+		_createClass(CarManager, [{
+			key: 'addCar',
+			value: function addCar(velocity) {
+				var street = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _street.streets[Math.floor(Math.random() * _street.streets.length)];
+				var position = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : Math.random();
 
-				var pos = street.getPositionAt(pct);
-				this.x = pos.x;
-				this.y = pos.y;
-				this.rotateTo(pos.heading);
-				this.street = street;
-				return this;
-			}
-		}, {
-			key: 'getTravelDirection',
-			value: function getTravelDirection() {
-				var diff = this.rotation - this.street.orientation;
-				var dir = Math.round(Math.abs(diff) / Math.PI) % 2 === 0;
-				return dir;
-			}
-		}, {
-			key: 'checkTurn',
-			value: function checkTurn() {
-				var car = this;
-				var distance = car.street.getCovered(car, !car.getTravelDirection()).toFixed(3);
-				if (distance >= 1 && !car.states.turning) {
-					car.states.turning = true;
-					setTimeout(function () {
-						car.states.turning = false;
-					}, 10);
-					var pos = car.street.getCovered(car) > 0.5 ? 'end' : 'start';
-					var nextStreet = car.street.getNeighbor(pos);
-					if (nextStreet) {
-						// determine if car should be placed at start/end of segments
-						var atStart = nextStreet.start.distance(car) < nextStreet.end.distance(car);
-						car.setStreet(nextStreet, atStart ? 0 : 1);
-					} else {
-						car.rotateTo(car.rotation + Math.PI);
-					}
-				}
+				var car = new _car2.default(this.game);
+				car.setStreet(street, position);
+				car.setVelocity(200);
+				this.game.add.existing(car);
+				this.cars.add(car);
 			}
 		}]);
 
-		return Car;
-	}(_phaser2.default.Sprite);
+		return CarManager;
+	}();
 
-	exports.default = Car;
+	exports.default = CarManager;
 
 /***/ },
 /* 308 */
@@ -112393,6 +112313,126 @@
 	}
 
 	exports.default = generateUUID;
+
+/***/ },
+/* 310 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _phaser = __webpack_require__(304);
+
+	var _phaser2 = _interopRequireDefault(_phaser);
+
+	var _config = __webpack_require__(306);
+
+	var _config2 = _interopRequireDefault(_config);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Car = function (_Phaser$Sprite) {
+		_inherits(Car, _Phaser$Sprite);
+
+		function Car(game) {
+			var x = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -100;
+
+			var _ret;
+
+			var y = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -100;
+
+			_classCallCheck(this, Car);
+
+			var _this = _possibleConstructorReturn(this, (Car.__proto__ || Object.getPrototypeOf(Car)).call(this, game, x, y, 'car'));
+
+			game.physics.arcade.enable(_this);
+			_this.anchor.setTo(0.5, 0.5);
+			_this.width = _config2.default.CAR_SIZE;
+			_this.height = _config2.default.CAR_SIZE;
+			_this.states = {};
+			return _ret = _this, _possibleConstructorReturn(_this, _ret);
+		}
+
+		_createClass(Car, [{
+			key: 'getVelocity',
+			value: function getVelocity() {
+				return Math.sqrt(Math.pow(this.body.velocity.x, 2) + Math.pow(this.body.velocity.y, 2));
+			}
+		}, {
+			key: 'setVelocity',
+			value: function setVelocity(val) {
+				var angle = this.rotation;
+				var sin = Math.sin(angle);
+				var cos = Math.cos(angle);
+				this.body.velocity.x = val * sin;
+				this.body.velocity.y = -val * cos;
+				return this;
+			}
+		}, {
+			key: 'rotateTo',
+			value: function rotateTo(val) {
+				this.rotation = val;
+				// update velocity vectors
+				this.setVelocity(this.getVelocity());
+				return this;
+			}
+		}, {
+			key: 'setStreet',
+			value: function setStreet(street) {
+				var pct = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+				var pos = street.getPositionAt(pct);
+				this.x = pos.x;
+				this.y = pos.y;
+				this.rotateTo(pos.heading);
+				this.street = street;
+				return this;
+			}
+		}, {
+			key: 'getTravelDirection',
+			value: function getTravelDirection() {
+				var diff = this.rotation - this.street.orientation;
+				var dir = Math.round(Math.abs(diff) / Math.PI) % 2 === 0;
+				return dir;
+			}
+		}, {
+			key: 'checkTurn',
+			value: function checkTurn() {
+				var car = this;
+				var distance = car.street.getCovered(car, !car.getTravelDirection()).toFixed(3);
+				if (distance >= 1 && !car.states.turning) {
+					car.states.turning = true;
+					setTimeout(function () {
+						car.states.turning = false;
+					}, 10);
+					var pos = car.street.getCovered(car) > 0.5 ? 'end' : 'start';
+					var nextStreet = car.street.getNeighbor(pos);
+					if (nextStreet) {
+						// determine if car should be placed at start/end of segments
+						var atStart = nextStreet.start.distance(car) < nextStreet.end.distance(car);
+						car.setStreet(nextStreet, atStart ? 0 : 1);
+					} else {
+						car.rotateTo(car.rotation + Math.PI);
+					}
+				}
+			}
+		}]);
+
+		return Car;
+	}(_phaser2.default.Sprite);
+
+	exports.default = Car;
 
 /***/ }
 /******/ ]);
