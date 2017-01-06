@@ -8884,8 +8884,20 @@
 		}, {
 			key: 'update',
 			value: function update() {
-				this.carManager.cars.children.forEach(function (car) {
+				var cars = this.carManager.cars.children;
+				// check if the car should take a turn
+				cars.forEach(function (car) {
 					return car.checkTurn();
+				});
+				// check for collision
+				var group = this.carManager.cars;
+				game.physics.arcade.overlap(group, group, function (one, two) {
+					// only kill cars on same street
+					// 	rectangle intersection might detect two cars on close by roads to overlap
+					if (one.street.id === two.street.id) {
+						// kill the one being hit
+						two.kill();
+					}
 				});
 			}
 		}]);

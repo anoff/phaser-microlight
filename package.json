@@ -63,7 +63,8 @@
       "scopes": [
         "car",
         "street",
-        "world"
+        "world",
+        "carmanager"
       ]
     }
   }
