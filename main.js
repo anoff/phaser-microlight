@@ -30,28 +30,14 @@ class MainState {
 			this.car.setStreet(street, Math.random());
 		};
 		this.replaceCar();
-		this.car.setVelocity(70);
+		this.car.setVelocity(200);
 		const spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		spaceKey.onDown.add(this.replaceCar);
 	}
 
 	update() {
 		const car = this.car;
-		const distance = car.street.getCovered(car, car.getTravelDirection()).toFixed(3);
-		if (distance >= 1 && !car.states.turning) {
-			car.states.turning = true;
-			setTimeout(() => {
-				car.states.turning = false;
-			}, 100);
-			const pos = car.street.getCovered(car) > 0.5 ? 'end' : 'start';
-			const nextStreet = car.street.getNeighbor(pos);
-			console.log(nextStreet);
-			if (nextStreet) {
-				car.setStreet(nextStreet, 0);
-			} else {
-				car.rotateTo(car.rotation + Math.PI);
-			}
-		}
+		car.checkTurn();
 	}
 }
 
