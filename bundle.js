@@ -8253,7 +8253,7 @@
 				var spaceKey = game.input.keyboard.addKey(_phaser2.default.Keyboard.SPACEBAR);
 				spaceKey.onDown.add(this.carManager.addCar.bind(this.carManager));
 				// init the world with 3 cars
-				for (var i = 3; i > 0; i--) {
+				for (var i = 1; i > 0; i--) {
 					this.carManager.addCar();
 				}
 			}
@@ -111478,10 +111478,6 @@
 
 	var _car2 = _interopRequireDefault(_car);
 
-	var _config = __webpack_require__(305);
-
-	var _config2 = _interopRequireDefault(_config);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -111502,7 +111498,7 @@
 
 				var car = new _car2.default(this.game);
 				car.setStreet(street, position);
-				car.setAcceleration(_config2.default.CAR_ACCELERATION);
+				car.setAcceleration(car.maxAcceleration);
 				this.game.add.existing(car);
 				this.cars.add(car);
 			}
@@ -111512,7 +111508,7 @@
 				var cars = this.cars.children;
 				// check if the car should take a turn
 				cars.forEach(function (car) {
-					return car.limitVelocity().checkTurn();
+					return car.limitVelocity().checkTurn().lookAhead();
 				});
 				// check for collision
 				var PhysGroup = this.cars;
@@ -111521,6 +111517,7 @@
 					// 	rectangle intersection might detect two cars on close by roads to overlap
 					if (one.street.id === two.street.id) {
 						if (!(0, _isOpposedAngle2.default)(one.rotation, two.rotation)) {
+							// kills the older car
 							one.kill();
 							console.log('collision');
 						}
@@ -111587,7 +111584,13 @@
 	[5, 5], [10, 30], [50, 30], [26, 76], [90, 85], [70, 50], [66, 10]];
 	intersections = intersections.map(function (elm) {
 		return [elm[0] / 100 * _config2.default.GAME_SIZE, elm[1] / 100 * _config2.default.GAME_SIZE];
+	}).map(function (elm) {
+		return new _phaser2.default.Point(elm[0], elm[1]);
+	}).map(function (elm) {
+		elm.isBlocked = false;
+		return elm;
 	});
+
 	var segments = [
 	// connect intersections (index)
 	[0, 1], [1, 2], [2, 3], [2, 5], [1, 3], [3, 5], [0, 6], [2, 6], [4, 6]];
@@ -111597,8 +111600,8 @@
 		function Street(start, end) {
 			_classCallCheck(this, Street);
 
-			this.start = new _phaser2.default.Point(start[0], start[1]);
-			this.end = new _phaser2.default.Point(end[0], end[1]);
+			this.start = start;
+			this.end = end;
 			this.deltaX = this.end.x - this.start.x;
 			this.deltaY = this.end.y - this.start.y;
 			this.length = this.start.distance(this.end);
@@ -111627,8 +111630,12 @@
 			key: 'drawIntersections',
 			value: function drawIntersections(graphics) {
 				graphics.lineStyle(_config2.default.STREET_WIDTH / 2, 0x666666, 1);
-				graphics.drawCircle(this.start.x, this.start.y, _config2.default.STREET_WIDTH / 2);
-				graphics.drawCircle(this.end.x, this.end.y, _config2.default.STREET_WIDTH / 2);
+				if (!this.start.graphic) {
+					this.start.graphic = graphics.drawCircle(this.start.x, this.start.y, _config2.default.STREET_WIDTH / 2);
+				}
+				if (!this.end.graphic) {
+					this.end.graphic = graphics.drawCircle(this.end.x, this.end.y, _config2.default.STREET_WIDTH / 2);
+				}
 			}
 		}, {
 			key: 'getPositionAt',
@@ -112027,6 +112034,8 @@
 			_this.anchor.setTo(0.5 - _config2.default.CAR_LANE_OFFSET, 0.5);
 			_this.width = _config2.default.CAR_SIZE;
 			_this.height = _config2.default.CAR_SIZE;
+			_this.maxSpeed = _config2.default.CAR_MAXSPEED;
+			_this.maxAcceleration = _config2.default.CAR_ACCELERATION;
 			_this.state = states.INIT;
 			return _ret = _this, _possibleConstructorReturn(_this, _ret);
 		}
@@ -112034,7 +112043,12 @@
 		_createClass(Car, [{
 			key: 'getVelocity',
 			value: function getVelocity() {
-				return Math.sqrt(Math.pow(this.body.velocity.x, 2) + Math.pow(this.body.velocity.y, 2));
+				var angle = Math.atan2(this.body.velocity.y, this.body.velocity.x) + Math.PI / 2;
+				// not exactly sure why 90° offset
+				// 	might be due to Phasers coord system
+				var sign = (0, _isOpposedAngle2.default)(angle, this.rotation) ? -1 : 1;
+				var val = Math.sqrt(Math.pow(this.body.velocity.x, 2) + Math.pow(this.body.velocity.y, 2));
+				return sign * val;
 			}
 		}, {
 			key: 'setVelocity',
@@ -112100,8 +112114,29 @@
 		}, {
 			key: 'limitVelocity',
 			value: function limitVelocity() {
-				if (this.getVelocity() >= _config2.default.CAR_MAXSPEED) {
+				var vel = this.getVelocity();
+				if (vel >= this.maxSpeed) {
 					this.setAcceleration(0);
+					this.setVelocity(this.maxSpeed);
+				} else if (vel <= 0 && this.getAcceleration() !== 0) {
+					this.setAcceleration(0);
+					this.setVelocity(0);
+				}
+				return this;
+			}
+		}, {
+			key: 'lookAhead',
+			value: function lookAhead() {
+				// distance to end of street
+				var dir = this.getTravelDirection();
+				var dist = this.street.getCovered(this, dir) * this.street.length;
+				// calculate required break distance
+				var timeToStop = this.getVelocity() / this.maxAcceleration;
+				var minDist = this.getVelocity() * timeToStop + 0.5 * -this.maxAcceleration * Math.pow(timeToStop, 2);
+				if (dist <= minDist + 50 && this.getState() !== states.DECELERATING) {
+					this.state = states.DECELERATING;
+					this.setAcceleration(-this.maxAcceleration);
+					console.log('BREAK', this.getVelocity(), this.getAcceleration());
 				}
 				return this;
 			}

@@ -27,7 +27,7 @@ class MainState {
 		const spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		spaceKey.onDown.add(this.carManager.addCar.bind(this.carManager));
 		// init the world with 3 cars
-		for (let i = 3; i > 0; i--) {
+		for (let i = 1; i > 0; i--) {
 			this.carManager.addCar();
 		}
 	}
