@@ -9,7 +9,7 @@ import {createMap} from './lib/street';
 import {loadSprites as loadCars} from './assets/cars';
 
 // Initialize Phaser
-const game = new Phaser.Game(config.MAX_SIZE, config.MAX_SIZE);
+const game = new Phaser.Game(config.GAME_SIZE, config.GAME_SIZE);
 global.game = game;
 
 // Create our 'main' state that will contain the game

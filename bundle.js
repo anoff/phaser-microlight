@@ -8227,7 +8227,7 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	// Initialize Phaser
-	var game = new _phaser2.default.Game(_config2.default.MAX_SIZE, _config2.default.MAX_SIZE);
+	var game = new _phaser2.default.Game(_config2.default.GAME_SIZE, _config2.default.GAME_SIZE);
 	global.game = game;
 
 	// Create our 'main' state that will contain the game
@@ -111412,22 +111412,49 @@
 /* 305 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	// disable phaser banner in console
 	window.PhaserGlobal = {
 		hideBanner: true
 	};
 
-	exports.default = {
-		MAX_SIZE: 600,
-		STREET_WIDTH: 10,
+	// magic numbers go here
+	var c = {
+		GAME_SIZE: 600,
+		STREET_WIDTH: 40,
 		CAR_SIZE: 40,
-		CAR_MAXSPEED: 300,
-		CAR_ACCELERATION: 170
+		CAR_LANE_OFFSET: 0.3
 	};
+	// values that need some magic numbers
+	var derived = {
+		CAR_MAXSPEED: function CAR_MAXSPEED() {
+			return c.GAME_SIZE / 3;
+		},
+		CAR_ACCELERATION: function CAR_ACCELERATION() {
+			return c.CAR_MAXSPEED;
+		}
+	};
+
+	// helper to create dependend config values
+	function addDepVal(name, fn) {
+		var res = fn();
+		if (typeof res === 'undefined' || isNaN(res)) {
+			throw new Error('Tried setting ' + name + '=' + res + '. Assume thats not what you want here');
+		} else if (c[name] !== undefined) {
+			throw new Error('trying to overwrite ' + name + '(=' + c[name] + ') with ' + fn());
+		}
+		c[name] = fn();
+	}
+	// calculate derived values
+	Object.keys(derived).forEach(function (key) {
+		return addDepVal(key, derived[key]);
+	});
+
+	exports.default = c;
 
 /***/ },
 /* 306 */
@@ -111485,7 +111512,7 @@
 				var cars = this.cars.children;
 				// check if the car should take a turn
 				cars.forEach(function (car) {
-					return car.checkTurn();
+					return car.limitVelocity().checkTurn();
 				});
 				// check for collision
 				var PhysGroup = this.cars;
@@ -111559,7 +111586,7 @@
 	// 100 is max (autoscaled)
 	[5, 5], [10, 30], [50, 30], [26, 76], [90, 85], [70, 50], [66, 10]];
 	intersections = intersections.map(function (elm) {
-		return [elm[0] / 100 * _config2.default.MAX_SIZE, elm[1] / 100 * _config2.default.MAX_SIZE];
+		return [elm[0] / 100 * _config2.default.GAME_SIZE, elm[1] / 100 * _config2.default.GAME_SIZE];
 	});
 	var segments = [
 	// connect intersections (index)
@@ -111599,9 +111626,9 @@
 		}, {
 			key: 'drawIntersections',
 			value: function drawIntersections(graphics) {
-				graphics.lineStyle(_config2.default.STREET_WIDTH, 0x666666, 1);
-				graphics.drawCircle(this.start.x, this.start.y, _config2.default.STREET_WIDTH);
-				graphics.drawCircle(this.end.x, this.end.y, _config2.default.STREET_WIDTH);
+				graphics.lineStyle(_config2.default.STREET_WIDTH / 2, 0x666666, 1);
+				graphics.drawCircle(this.start.x, this.start.y, _config2.default.STREET_WIDTH / 2);
+				graphics.drawCircle(this.end.x, this.end.y, _config2.default.STREET_WIDTH / 2);
 			}
 		}, {
 			key: 'getPositionAt',
@@ -111701,7 +111728,7 @@
 			});
 			// draw numbers on street
 			var pos = street.getPositionAt(0.13);
-			var text = game.add.text(pos.x, pos.y, ix.toString(), { align: 'center', fill: '#ff00ff', fontSize: '14px', backgroundColor: '#fff' });
+			var text = game.add.text(pos.x, pos.y, ix.toString(), { align: 'center', fill: '#ffffff', fontSize: '14px' });
 			text.anchor.set(0.5);
 		});
 	}
@@ -111976,6 +112003,11 @@
 		var cos = Math.cos(angle);
 		return new _phaser2.default.Point(val * sin, -val * cos);
 	};
+	var states = ['INIT', 'ACCELERATING', 'DECELERATING', 'TURNING', 'DRIVING', 'IDLE'];
+	states = states.reduce(function (p, c, i) {
+		p[c] = i;
+		return p;
+	}, {});
 
 	var Car = function (_Phaser$Sprite) {
 		_inherits(Car, _Phaser$Sprite);
@@ -111992,10 +112024,10 @@
 			var _this = _possibleConstructorReturn(this, (Car.__proto__ || Object.getPrototypeOf(Car)).call(this, game, x, y, (0, _cars.randomCar)()));
 
 			game.physics.arcade.enable(_this);
-			_this.anchor.setTo(0.5, 0.5);
+			_this.anchor.setTo(0.5 - _config2.default.CAR_LANE_OFFSET, 0.5);
 			_this.width = _config2.default.CAR_SIZE;
 			_this.height = _config2.default.CAR_SIZE;
-			_this.states = {};
+			_this.state = states.INIT;
 			return _ret = _this, _possibleConstructorReturn(_this, _ret);
 		}
 
@@ -112009,10 +112041,20 @@
 			value: function setVelocity(val) {
 				var values = splitValByAngle(val, this.rotation);
 				this.body.velocity = Object.assign(this.body.velocity, values);
-				var max = splitValByAngle(_config2.default.CAR_MAXSPEED, this.rotation);
-				// max velcoity needs to be absolute
-				this.body.maxVelocity = new _phaser2.default.Point(Math.abs(max.x), Math.abs(max.y));
 				return this;
+			}
+		}, {
+			key: 'getState',
+			value: function getState() {
+				if (this.state === states.DRIVING) {
+					if (this.getAcceleration() > 0) {
+						return states.ACCELERATING;
+					} else if (this.getAcceleration() < 0) {
+						return states.DECELERATING;
+					}
+					return states.DRIVING;
+				}
+				return this.state;
 			}
 		}, {
 			key: 'setAcceleration',
@@ -112043,25 +112085,35 @@
 				var pos = street.getPositionAt(pct);
 				this.x = pos.x;
 				this.y = pos.y;
-				this.rotateTo(pos.heading);
 				this.street = street;
+				this.rotateTo(pos.heading);
 				return this;
 			}
 		}, {
 			key: 'getTravelDirection',
 			value: function getTravelDirection() {
-				var dir = (0, _isOpposedAngle2.default)(this.rotation, this.street.orientation);
-				return !dir;
+				if (this.street) {
+					return !(0, _isOpposedAngle2.default)(this.rotation, this.street.orientation);
+				}
+				return true;
+			}
+		}, {
+			key: 'limitVelocity',
+			value: function limitVelocity() {
+				if (this.getVelocity() >= _config2.default.CAR_MAXSPEED) {
+					this.setAcceleration(0);
+				}
+				return this;
 			}
 		}, {
 			key: 'checkTurn',
 			value: function checkTurn() {
 				var car = this;
 				var distance = car.street.getCovered(car, !car.getTravelDirection()).toFixed(3);
-				if (distance >= 1 && !car.states.turning) {
-					car.states.turning = true;
+				if (distance >= 1 && car.getState() !== states.TURNING) {
+					car.state = states.TURNING;
 					setTimeout(function () {
-						car.states.turning = false;
+						car.state = states.DRIVING;
 					}, 10);
 					var pos = car.street.getCovered(car) > 0.5 ? 'end' : 'start';
 					var nextStreet = car.street.getNeighbor(pos);
@@ -112073,6 +112125,7 @@
 						car.rotateTo(car.rotation + Math.PI);
 					}
 				}
+				return this;
 			}
 		}]);
 
@@ -112091,7 +112144,6 @@
 		value: true
 	});
 	var list = {
-		ambulance: 'Ambulance',
 		audi: 'Audi',
 		viper: 'Black_viper',
 		car: 'Car',

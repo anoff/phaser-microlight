@@ -1,5 +1,4 @@
 const list = {
-	ambulance: 'Ambulance',
 	audi: 'Audi',
 	viper: 'Black_viper',
 	car: 'Car',
