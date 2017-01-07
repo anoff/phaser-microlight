@@ -33,19 +33,7 @@ class MainState {
 	}
 
 	update() {
-		const cars = this.carManager.cars.children;
-		// check if the car should take a turn
-		cars.forEach(car => car.checkTurn());
-		// check for collision
-		const group = this.carManager.cars;
-		game.physics.arcade.overlap(group, group, (one, two) => {
-			// only kill cars on same street
-			// 	rectangle intersection might detect two cars on close by roads to overlap
-			if (one.street.id === two.street.id) {
-				// kill the one being hit
-				two.kill();
-			}
-		});
+		this.carManager.update();
 	}
 }
 

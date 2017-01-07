@@ -8218,9 +8218,9 @@
 
 	var _carmanager2 = _interopRequireDefault(_carmanager);
 
-	var _street = __webpack_require__(307);
+	var _street = __webpack_require__(308);
 
-	var _cars = __webpack_require__(314);
+	var _cars = __webpack_require__(315);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8260,21 +8260,7 @@
 		}, {
 			key: 'update',
 			value: function update() {
-				var cars = this.carManager.cars.children;
-				// check if the car should take a turn
-				cars.forEach(function (car) {
-					return car.checkTurn();
-				});
-				// check for collision
-				var group = this.carManager.cars;
-				game.physics.arcade.overlap(group, group, function (one, two) {
-					// only kill cars on same street
-					// 	rectangle intersection might detect two cars on close by roads to overlap
-					if (one.street.id === two.street.id) {
-						// kill the one being hit
-						two.kill();
-					}
-				});
+				this.carManager.update();
 			}
 		}]);
 
@@ -111455,9 +111441,13 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _street = __webpack_require__(307);
+	var _isOpposedAngle = __webpack_require__(307);
 
-	var _car = __webpack_require__(313);
+	var _isOpposedAngle2 = _interopRequireDefault(_isOpposedAngle);
+
+	var _street = __webpack_require__(308);
+
+	var _car = __webpack_require__(314);
 
 	var _car2 = _interopRequireDefault(_car);
 
@@ -111489,6 +111479,27 @@
 				this.game.add.existing(car);
 				this.cars.add(car);
 			}
+		}, {
+			key: 'update',
+			value: function update() {
+				var cars = this.cars.children;
+				// check if the car should take a turn
+				cars.forEach(function (car) {
+					return car.checkTurn();
+				});
+				// check for collision
+				var PhysGroup = this.cars;
+				this.game.physics.arcade.overlap(PhysGroup, PhysGroup, function (one, two) {
+					// only kill cars on same street
+					// 	rectangle intersection might detect two cars on close by roads to overlap
+					if (one.street.id === two.street.id) {
+						if (!(0, _isOpposedAngle2.default)(one.rotation, two.rotation)) {
+							one.kill();
+							console.log('collision');
+						}
+					}
+				});
+			}
 		}]);
 
 		return CarManager;
@@ -111498,6 +111509,24 @@
 
 /***/ },
 /* 307 */
+/***/ function(module, exports) {
+
+	'use strict';
+	module.exports = (val1, val2, opts) => {
+		opts = opts || {};
+		let tolerance = typeof opts.tolerance === 'number' ? Math.abs(opts.tolerance) : 0.1;
+		let diff = val2 - val1;
+		if (opts.isDegree) {
+			diff *= Math.PI / 180;
+			tolerance *= Math.PI / 180;
+		}
+		const mod = (Math.abs(diff) % (2 * Math.PI));
+		return mod <= Math.PI + tolerance && mod >= Math.PI - tolerance;
+	};
+
+
+/***/ },
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -111514,7 +111543,7 @@
 
 	var _phaser2 = _interopRequireDefault(_phaser);
 
-	var _uuid = __webpack_require__(308);
+	var _uuid = __webpack_require__(309);
 
 	var _uuid2 = _interopRequireDefault(_uuid);
 
@@ -111682,11 +111711,11 @@
 	exports.streets = streets;
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var v1 = __webpack_require__(309);
-	var v4 = __webpack_require__(312);
+	var v1 = __webpack_require__(310);
+	var v4 = __webpack_require__(313);
 
 	var uuid = v4;
 	uuid.v1 = v1;
@@ -111696,14 +111725,14 @@
 
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Unique ID creation requires a high quality random # generator.  We feature
 	// detect to determine the best RNG source, normalizing to a function that
 	// returns 128-bits of randomness, since that's what's usually required
-	var rng = __webpack_require__(310);
-	var bytesToUuid = __webpack_require__(311);
+	var rng = __webpack_require__(311);
+	var bytesToUuid = __webpack_require__(312);
 
 	// **`v1()` - Generate time-based UUID**
 	//
@@ -111805,7 +111834,7 @@
 
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// Unique ID creation requires a high quality random # generator.  In the
@@ -111845,7 +111874,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 311 */
+/* 312 */
 /***/ function(module, exports) {
 
 	/**
@@ -111874,11 +111903,11 @@
 
 
 /***/ },
-/* 312 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var rng = __webpack_require__(310);
-	var bytesToUuid = __webpack_require__(311);
+	var rng = __webpack_require__(311);
+	var bytesToUuid = __webpack_require__(312);
 
 	function v4(options, buf, offset) {
 	  var i = buf && offset || 0;
@@ -111909,7 +111938,7 @@
 
 
 /***/ },
-/* 313 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -111924,7 +111953,11 @@
 
 	var _phaser2 = _interopRequireDefault(_phaser);
 
-	var _cars = __webpack_require__(314);
+	var _isOpposedAngle = __webpack_require__(307);
+
+	var _isOpposedAngle2 = _interopRequireDefault(_isOpposedAngle);
+
+	var _cars = __webpack_require__(315);
 
 	var _config = __webpack_require__(305);
 
@@ -112017,9 +112050,8 @@
 		}, {
 			key: 'getTravelDirection',
 			value: function getTravelDirection() {
-				var diff = this.rotation - this.street.orientation;
-				var dir = Math.round(Math.abs(diff) / Math.PI) % 2 === 0;
-				return dir;
+				var dir = (0, _isOpposedAngle2.default)(this.rotation, this.street.orientation);
+				return !dir;
 			}
 		}, {
 			key: 'checkTurn',
@@ -112050,7 +112082,7 @@
 	exports.default = Car;
 
 /***/ },
-/* 314 */
+/* 315 */
 /***/ function(module, exports) {
 
 	'use strict';

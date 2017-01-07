@@ -40,6 +40,7 @@
     "xo": "^0.17.1"
   },
   "dependencies": {
+    "is-opposed-angle": "^1.0.0",
     "phaser": "^2.6.2",
     "uuid": "^3.0.1"
   },

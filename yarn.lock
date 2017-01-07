@@ -2025,6 +2025,10 @@ is-obj@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/is-obj/-/is-obj-1.0.1.tgz#3e4729ac1f5fde025cd7d83a896dab9f4f67db0f"
 
+is-opposed-angle@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/is-opposed-angle/-/is-opposed-angle-1.0.0.tgz#488431ac79829ab75f93c521dc74ad0d86e7ef84"
+
 is-path-cwd@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-path-cwd/-/is-path-cwd-1.0.0.tgz#d225ec23132e89edd38fda767472e62e65f1106d"
