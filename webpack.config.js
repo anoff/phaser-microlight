@@ -17,7 +17,7 @@ module.exports = {
 	},
 	module: {
 		loaders: [
-			{test: /\.js$/, loader: 'babel'},
+			{test: /\.js$/, loader: 'babel-loader', exclude: /(node_modules|bower_components)/},
 			{test: /pixi\.js/, loader: 'expose?PIXI'},
 			{test: /p2\.js/, loader: 'expose?p2'},
 			{test: /phaser-split\.js$/, loader: 'expose?Phaser'}
