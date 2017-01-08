@@ -8253,7 +8253,7 @@
 				var spaceKey = game.input.keyboard.addKey(_phaser2.default.Keyboard.SPACEBAR);
 				spaceKey.onDown.add(this.carManager.addCar.bind(this.carManager));
 				// init the world with 3 cars
-				for (var i = 1; i > 0; i--) {
+				for (var i = 3; i > 0; i--) {
 					this.carManager.addCar();
 				}
 			}
