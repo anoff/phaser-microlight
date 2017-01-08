@@ -111436,6 +111436,9 @@
 		},
 		CAR_ACCELERATION: function CAR_ACCELERATION() {
 			return c.CAR_MAXSPEED;
+		},
+		INTERSECTION_OFFSET: function INTERSECTION_OFFSET() {
+			return c.CAR_SIZE / 2;
 		}
 	};
 
@@ -112010,7 +112013,7 @@
 		var cos = Math.cos(angle);
 		return new _phaser2.default.Point(val * sin, -val * cos);
 	};
-	var states = ['INIT', 'ACCELERATING', 'DECELERATING', 'TURNING', 'DRIVING', 'IDLE'];
+	var states = ['INIT', 'ACCELERATING', 'DECELERATING', 'TURNING', 'DRIVING', 'IDLE', 'STOPPED'];
 	states = states.reduce(function (p, c, i) {
 		p[c] = i;
 		return p;
@@ -112030,6 +112033,7 @@
 
 			var _this = _possibleConstructorReturn(this, (Car.__proto__ || Object.getPrototypeOf(Car)).call(this, game, x, y, (0, _cars.randomCar)()));
 
+			_this.game = game;
 			game.physics.arcade.enable(_this);
 			_this.anchor.setTo(0.5 - _config2.default.CAR_LANE_OFFSET, 0.5);
 			_this.width = _config2.default.CAR_SIZE;
@@ -112119,6 +112123,9 @@
 					this.setAcceleration(0);
 					this.setVelocity(this.maxSpeed);
 				} else if (vel <= 0 && this.getAcceleration() !== 0) {
+					if (this.getState() === states.DECELERATING) {
+						this.state = states.STOPPED;
+					}
 					this.setAcceleration(0);
 					this.setVelocity(0);
 				}
@@ -112133,32 +112140,51 @@
 				// calculate required break distance
 				var timeToStop = this.getVelocity() / this.maxAcceleration;
 				var minDist = this.getVelocity() * timeToStop + 0.5 * -this.maxAcceleration * Math.pow(timeToStop, 2);
-				if (dist <= minDist + 50 && this.getState() !== states.DECELERATING) {
+				if (dist <= minDist + _config2.default.INTERSECTION_OFFSET && this.getState() !== states.DECELERATING && this.getState() !== states.TURNING) {
 					this.state = states.DECELERATING;
 					this.setAcceleration(-this.maxAcceleration);
-					console.log('BREAK', this.getVelocity(), this.getAcceleration());
 				}
 				return this;
 			}
 		}, {
 			key: 'checkTurn',
 			value: function checkTurn() {
+				var _this2 = this;
+
 				var car = this;
 				var distance = car.street.getCovered(car, !car.getTravelDirection()).toFixed(3);
-				if (distance >= 1 && car.getState() !== states.TURNING) {
-					car.state = states.TURNING;
-					setTimeout(function () {
-						car.state = states.DRIVING;
-					}, 10);
-					var pos = car.street.getCovered(car) > 0.5 ? 'end' : 'start';
-					var nextStreet = car.street.getNeighbor(pos);
-					if (nextStreet) {
-						// determine if car should be placed at start/end of segments
-						var atStart = nextStreet.start.distance(car) < nextStreet.end.distance(car);
-						car.setStreet(nextStreet, atStart ? 0 : 1);
-					} else {
-						car.rotateTo(car.rotation + Math.PI);
-					}
+				if ((distance >= 1 || car.getState() === states.STOPPED) && car.getState() !== states.TURNING) {
+					(function () {
+						car.state = states.TURNING;
+						var pos = car.street.getCovered(car) > 0.5 ? 'end' : 'start';
+						var nextStreet = car.street.getNeighbor(pos);
+						var startPos = void 0;
+						if (nextStreet) {
+							// determine if car should be placed at start/end of segments
+							var atStart = nextStreet.start.distance(car) < nextStreet.end.distance(car);
+							var _pos = nextStreet.getPositionAt(atStart ? 0.1 : 0.9);
+							startPos = { x: _pos.x, y: _pos.y, rotation: _pos.heading };
+						} else {
+							startPos = { x: car.x, y: car.y };
+							startPos.rotation = car.rotation + Math.PI;
+						}
+						// fix current rotation to prevent weird animations
+						var a1 = car.rotation;
+						var a2 = startPos.rotation;
+						if (Math.abs(a2 - a1) > Math.abs(a2 - (a1 + 2 * Math.PI))) {
+							car.rotation += 2 * Math.PI;
+						}
+
+						var animation = _this2.game.add.tween(_this2);
+						animation.to(startPos, 500, _phaser2.default.Easing.Power0);
+						animation.onComplete.add(function () {
+							car.street = nextStreet ? nextStreet : car.street;
+							car.setAcceleration(car.maxAcceleration);
+							car.setVelocity(50);
+							car.state = states.DRIVING;
+						});
+						animation.start();
+					})();
 				}
 				return this;
 			}
