@@ -86,11 +86,6 @@ const filterFn = d => d.type === 'way' && ['residential', 'secondary'].indexOf((
 
 getWays(filepath, filterFn)
 .then(ways => {
-  ways = ways.map(w => {
-    w.coordinates = [w.coordinates[0], w.coordinates.slice(-1)[0]]
-    return w
-  })
-
   const streets = ways.map(w => {
     return w.coordinates
   })
