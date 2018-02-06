@@ -82,7 +82,7 @@ function getWays (filepath, filterFn) {
 }
 
 const filepath = path.normalize(path.join(__dirname, './marbach-city.osm'))
-filterFn = d => d.type === 'way' && ['residential', 'secondary'].indexOf((d.tags || {}).highway) > -1
+const filterFn = d => d.type === 'way' && ['residential', 'secondary'].indexOf((d.tags || {}).highway) > -1
 
 getWays(filepath, filterFn)
 .then(ways => {
