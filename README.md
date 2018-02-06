@@ -35,9 +35,16 @@ In case you want to run the stuff yourself locally
 
 ```bash
 # install dependencies
-yarn
+npm install
 # start dev server
 npm start
+```
+
+### Getting OSM street data
+
+```sh
+# download a dumpy (lower left corner lng,lat -> top right lng,lat)
+curl "https://api.openstreetmap.org/api/0.6/map?bbox=9.2055000,48.9407000,9.2643,48.9582" > marbach.osm
 ```
 
 ## Credits
