@@ -1,27 +1,31 @@
 #!/usr/bin/env node
 const fs = require('fs')
 const path = require('path')
-const OSMStream = require('node-osm-stream')
-const parser = OSMStream()
+const es = require('event-stream')
+const Osm2Obj = require('osm2obj')
+const toArray = require('stream-to-array')
 
 const filepath = path.normalize(path.join(__dirname, './marbach.osm'))
-
 console.log(filepath)
 
-const rs = fs.createReadStream(filepath, 'utf8')
+function getElements (filepath, filterFn) {
+  return new Promise((resolve, reject) => {
+    const stream = fs.createReadStream(filepath, 'utf8')
+    .pipe(new Osm2Obj())
+    .pipe(es.map((d, cb) => {
+      if (filterFn(d)) {
+        cb(null, d)
+      } else cb() // discard element
+    }))
 
-// open a local .osm filestream
-rs.pipe(parser)
+    toArray(stream, (err, arr) => {
+      if (err) reject(err)
+      else resolve(arr)
+    })
+  })
+}
 
-parser.on('node', function (node, callback) {
-    // Modify current node object as you wish
-    // and pass it back to the callback.
-    // Or pass 'null' or 'false' to prevent the object being
-    // written to outgoing stream
-  // console.log(node)
-  callback(node)
+getElements(filepath, d => d.type === 'way' && (d.tags || {}).highway === 'residential')
+.then(ways => {
+  console.log(ways.length)
 })
-
-parser.on('way', function (way, callback) { console.log(way); callback(way) })
-
-parser.on('relation', function (relation, callback) { callback(relation) })

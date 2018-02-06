@@ -39,9 +39,14 @@
     "webpack-dev-server": "^2.3.0"
   },
   "dependencies": {
+    "event-stream": "^3.3.4",
     "is-opposed-angle": "^1.0.0",
+    "node-osm-stream": "^0.2.2",
+    "osm2obj": "^3.0.0",
     "phaser": "^2.6.2",
     "standard": "^10.0.3",
+    "stream-to-array": "^2.3.0",
+    "through2": "^2.0.3",
     "uuid": "^3.0.1"
   },
   "config": {
