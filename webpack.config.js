@@ -32,5 +32,8 @@ module.exports = {
       pixi,
       p2
     }
+  },
+  resolveLoader: {
+    moduleExtensions: ['-loader']
   }
 }

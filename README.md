@@ -46,4 +46,4 @@ npm start
 
 ## License
 
-MIT © [Andreas Offenhäuser](http//anoff.io)
+MIT © [Andreas Offenhaeuser](http//anoff.io)

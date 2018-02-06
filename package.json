@@ -20,14 +20,19 @@
     "type": "git",
     "url": "git+https://github.com/anoff/phaser-microlight.git"
   },
-  "author": "anoff <offenhaeuser@gmail.com>",
+  "author": "Andreas Offenhaeuser <offenhaeuser@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/anoff/phaser-microlight/issues"
   },
   "homepage": "https://github.com/anoff/phaser-microlight#readme",
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
     "cz-conventional-kawaii": "^0.1.4",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-promise": "^3.6.0",
     "expose-loader": "^0.7.1",
     "pre-commit": "^1.2.2",
     "webpack": "^3.10.0",
