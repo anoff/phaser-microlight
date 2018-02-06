@@ -25,7 +25,33 @@ function getElements (filepath, filterFn) {
   })
 }
 
+let ways
 getElements(filepath, d => d.type === 'way' && (d.tags || {}).highway === 'residential')
-.then(ways => {
-  console.log(ways.length)
+.then(w => {
+  w = w.filter(e => e.nodes.length === 2)
+  const wayNodes = w
+  .map(e => e.nodes)
+  .reduce((p, c) => {
+    c.forEach(e => p.push(e))
+    return p
+  }, [])
+  const wayNodeSelectorFn = d => d.type === 'node' && wayNodes.indexOf(d.id) > -1
+  ways = w
+  return getElements(filepath, wayNodeSelectorFn)
+})
+.then(nodes => {
+  ways = ways.map(w => {
+    const pos = w.nodes.map(wn => {
+      const node = nodes.find(n => n.id === wn)
+      if (!node) {
+        console.error(`no node information found for ${wn}`)
+        return {lat: undefined, lon: undefined}
+      } else {
+        return {lat: node.lat, lon: node.lon}
+      }
+    })
+    w.position = pos
+    return w
+  })
+  console.log(ways)
 })
