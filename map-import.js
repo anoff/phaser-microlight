@@ -5,7 +5,7 @@ const es = require('event-stream')
 const Osm2Obj = require('osm2obj')
 const toArray = require('stream-to-array')
 
-const filepath = path.normalize(path.join(__dirname, './marbach.osm'))
+const filepath = path.normalize(path.join(__dirname, './marbach-city.osm'))
 // console.log(filepath)
 
 function getElements (filepath, filterFn) {
@@ -25,8 +25,24 @@ function getElements (filepath, filterFn) {
   })
 }
 
+function mapWayToLineString (way) {
+  const lineString = {
+    'type': 'Feature',
+    'properties': {
+      'stroke': '#f0f',
+      'stroke-width': 5
+    },
+    'geometry': {
+      'type': 'LineString',
+      'coordinates': []
+    }
+  }
+
+  lineString.geometry.coordinates = way.coordinates.map(c => [c.lon, c.lat])
+  return lineString
+}
 let ways
-getElements(filepath, d => d.type === 'way' && (d.tags || {}).highway === 'secondary')
+getElements(filepath, d => d.type === 'way' && ['residential', 'secondary'].indexOf((d.tags || {}).highway) > -1) // residential for inner city, tertiary/secondary/primary for outer city
 .then(w => {
   // w = w.filter(e => e.nodes.length === 2) // filter for ways with only 2 points
   const wayNodes = w
@@ -59,22 +75,7 @@ getElements(filepath, d => d.type === 'way' && (d.tags || {}).highway === 'secon
 })
 .then(ways => {
   const features = ways
-  .map(w => {
-    const lineString = {
-      'type': 'Feature',
-      'properties': {
-        'stroke': '#f0f',
-        'stroke-width': 5
-      },
-      'geometry': {
-        'type': 'LineString',
-        'coordinates': []
-      }
-    }
-
-    lineString.geometry.coordinates = w.coordinates.map(c => [c.lon, c.lat])
-    return lineString
-  })
+  .map(mapWayToLineString)
   const geojson = {
     'type': 'FeatureCollection',
     'features': features
