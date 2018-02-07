@@ -2792,7 +2792,7 @@ window.PhaserGlobal = {
   GAME_SIZE: 960,
   STREET_WIDTH: 10,
   CAR_SIZE: 40,
-  CAR_LANE_OFFSET: 0.3,
+  CAR_LANE_OFFSET: 0.1,
   DEBUG: false
   // values that need some magic numbers
 };const derived = {
@@ -3818,23 +3818,32 @@ const map = __WEBPACK_IMPORTED_MODULE_3__assets_marbach_city_simple_json___defau
   });
 });
 
+function totalLength(street) {
+  const points = street.points;
+  let length = 0;
+  for (let i = 1; i < points.length; i++) {
+    length += points[i - 1].distance(points[i]);
+  }
+  return length;
+}
+
 const streets = [];
 
 class Street {
   constructor(points) {
-    this.start = points[0];
-    this.end = points.slice(-1)[0];
     this.points = points;
+    this.start = this.points[0];
+    this.end = this.points.slice(-1)[0];
     this.deltaX = this.end.x - this.start.x;
     this.deltaY = this.end.y - this.start.y;
-    this.length = this.start.distance(this.end);
+    this.length = totalLength(this);
     this.orientation = Math.atan2(this.deltaY, this.deltaX) + Math.PI / 2;
-    this.neighbors = { start: [], end: [] };
+    this.neighbors = new Array(points.length).fill([]);
     this.id = __WEBPACK_IMPORTED_MODULE_1_uuid___default()();
   }
 
-  draw(graphics) {
-    graphics.lineStyle(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */].STREET_WIDTH, 0x666666, 1);
+  draw(graphics, color = 0x666666) {
+    graphics.lineStyle(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */].STREET_WIDTH, color, 1);
     graphics.moveTo(this.start.x, this.start.y);
     for (let i = 1; i < this.points.length; i++) {
       graphics.lineTo(this.points[i].x, this.points[i].y);
@@ -3894,7 +3903,7 @@ class Street {
     return pct;
   }
 
-  // position is a string 'start' or 'end'
+  // position is an integer refering to the "point" on the street
   addNeighbor(position, street) {
     const existing = this.neighbors[position];
     if (!existing.find(elm => elm === street.id)) {
@@ -3915,22 +3924,25 @@ class Street {
 }
 
 function createMap(graphics) {
-  map.forEach((roadpoints, ix) => {
-    const street = new Street(roadpoints);
-    street.draw(graphics);
+  map.forEach(roadpoints => streets.push(new Street(roadpoints)));
+  // populate neighbors of each street
+  streets.forEach(street => {
+    street.points.forEach((point, ix) => {
+      streets.filter(elm => street.id !== elm.id).filter(elm => {
+        const sameStart = elm.start.x === point.x && elm.start.y === point.y;
+        const sameEnd = elm.end.x === point.x && elm.end.y === point.y;
+        return sameStart || sameEnd;
+      }).forEach(street.addNeighbor.bind(street, ix));
+    });
+  });
+  streets.forEach((street, ix) => {
+    let color;
+    if (!street.neighbors.find(n => n.length > 0)) {
+      color = 0xff0ff;
+    } else color = 0x666666;
+    street.draw(graphics, color);
     street.drawIntersections(graphics);
     streets.push(street);
-    // populate neighbors of each street
-    streets.forEach(street => {
-      ['start', 'end'].forEach(position => {
-        const point = street[position];
-        streets.filter(elm => street.id !== elm.id).filter(elm => {
-          const sameStart = elm.start.x === point.x && elm.start.y === point.y;
-          const sameEnd = elm.end.x === point.x && elm.end.y === point.y;
-          return sameStart || sameEnd;
-        }).forEach(street.addNeighbor.bind(street, position));
-      });
-    });
     // draw numbers on street
     const pos = street.getPositionAt(0.13);
     const text = game.add.text(pos.x, pos.y, ix.toString(), { align: 'center', fill: '#ffffff', fontSize: '14px' });
@@ -113066,7 +113078,7 @@ class Car extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Sprite {
     const distance = car.street.getCovered(car, !car.getTravelDirection()).toFixed(3);
     if ((distance >= 1 || car.getState() === states.STOPPED) && car.getState() !== states.TURNING) {
       car.state = states.TURNING;
-      const pos = car.street.getCovered(car) > 0.5 ? 'end' : 'start';
+      const pos = car.street.getCovered(car) > 0.5 ? car.street.points.length - 1 : 0;
       const nextStreet = car.street.getNeighbor(pos);
       let startPos;
       if (nextStreet) {
