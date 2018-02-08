@@ -366,7 +366,7 @@ exports.f = __webpack_require__(6) ? gOPD : function getOwnPropertyDescriptor(O,
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has = __webpack_require__(11);
 var toObject = __webpack_require__(9);
-var IE_PROTO = __webpack_require__(67)('IE_PROTO');
+var IE_PROTO = __webpack_require__(68)('IE_PROTO');
 var ObjectProto = Object.prototype;
 
 module.exports = Object.getPrototypeOf || function (O) {
@@ -511,7 +511,7 @@ var ctx = __webpack_require__(18);
 var IObject = __webpack_require__(47);
 var toObject = __webpack_require__(9);
 var toLength = __webpack_require__(8);
-var asc = __webpack_require__(84);
+var asc = __webpack_require__(85);
 module.exports = function (TYPE, $create) {
   var IS_MAP = TYPE == 1;
   var IS_FILTER = TYPE == 2;
@@ -558,7 +558,7 @@ if (__webpack_require__(6)) {
   var fails = __webpack_require__(3);
   var $export = __webpack_require__(0);
   var $typed = __webpack_require__(60);
-  var $buffer = __webpack_require__(90);
+  var $buffer = __webpack_require__(91);
   var ctx = __webpack_require__(18);
   var anInstance = __webpack_require__(39);
   var propertyDesc = __webpack_require__(31);
@@ -573,21 +573,21 @@ if (__webpack_require__(6)) {
   var classof = __webpack_require__(49);
   var isObject = __webpack_require__(4);
   var toObject = __webpack_require__(9);
-  var isArrayIter = __webpack_require__(81);
+  var isArrayIter = __webpack_require__(82);
   var create = __webpack_require__(36);
   var getPrototypeOf = __webpack_require__(17);
   var gOPN = __webpack_require__(37).f;
-  var getIterFn = __webpack_require__(83);
+  var getIterFn = __webpack_require__(84);
   var uid = __webpack_require__(32);
   var wks = __webpack_require__(5);
   var createArrayMethod = __webpack_require__(26);
   var createArrayIncludes = __webpack_require__(51);
   var speciesConstructor = __webpack_require__(58);
-  var ArrayIterators = __webpack_require__(86);
+  var ArrayIterators = __webpack_require__(87);
   var Iterators = __webpack_require__(45);
   var $iterDetect = __webpack_require__(55);
   var setSpecies = __webpack_require__(38);
-  var arrayFill = __webpack_require__(85);
+  var arrayFill = __webpack_require__(86);
   var arrayCopyWithin = __webpack_require__(109);
   var $DP = __webpack_require__(7);
   var $GOPD = __webpack_require__(16);
@@ -1200,7 +1200,7 @@ module.exports = false;
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
 var $keys = __webpack_require__(95);
-var enumBugKeys = __webpack_require__(68);
+var enumBugKeys = __webpack_require__(69);
 
 module.exports = Object.keys || function keys(O) {
   return $keys(O, enumBugKeys);
@@ -1227,21 +1227,21 @@ module.exports = function (index, length) {
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject = __webpack_require__(1);
 var dPs = __webpack_require__(96);
-var enumBugKeys = __webpack_require__(68);
-var IE_PROTO = __webpack_require__(67)('IE_PROTO');
+var enumBugKeys = __webpack_require__(69);
+var IE_PROTO = __webpack_require__(68)('IE_PROTO');
 var Empty = function () { /* empty */ };
 var PROTOTYPE = 'prototype';
 
 // Create object with fake `null` prototype: use iframe Object with cleared prototype
 var createDict = function () {
   // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(65)('iframe');
+  var iframe = __webpack_require__(66)('iframe');
   var i = enumBugKeys.length;
   var lt = '<';
   var gt = '>';
   var iframeDocument;
   iframe.style.display = 'none';
-  __webpack_require__(69).appendChild(iframe);
+  __webpack_require__(70).appendChild(iframe);
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
@@ -1273,7 +1273,7 @@ module.exports = Object.create || function create(O, Properties) {
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
 var $keys = __webpack_require__(95);
-var hiddenKeys = __webpack_require__(68).concat('length', 'prototype');
+var hiddenKeys = __webpack_require__(69).concat('length', 'prototype');
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
   return $keys(O, hiddenKeys);
@@ -1317,10 +1317,10 @@ module.exports = function (it, Constructor, name, forbiddenField) {
 
 var ctx = __webpack_require__(18);
 var call = __webpack_require__(107);
-var isArrayIter = __webpack_require__(81);
+var isArrayIter = __webpack_require__(82);
 var anObject = __webpack_require__(1);
 var toLength = __webpack_require__(8);
-var getIterFn = __webpack_require__(83);
+var getIterFn = __webpack_require__(84);
 var BREAK = {};
 var RETURN = {};
 var exports = module.exports = function (iterable, entries, fn, that, ITERATOR) {
@@ -1400,7 +1400,7 @@ module.exports = function (it, tag, stat) {
 var $export = __webpack_require__(0);
 var defined = __webpack_require__(23);
 var fails = __webpack_require__(3);
-var spaces = __webpack_require__(71);
+var spaces = __webpack_require__(72);
 var space = '[' + spaces + ']';
 var non = '\u200b\u0085';
 var ltrim = RegExp('^' + space + space + '*');
@@ -1683,7 +1683,7 @@ var isObject = __webpack_require__(4);
 var fails = __webpack_require__(3);
 var $iterDetect = __webpack_require__(55);
 var setToStringTag = __webpack_require__(43);
-var inheritIfRequired = __webpack_require__(72);
+var inheritIfRequired = __webpack_require__(73);
 
 module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
   var Base = global[NAME];
@@ -1871,6 +1871,43 @@ module.exports = function (COLLECTION) {
 
 /***/ }),
 /* 65 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+// disable phaser banner in console
+window.PhaserGlobal = {
+  hideBanner: true
+
+  // magic numbers go here
+};const c = {
+  GAME_SIZE: 960,
+  STREET_WIDTH: 10,
+  CAR_SIZE: 40,
+  CAR_LANE_OFFSET: 0.1,
+  DEBUG: false
+  // values that need some magic numbers
+};const derived = {
+  CAR_MAXSPEED: () => c.GAME_SIZE / 3,
+  CAR_ACCELERATION: () => c.CAR_MAXSPEED,
+  INTERSECTION_OFFSET: () => c.CAR_SIZE / 2
+
+  // helper to create dependend config values
+};function addDepVal(name, fn) {
+  const res = fn();
+  if (typeof res === 'undefined' || isNaN(res)) {
+    throw new Error(`Tried setting ${name}=${res}. Assume thats not what you want here`);
+  } else if (c[name] !== undefined) {
+    throw new Error(`trying to overwrite ${name}(=${c[name]}) with ${fn()}`);
+  }
+  c[name] = fn();
+}
+// calculate derived values
+Object.keys(derived).forEach(key => addDepVal(key, derived[key]));
+
+/* harmony default export */ __webpack_exports__["a"] = (c);
+
+/***/ }),
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(4);
@@ -1883,7 +1920,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(2);
@@ -1898,7 +1935,7 @@ module.exports = function (name) {
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var shared = __webpack_require__(50)('keys');
@@ -1909,7 +1946,7 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports) {
 
 // IE 8- don't enum bug keys
@@ -1919,7 +1956,7 @@ module.exports = (
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var document = __webpack_require__(2).document;
@@ -1927,7 +1964,7 @@ module.exports = document && document.documentElement;
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Works with __proto__ only. Old v8 can't work with null proto objects.
@@ -1958,7 +1995,7 @@ module.exports = {
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports) {
 
 module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
@@ -1966,11 +2003,11 @@ module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u20
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(4);
-var setPrototypeOf = __webpack_require__(70).set;
+var setPrototypeOf = __webpack_require__(71).set;
 module.exports = function (that, target, C) {
   var S = target.constructor;
   var P;
@@ -1981,7 +2018,7 @@ module.exports = function (that, target, C) {
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2000,7 +2037,7 @@ module.exports = function repeat(count) {
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports) {
 
 // 20.2.2.28 Math.sign(x)
@@ -2011,7 +2048,7 @@ module.exports = Math.sign || function sign(x) {
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports) {
 
 // 20.2.2.14 Math.expm1(x)
@@ -2027,7 +2064,7 @@ module.exports = (!$expm1
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(24);
@@ -2050,7 +2087,7 @@ module.exports = function (TO_STRING) {
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2061,7 +2098,7 @@ var redefine = __webpack_require__(13);
 var hide = __webpack_require__(12);
 var has = __webpack_require__(11);
 var Iterators = __webpack_require__(45);
-var $iterCreate = __webpack_require__(78);
+var $iterCreate = __webpack_require__(79);
 var setToStringTag = __webpack_require__(43);
 var getPrototypeOf = __webpack_require__(17);
 var ITERATOR = __webpack_require__(5)('iterator');
@@ -2127,7 +2164,7 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2147,7 +2184,7 @@ module.exports = function (Constructor, NAME, next) {
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // helper for String#{startsWith, endsWith, includes}
@@ -2161,7 +2198,7 @@ module.exports = function (that, searchString, NAME) {
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var MATCH = __webpack_require__(5)('match');
@@ -2179,7 +2216,7 @@ module.exports = function (KEY) {
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
@@ -2193,7 +2230,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2208,7 +2245,7 @@ module.exports = function (object, index, value) {
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof = __webpack_require__(49);
@@ -2222,7 +2259,7 @@ module.exports = __webpack_require__(21).getIteratorMethod = function (it) {
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 9.4.2.3 ArraySpeciesCreate(originalArray, length)
@@ -2234,7 +2271,7 @@ module.exports = function (original, length) {
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2256,7 +2293,7 @@ module.exports = function fill(value /* , start = 0, end = @length */) {
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2270,7 +2307,7 @@ var toIObject = __webpack_require__(15);
 // 22.1.3.13 Array.prototype.keys()
 // 22.1.3.29 Array.prototype.values()
 // 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(77)(Array, 'Array', function (iterated, kind) {
+module.exports = __webpack_require__(78)(Array, 'Array', function (iterated, kind) {
   this._t = toIObject(iterated); // target
   this._i = 0;                   // next index
   this._k = kind;                // kind
@@ -2297,13 +2334,13 @@ addToUnscopables('entries');
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ctx = __webpack_require__(18);
 var invoke = __webpack_require__(100);
-var html = __webpack_require__(69);
-var cel = __webpack_require__(65);
+var html = __webpack_require__(70);
+var cel = __webpack_require__(66);
 var global = __webpack_require__(2);
 var process = global.process;
 var setTask = global.setImmediate;
@@ -2387,11 +2424,11 @@ module.exports = {
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(2);
-var macrotask = __webpack_require__(87).set;
+var macrotask = __webpack_require__(88).set;
 var Observer = global.MutationObserver || global.WebKitMutationObserver;
 var process = global.process;
 var Promise = global.Promise;
@@ -2461,7 +2498,7 @@ module.exports = function () {
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2486,7 +2523,7 @@ module.exports.f = function (C) {
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2504,7 +2541,7 @@ var toLength = __webpack_require__(8);
 var toIndex = __webpack_require__(119);
 var gOPN = __webpack_require__(37).f;
 var dP = __webpack_require__(7).f;
-var arrayFill = __webpack_require__(85);
+var arrayFill = __webpack_require__(86);
 var setToStringTag = __webpack_require__(43);
 var ARRAY_BUFFER = 'ArrayBuffer';
 var DATA_VIEW = 'DataView';
@@ -2769,7 +2806,7 @@ exports[DATA_VIEW] = $DataView;
 
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(2);
@@ -2779,48 +2816,11 @@ module.exports = navigator && navigator.userAgent || '';
 
 
 /***/ }),
-/* 92 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// disable phaser banner in console
-window.PhaserGlobal = {
-  hideBanner: true
-
-  // magic numbers go here
-};const c = {
-  GAME_SIZE: 960,
-  STREET_WIDTH: 10,
-  CAR_SIZE: 40,
-  CAR_LANE_OFFSET: 0.1,
-  DEBUG: false
-  // values that need some magic numbers
-};const derived = {
-  CAR_MAXSPEED: () => c.GAME_SIZE / 3,
-  CAR_ACCELERATION: () => c.CAR_MAXSPEED,
-  INTERSECTION_OFFSET: () => c.CAR_SIZE / 2
-
-  // helper to create dependend config values
-};function addDepVal(name, fn) {
-  const res = fn();
-  if (typeof res === 'undefined' || isNaN(res)) {
-    throw new Error(`Tried setting ${name}=${res}. Assume thats not what you want here`);
-  } else if (c[name] !== undefined) {
-    throw new Error(`trying to overwrite ${name}(=${c[name]}) with ${fn()}`);
-  }
-  c[name] = fn();
-}
-// calculate derived values
-Object.keys(derived).forEach(key => addDepVal(key, derived[key]));
-
-/* harmony default export */ __webpack_exports__["a"] = (c);
-
-/***/ }),
 /* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = !__webpack_require__(6) && !__webpack_require__(3)(function () {
-  return Object.defineProperty(__webpack_require__(65)('div'), 'a', { get: function () { return 7; } }).a != 7;
+  return Object.defineProperty(__webpack_require__(66)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
 
@@ -2838,7 +2838,7 @@ exports.f = __webpack_require__(5);
 var has = __webpack_require__(11);
 var toIObject = __webpack_require__(15);
 var arrayIndexOf = __webpack_require__(51)(false);
-var IE_PROTO = __webpack_require__(67)('IE_PROTO');
+var IE_PROTO = __webpack_require__(68)('IE_PROTO');
 
 module.exports = function (object, names) {
   var O = toIObject(object);
@@ -2999,7 +2999,7 @@ module.exports = function (fn, args, that) {
 
 var $parseInt = __webpack_require__(2).parseInt;
 var $trim = __webpack_require__(44).trim;
-var ws = __webpack_require__(71);
+var ws = __webpack_require__(72);
 var hex = /^[-+]?0[xX]/;
 
 module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? function parseInt(str, radix) {
@@ -3015,7 +3015,7 @@ module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? f
 var $parseFloat = __webpack_require__(2).parseFloat;
 var $trim = __webpack_require__(44).trim;
 
-module.exports = 1 / $parseFloat(__webpack_require__(71) + '-0') !== -Infinity ? function parseFloat(str) {
+module.exports = 1 / $parseFloat(__webpack_require__(72) + '-0') !== -Infinity ? function parseFloat(str) {
   var string = $trim(String(str), 3);
   var result = $parseFloat(string);
   return result === 0 && string.charAt(0) == '-' ? -0 : result;
@@ -3060,7 +3060,7 @@ module.exports = Math.log1p || function log1p(x) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.16 Math.fround(x)
-var sign = __webpack_require__(74);
+var sign = __webpack_require__(75);
 var pow = Math.pow;
 var EPSILON = pow(2, -52);
 var EPSILON32 = pow(2, -23);
@@ -3208,7 +3208,7 @@ module.exports = function (exec) {
 
 var anObject = __webpack_require__(1);
 var isObject = __webpack_require__(4);
-var newPromiseCapability = __webpack_require__(89);
+var newPromiseCapability = __webpack_require__(90);
 
 module.exports = function (C, x) {
   anObject(C);
@@ -3258,7 +3258,7 @@ var redefineAll = __webpack_require__(41);
 var ctx = __webpack_require__(18);
 var anInstance = __webpack_require__(39);
 var forOf = __webpack_require__(40);
-var $iterDefine = __webpack_require__(77);
+var $iterDefine = __webpack_require__(78);
 var step = __webpack_require__(110);
 var setSpecies = __webpack_require__(38);
 var DESCRIPTORS = __webpack_require__(6);
@@ -3660,7 +3660,7 @@ module.exports = flattenIntoArray;
 
 // https://github.com/tc39/proposal-string-pad-start-end
 var toLength = __webpack_require__(8);
-var repeat = __webpack_require__(73);
+var repeat = __webpack_require__(74);
 var defined = __webpack_require__(23);
 
 module.exports = function (that, maxLength, fillString, left) {
@@ -3788,35 +3788,12 @@ module.exports = (val1, val2, opts) => {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export default */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createMap; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return streets; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_phaser__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_uuid__ = __webpack_require__(343);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_uuid__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_marbach_city_simple_json__ = __webpack_require__(346);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_marbach_city_simple_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__assets_marbach_city_simple_json__);
-/* global game */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Street; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_uuid__ = __webpack_require__(343);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_uuid___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_uuid__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config__ = __webpack_require__(65);
 
 
-
-
-
-// lat = y, lon = x
-const latMin = Math.min(...__WEBPACK_IMPORTED_MODULE_3__assets_marbach_city_simple_json___default.a.map(elm => Math.min(elm[0].lat, elm[1].lat)));
-const latMax = Math.max(...__WEBPACK_IMPORTED_MODULE_3__assets_marbach_city_simple_json___default.a.map(elm => Math.max(elm[0].lat, elm[1].lat)));
-const lonMin = Math.min(...__WEBPACK_IMPORTED_MODULE_3__assets_marbach_city_simple_json___default.a.map(elm => Math.min(elm[0].lon, elm[1].lon)));
-const lonMax = Math.max(...__WEBPACK_IMPORTED_MODULE_3__assets_marbach_city_simple_json___default.a.map(elm => Math.max(elm[0].lon, elm[1].lon)));
-
-const map = __WEBPACK_IMPORTED_MODULE_3__assets_marbach_city_simple_json___default.a.map(elm => {
-  return elm.map(point => {
-    const y = __WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */].GAME_SIZE - (point.lat - latMin) / (latMax - latMin) * __WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */].GAME_SIZE;
-    const x = (point.lon - lonMin) / (lonMax - lonMin) * __WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */].GAME_SIZE;
-    return new __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Point(x, y);
-  });
-});
 
 function totalLength(street) {
   const points = street.points;
@@ -3826,8 +3803,6 @@ function totalLength(street) {
   }
   return length;
 }
-
-const streets = [];
 
 class Street {
   constructor(points) {
@@ -3839,17 +3814,17 @@ class Street {
     this.length = totalLength(this);
     this.orientation = Math.atan2(this.deltaY, this.deltaX) + Math.PI / 2;
     this.neighbors = new Array(points.length).fill([]);
-    this.id = __WEBPACK_IMPORTED_MODULE_1_uuid___default()();
+    this.id = __WEBPACK_IMPORTED_MODULE_0_uuid___default()();
   }
 
   draw(graphics, color = 0x666666) {
-    graphics.lineStyle(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */].STREET_WIDTH, color, 1);
+    graphics.lineStyle(__WEBPACK_IMPORTED_MODULE_1__config__["a" /* default */].STREET_WIDTH, color, 0.5);
     graphics.moveTo(this.start.x, this.start.y);
     for (let i = 1; i < this.points.length; i++) {
       graphics.lineTo(this.points[i].x, this.points[i].y);
     }
 
-    if (__WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */].DEBUG) {
+    if (__WEBPACK_IMPORTED_MODULE_1__config__["a" /* default */].DEBUG) {
       // helper lines
       graphics.lineStyle(2, 0xff00ff, 0.5);
       graphics.moveTo(this.start.x, this.start.y);
@@ -3860,12 +3835,12 @@ class Street {
   }
 
   drawIntersections(graphics) {
-    graphics.lineStyle(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */].STREET_WIDTH / 2, 0x666666, 1);
+    graphics.lineStyle(__WEBPACK_IMPORTED_MODULE_1__config__["a" /* default */].STREET_WIDTH / 2, 0xff00ff, 1);
     if (!this.start.graphic) {
-      this.start.graphic = graphics.drawCircle(this.start.x, this.start.y, __WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */].STREET_WIDTH / 2);
+      this.start.graphic = graphics.drawCircle(this.start.x, this.start.y, __WEBPACK_IMPORTED_MODULE_1__config__["a" /* default */].STREET_WIDTH / 2);
     }
     if (!this.end.graphic) {
-      this.end.graphic = graphics.drawCircle(this.end.x, this.end.y, __WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */].STREET_WIDTH / 2);
+      this.end.graphic = graphics.drawCircle(this.end.x, this.end.y, __WEBPACK_IMPORTED_MODULE_1__config__["a" /* default */].STREET_WIDTH / 2);
     }
   }
 
@@ -3902,52 +3877,6 @@ class Street {
     }
     return pct;
   }
-
-  // position is an integer refering to the "point" on the street
-  addNeighbor(position, street) {
-    const existing = this.neighbors[position];
-    if (!existing.find(elm => elm === street.id)) {
-      this.neighbors[position].push(street.id);
-    }
-  }
-
-  getNeighbor(position) {
-    const ids = this.neighbors[position];
-    const sel = ids[Math.floor(Math.random() * ids.length)];
-    return streets.find(elm => elm.id === sel);
-  }
-
-  getNeighbors(position) {
-    const ids = this.neighbors[position] || [];
-    return streets.filter(elm => ids.indexOf(elm.id) > -1);
-  }
-}
-
-function createMap(graphics) {
-  map.forEach(roadpoints => streets.push(new Street(roadpoints)));
-  // populate neighbors of each street
-  streets.forEach(street => {
-    street.points.forEach((point, ix) => {
-      streets.filter(elm => street.id !== elm.id).filter(elm => {
-        const sameStart = elm.start.x === point.x && elm.start.y === point.y;
-        const sameEnd = elm.end.x === point.x && elm.end.y === point.y;
-        return sameStart || sameEnd;
-      }).forEach(street.addNeighbor.bind(street, ix));
-    });
-  });
-  streets.forEach((street, ix) => {
-    let color;
-    if (!street.neighbors.find(n => n.length > 0)) {
-      color = 0xff0ff;
-    } else color = 0x666666;
-    street.draw(graphics, color);
-    street.drawIntersections(graphics);
-    streets.push(street);
-    // draw numbers on street
-    const pos = street.getPositionAt(0.13);
-    const text = game.add.text(pos.x, pos.y, ix.toString(), { align: 'center', fill: '#ffffff', fontSize: '14px' });
-    text.anchor.set(0.5);
-  });
 }
 
 
@@ -4203,7 +4132,7 @@ __webpack_require__(237);
 __webpack_require__(238);
 __webpack_require__(239);
 __webpack_require__(240);
-__webpack_require__(86);
+__webpack_require__(87);
 __webpack_require__(241);
 __webpack_require__(242);
 __webpack_require__(111);
@@ -4322,7 +4251,7 @@ var setToStringTag = __webpack_require__(43);
 var uid = __webpack_require__(32);
 var wks = __webpack_require__(5);
 var wksExt = __webpack_require__(94);
-var wksDefine = __webpack_require__(66);
+var wksDefine = __webpack_require__(67);
 var enumKeys = __webpack_require__(138);
 var isArray = __webpack_require__(53);
 var anObject = __webpack_require__(1);
@@ -4770,7 +4699,7 @@ module.exports = Object.is || function is(x, y) {
 
 // 19.1.3.19 Object.setPrototypeOf(O, proto)
 var $export = __webpack_require__(0);
-$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(70).set });
+$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(71).set });
 
 
 /***/ }),
@@ -4871,7 +4800,7 @@ $export($export.G + $export.F * (parseFloat != $parseFloat), { parseFloat: $pars
 var global = __webpack_require__(2);
 var has = __webpack_require__(11);
 var cof = __webpack_require__(19);
-var inheritIfRequired = __webpack_require__(72);
+var inheritIfRequired = __webpack_require__(73);
 var toPrimitive = __webpack_require__(22);
 var fails = __webpack_require__(3);
 var gOPN = __webpack_require__(37).f;
@@ -4947,7 +4876,7 @@ if (!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')) {
 var $export = __webpack_require__(0);
 var toInteger = __webpack_require__(24);
 var aNumberValue = __webpack_require__(103);
-var repeat = __webpack_require__(73);
+var repeat = __webpack_require__(74);
 var $toFixed = 1.0.toFixed;
 var floor = Math.floor;
 var data = [0, 0, 0, 0, 0, 0];
@@ -5252,7 +5181,7 @@ $export($export.S + $export.F * !($atanh && 1 / $atanh(-0) < 0), 'Math', {
 
 // 20.2.2.9 Math.cbrt(x)
 var $export = __webpack_require__(0);
-var sign = __webpack_require__(74);
+var sign = __webpack_require__(75);
 
 $export($export.S, 'Math', {
   cbrt: function cbrt(x) {
@@ -5296,7 +5225,7 @@ $export($export.S, 'Math', {
 
 // 20.2.2.14 Math.expm1(x)
 var $export = __webpack_require__(0);
-var $expm1 = __webpack_require__(75);
+var $expm1 = __webpack_require__(76);
 
 $export($export.S + $export.F * ($expm1 != Math.expm1), 'Math', { expm1: $expm1 });
 
@@ -5410,7 +5339,7 @@ $export($export.S, 'Math', {
 // 20.2.2.28 Math.sign(x)
 var $export = __webpack_require__(0);
 
-$export($export.S, 'Math', { sign: __webpack_require__(74) });
+$export($export.S, 'Math', { sign: __webpack_require__(75) });
 
 
 /***/ }),
@@ -5419,7 +5348,7 @@ $export($export.S, 'Math', { sign: __webpack_require__(74) });
 
 // 20.2.2.30 Math.sinh(x)
 var $export = __webpack_require__(0);
-var expm1 = __webpack_require__(75);
+var expm1 = __webpack_require__(76);
 var exp = Math.exp;
 
 // V8 near Chromium 38 has a problem with very small numbers
@@ -5440,7 +5369,7 @@ $export($export.S + $export.F * __webpack_require__(3)(function () {
 
 // 20.2.2.33 Math.tanh(x)
 var $export = __webpack_require__(0);
-var expm1 = __webpack_require__(75);
+var expm1 = __webpack_require__(76);
 var exp = Math.exp;
 
 $export($export.S, 'Math', {
@@ -5539,10 +5468,10 @@ __webpack_require__(44)('trim', function ($trim) {
 
 "use strict";
 
-var $at = __webpack_require__(76)(true);
+var $at = __webpack_require__(77)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(77)(String, 'String', function (iterated) {
+__webpack_require__(78)(String, 'String', function (iterated) {
   this._t = String(iterated); // target
   this._i = 0;                // next index
 // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -5564,7 +5493,7 @@ __webpack_require__(77)(String, 'String', function (iterated) {
 "use strict";
 
 var $export = __webpack_require__(0);
-var $at = __webpack_require__(76)(false);
+var $at = __webpack_require__(77)(false);
 $export($export.P, 'String', {
   // 21.1.3.3 String.prototype.codePointAt(pos)
   codePointAt: function codePointAt(pos) {
@@ -5582,11 +5511,11 @@ $export($export.P, 'String', {
 
 var $export = __webpack_require__(0);
 var toLength = __webpack_require__(8);
-var context = __webpack_require__(79);
+var context = __webpack_require__(80);
 var ENDS_WITH = 'endsWith';
 var $endsWith = ''[ENDS_WITH];
 
-$export($export.P + $export.F * __webpack_require__(80)(ENDS_WITH), 'String', {
+$export($export.P + $export.F * __webpack_require__(81)(ENDS_WITH), 'String', {
   endsWith: function endsWith(searchString /* , endPosition = @length */) {
     var that = context(this, searchString, ENDS_WITH);
     var endPosition = arguments.length > 1 ? arguments[1] : undefined;
@@ -5608,10 +5537,10 @@ $export($export.P + $export.F * __webpack_require__(80)(ENDS_WITH), 'String', {
 // 21.1.3.7 String.prototype.includes(searchString, position = 0)
 
 var $export = __webpack_require__(0);
-var context = __webpack_require__(79);
+var context = __webpack_require__(80);
 var INCLUDES = 'includes';
 
-$export($export.P + $export.F * __webpack_require__(80)(INCLUDES), 'String', {
+$export($export.P + $export.F * __webpack_require__(81)(INCLUDES), 'String', {
   includes: function includes(searchString /* , position = 0 */) {
     return !!~context(this, searchString, INCLUDES)
       .indexOf(searchString, arguments.length > 1 ? arguments[1] : undefined);
@@ -5627,7 +5556,7 @@ var $export = __webpack_require__(0);
 
 $export($export.P, 'String', {
   // 21.1.3.13 String.prototype.repeat(count)
-  repeat: __webpack_require__(73)
+  repeat: __webpack_require__(74)
 });
 
 
@@ -5640,11 +5569,11 @@ $export($export.P, 'String', {
 
 var $export = __webpack_require__(0);
 var toLength = __webpack_require__(8);
-var context = __webpack_require__(79);
+var context = __webpack_require__(80);
 var STARTS_WITH = 'startsWith';
 var $startsWith = ''[STARTS_WITH];
 
-$export($export.P + $export.F * __webpack_require__(80)(STARTS_WITH), 'String', {
+$export($export.P + $export.F * __webpack_require__(81)(STARTS_WITH), 'String', {
   startsWith: function startsWith(searchString /* , position = 0 */) {
     var that = context(this, searchString, STARTS_WITH);
     var index = toLength(Math.min(arguments.length > 1 ? arguments[1] : undefined, that.length));
@@ -5982,10 +5911,10 @@ var ctx = __webpack_require__(18);
 var $export = __webpack_require__(0);
 var toObject = __webpack_require__(9);
 var call = __webpack_require__(107);
-var isArrayIter = __webpack_require__(81);
+var isArrayIter = __webpack_require__(82);
 var toLength = __webpack_require__(8);
-var createProperty = __webpack_require__(82);
-var getIterFn = __webpack_require__(83);
+var createProperty = __webpack_require__(83);
+var getIterFn = __webpack_require__(84);
 
 $export($export.S + $export.F * !__webpack_require__(55)(function (iter) { Array.from(iter); }), 'Array', {
   // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
@@ -6023,7 +5952,7 @@ $export($export.S + $export.F * !__webpack_require__(55)(function (iter) { Array
 "use strict";
 
 var $export = __webpack_require__(0);
-var createProperty = __webpack_require__(82);
+var createProperty = __webpack_require__(83);
 
 // WebKit Array.of isn't generic
 $export($export.S + $export.F * __webpack_require__(3)(function () {
@@ -6068,7 +5997,7 @@ $export($export.P + $export.F * (__webpack_require__(47) != Object || !__webpack
 "use strict";
 
 var $export = __webpack_require__(0);
-var html = __webpack_require__(69);
+var html = __webpack_require__(70);
 var cof = __webpack_require__(19);
 var toAbsoluteIndex = __webpack_require__(35);
 var toLength = __webpack_require__(8);
@@ -6338,7 +6267,7 @@ __webpack_require__(30)('copyWithin');
 // 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
 var $export = __webpack_require__(0);
 
-$export($export.P, 'Array', { fill: __webpack_require__(85) });
+$export($export.P, 'Array', { fill: __webpack_require__(86) });
 
 __webpack_require__(30)('fill');
 
@@ -6397,7 +6326,7 @@ __webpack_require__(38)('Array');
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(2);
-var inheritIfRequired = __webpack_require__(72);
+var inheritIfRequired = __webpack_require__(73);
 var dP = __webpack_require__(7).f;
 var gOPN = __webpack_require__(37).f;
 var isRegExp = __webpack_require__(54);
@@ -6616,9 +6545,9 @@ var aFunction = __webpack_require__(10);
 var anInstance = __webpack_require__(39);
 var forOf = __webpack_require__(40);
 var speciesConstructor = __webpack_require__(58);
-var task = __webpack_require__(87).set;
-var microtask = __webpack_require__(88)();
-var newPromiseCapabilityModule = __webpack_require__(89);
+var task = __webpack_require__(88).set;
+var microtask = __webpack_require__(89)();
+var newPromiseCapabilityModule = __webpack_require__(90);
 var perform = __webpack_require__(112);
 var promiseResolve = __webpack_require__(113);
 var PROMISE = 'Promise';
@@ -6909,7 +6838,7 @@ __webpack_require__(59)(WEAK_SET, function (get) {
 
 var $export = __webpack_require__(0);
 var $typed = __webpack_require__(60);
-var buffer = __webpack_require__(90);
+var buffer = __webpack_require__(91);
 var anObject = __webpack_require__(1);
 var toAbsoluteIndex = __webpack_require__(35);
 var toLength = __webpack_require__(8);
@@ -6960,7 +6889,7 @@ __webpack_require__(38)(ARRAY_BUFFER);
 
 var $export = __webpack_require__(0);
 $export($export.G + $export.W + $export.F * !__webpack_require__(60).ABV, {
-  DataView: __webpack_require__(90).DataView
+  DataView: __webpack_require__(91).DataView
 });
 
 
@@ -7200,7 +7129,7 @@ var Enumerate = function (iterated) {
   var key;
   for (key in iterated) keys.push(key);
 };
-__webpack_require__(78)(Enumerate, 'Object', function () {
+__webpack_require__(79)(Enumerate, 'Object', function () {
   var that = this;
   var keys = that._k;
   var key;
@@ -7382,7 +7311,7 @@ $export($export.S, 'Reflect', { set: set });
 
 // 26.1.14 Reflect.setPrototypeOf(target, proto)
 var $export = __webpack_require__(0);
-var setProto = __webpack_require__(70);
+var setProto = __webpack_require__(71);
 
 if (setProto) $export($export.S, 'Reflect', {
   setPrototypeOf: function setPrototypeOf(target, proto) {
@@ -7428,7 +7357,7 @@ var flattenIntoArray = __webpack_require__(121);
 var toObject = __webpack_require__(9);
 var toLength = __webpack_require__(8);
 var aFunction = __webpack_require__(10);
-var arraySpeciesCreate = __webpack_require__(84);
+var arraySpeciesCreate = __webpack_require__(85);
 
 $export($export.P, 'Array', {
   flatMap: function flatMap(callbackfn /* , thisArg */) {
@@ -7457,7 +7386,7 @@ var flattenIntoArray = __webpack_require__(121);
 var toObject = __webpack_require__(9);
 var toLength = __webpack_require__(8);
 var toInteger = __webpack_require__(24);
-var arraySpeciesCreate = __webpack_require__(84);
+var arraySpeciesCreate = __webpack_require__(85);
 
 $export($export.P, 'Array', {
   flatten: function flatten(/* depthArg = 1 */) {
@@ -7481,7 +7410,7 @@ __webpack_require__(30)('flatten');
 
 // https://github.com/mathiasbynens/String.prototype.at
 var $export = __webpack_require__(0);
-var $at = __webpack_require__(76)(true);
+var $at = __webpack_require__(77)(true);
 
 $export($export.P, 'String', {
   at: function at(pos) {
@@ -7499,7 +7428,7 @@ $export($export.P, 'String', {
 // https://github.com/tc39/proposal-string-pad-start-end
 var $export = __webpack_require__(0);
 var $pad = __webpack_require__(122);
-var userAgent = __webpack_require__(91);
+var userAgent = __webpack_require__(92);
 
 // https://github.com/zloirock/core-js/issues/280
 $export($export.P + $export.F * /Version\/10\.\d+(\.\d+)? Safari\//.test(userAgent), 'String', {
@@ -7518,7 +7447,7 @@ $export($export.P + $export.F * /Version\/10\.\d+(\.\d+)? Safari\//.test(userAge
 // https://github.com/tc39/proposal-string-pad-start-end
 var $export = __webpack_require__(0);
 var $pad = __webpack_require__(122);
-var userAgent = __webpack_require__(91);
+var userAgent = __webpack_require__(92);
 
 // https://github.com/zloirock/core-js/issues/280
 $export($export.P + $export.F * /Version\/10\.\d+(\.\d+)? Safari\//.test(userAgent), 'String', {
@@ -7575,7 +7504,7 @@ var $RegExpStringIterator = function (regexp, string) {
   this._s = string;
 };
 
-__webpack_require__(78)($RegExpStringIterator, 'RegExp String', function next() {
+__webpack_require__(79)($RegExpStringIterator, 'RegExp String', function next() {
   var match = this._r.exec(this._s);
   return { value: match, done: match === null };
 });
@@ -7597,14 +7526,14 @@ $export($export.P, 'String', {
 /* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(66)('asyncIterator');
+__webpack_require__(67)('asyncIterator');
 
 
 /***/ }),
 /* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(66)('observable');
+__webpack_require__(67)('observable');
 
 
 /***/ }),
@@ -7616,7 +7545,7 @@ var $export = __webpack_require__(0);
 var ownKeys = __webpack_require__(120);
 var toIObject = __webpack_require__(15);
 var gOPD = __webpack_require__(16);
-var createProperty = __webpack_require__(82);
+var createProperty = __webpack_require__(83);
 
 $export($export.S, 'Object', {
   getOwnPropertyDescriptors: function getOwnPropertyDescriptors(object) {
@@ -8088,7 +8017,7 @@ $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
 
 // https://github.com/tc39/proposal-promise-try
 var $export = __webpack_require__(0);
-var newPromiseCapability = __webpack_require__(89);
+var newPromiseCapability = __webpack_require__(90);
 var perform = __webpack_require__(112);
 
 $export($export.S, 'Promise', { 'try': function (callbackfn) {
@@ -8275,7 +8204,7 @@ $metadata.exp({ metadata: function metadata(metadataKey, metadataValue) {
 
 // https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#510-globalasap-for-enqueuing-a-microtask
 var $export = __webpack_require__(0);
-var microtask = __webpack_require__(88)();
+var microtask = __webpack_require__(89)();
 var process = __webpack_require__(2).process;
 var isNode = __webpack_require__(19)(process) == 'process';
 
@@ -8297,7 +8226,7 @@ $export($export.G, {
 var $export = __webpack_require__(0);
 var global = __webpack_require__(2);
 var core = __webpack_require__(21);
-var microtask = __webpack_require__(88)();
+var microtask = __webpack_require__(89)();
 var OBSERVABLE = __webpack_require__(5)('observable');
 var aFunction = __webpack_require__(10);
 var anObject = __webpack_require__(1);
@@ -8500,7 +8429,7 @@ __webpack_require__(38)('Observable');
 // ie9- setTimeout & setInterval additional parameters fix
 var global = __webpack_require__(2);
 var $export = __webpack_require__(0);
-var userAgent = __webpack_require__(91);
+var userAgent = __webpack_require__(92);
 var slice = [].slice;
 var MSIE = /MSIE .\./.test(userAgent); // <- dirty ie9- check
 var wrap = function (set) {
@@ -8524,7 +8453,7 @@ $export($export.G + $export.B + $export.F * MSIE, {
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
-var $task = __webpack_require__(87);
+var $task = __webpack_require__(88);
 $export($export.G + $export.B, {
   setImmediate: $task.set,
   clearImmediate: $task.clear
@@ -8535,7 +8464,7 @@ $export($export.G + $export.B, {
 /* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $iterators = __webpack_require__(86);
+var $iterators = __webpack_require__(87);
 var getKeys = __webpack_require__(34);
 var redefine = __webpack_require__(13);
 var global = __webpack_require__(2);
@@ -9383,14 +9312,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_p2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_p2__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_phaser__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_phaser__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_config__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_config__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__lib_carmanager__ = __webpack_require__(342);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__lib_street__ = __webpack_require__(130);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__lib_world__ = __webpack_require__(347);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__assets_cars__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__assets_marbach_city_simple_json__ = __webpack_require__(348);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__assets_marbach_city_simple_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__assets_marbach_city_simple_json__);
 /* eslint-disable import/no-extraneous-dependencies, import/no-unresolved, import/no-unassigned-import */
 
 
 /* eslint-enable */
+
 
 
 
@@ -9412,12 +9344,14 @@ class MainState {
   create() {
     game.stage.backgroundColor = '#ececec';
     game.physics.startSystem(__WEBPACK_IMPORTED_MODULE_2_phaser___default.a.Physics.ARCADE);
-    Object(__WEBPACK_IMPORTED_MODULE_5__lib_street__["a" /* createMap */])(this.graphics);
+    const world = new __WEBPACK_IMPORTED_MODULE_5__lib_world__["a" /* default */](this.graphics);
+    world.fromOSM(__WEBPACK_IMPORTED_MODULE_7__assets_marbach_city_simple_json___default.a);
+    world.draw();
     const spaceKey = game.input.keyboard.addKey(__WEBPACK_IMPORTED_MODULE_2_phaser___default.a.Keyboard.SPACEBAR);
     spaceKey.onDown.add(this.carManager.addCar.bind(this.carManager));
     // init the world with 3 cars
     for (let i = 3; i > 0; i--) {
-      this.carManager.addCar();
+      // this.carManager.addCar()
     }
   }
 
@@ -112742,7 +112676,7 @@ process.umask = function() { return 0; };
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_is_opposed_angle__ = __webpack_require__(129);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_is_opposed_angle___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_is_opposed_angle__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__street__ = __webpack_require__(130);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__car__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__car__ = __webpack_require__(346);
 
 
 
@@ -112753,7 +112687,7 @@ class CarManager {
     this.cars = game.add.group();
   }
 
-  addCar(velocity, street = __WEBPACK_IMPORTED_MODULE_1__street__["b" /* streets */][Math.floor(Math.random() * __WEBPACK_IMPORTED_MODULE_1__street__["b" /* streets */].length)], position = Math.random()) {
+  addCar(velocity, street = __WEBPACK_IMPORTED_MODULE_1__street__["streets"][Math.floor(Math.random() * __WEBPACK_IMPORTED_MODULE_1__street__["streets"].length)], position = Math.random()) {
     const car = new __WEBPACK_IMPORTED_MODULE_2__car__["a" /* default */](this.game);
     car.setStreet(street, position);
     car.setAcceleration(car.maxAcceleration);
@@ -112949,12 +112883,6 @@ module.exports = v4;
 
 /***/ }),
 /* 346 */
-/***/ (function(module, exports) {
-
-module.exports = [[{"lat":48.9427967,"lon":9.2646383},{"lat":48.9428016,"lon":9.264573},{"lat":48.9428004,"lon":9.2645124}],[{"lat":48.9423063,"lon":9.2651168},{"lat":48.9423413,"lon":9.265042},{"lat":48.9424088,"lon":9.2650134},{"lat":48.9426793,"lon":9.2648629},{"lat":48.9427266,"lon":9.2648166},{"lat":48.9427721,"lon":9.264733},{"lat":48.9427967,"lon":9.2646383}],[{"lat":48.9476585,"lon":9.2852033},{"lat":48.9476343,"lon":9.2850051},{"lat":48.9476247,"lon":9.2847199},{"lat":48.9476074,"lon":9.2844846},{"lat":48.9475777,"lon":9.2842483},{"lat":48.9475316,"lon":9.2839776},{"lat":48.9474732,"lon":9.2836909}],[{"lat":48.9399536,"lon":9.2603894},{"lat":48.9399894,"lon":9.2605348},{"lat":48.9402251,"lon":9.2614093}],[{"lat":48.9392528,"lon":9.2573325},{"lat":48.939151,"lon":9.2572944},{"lat":48.9388817,"lon":9.2573593},{"lat":48.9387499,"lon":9.2574016},{"lat":48.9384123,"lon":9.2575101},{"lat":48.9383396,"lon":9.2575895},{"lat":48.9382765,"lon":9.2586143}],[{"lat":48.9407062,"lon":9.2627451},{"lat":48.941341,"lon":9.2621592},{"lat":48.9418028,"lon":9.2616756},{"lat":48.9419862,"lon":9.2615345}],[{"lat":48.9420168,"lon":9.2616598},{"lat":48.9423871,"lon":9.2615175},{"lat":48.9425264,"lon":9.2614639},{"lat":48.9427462,"lon":9.2613812},{"lat":48.9428353,"lon":9.2613565},{"lat":48.9430325,"lon":9.2613019},{"lat":48.943099,"lon":9.2612978},{"lat":48.9431583,"lon":9.2613176},{"lat":48.9432189,"lon":9.2613878},{"lat":48.9432999,"lon":9.2615764},{"lat":48.94336,"lon":9.2618655},{"lat":48.9437385,"lon":9.2633649}],[{"lat":48.9450941,"lon":9.2725582},{"lat":48.9450218,"lon":9.272464},{"lat":48.9449778,"lon":9.2723581},{"lat":48.9449127,"lon":9.272107},{"lat":48.9448131,"lon":9.2715776},{"lat":48.9447499,"lon":9.2712743},{"lat":48.9446475,"lon":9.2711999},{"lat":48.9444662,"lon":9.271289}],[{"lat":48.9432999,"lon":9.2615764},{"lat":48.9437019,"lon":9.2614929}],[{"lat":48.9417319,"lon":9.2596446},{"lat":48.9418782,"lon":9.2596433},{"lat":48.9420595,"lon":9.2596453},{"lat":48.9423241,"lon":9.259562},{"lat":48.9424333,"lon":9.2595101},{"lat":48.9425704,"lon":9.2594152},{"lat":48.942779,"lon":9.259323}],[{"lat":48.943551,"lon":9.2558424},{"lat":48.9435432,"lon":9.2561447},{"lat":48.9435434,"lon":9.2562566},{"lat":48.9435621,"lon":9.2568654}],[{"lat":48.9378221,"lon":9.2585595},{"lat":48.9377987,"lon":9.2583108},{"lat":48.937784,"lon":9.258251},{"lat":48.9377393,"lon":9.2581804},{"lat":48.9376204,"lon":9.2581062},{"lat":48.9373579,"lon":9.2579063},{"lat":48.9369594,"lon":9.2576236},{"lat":48.9365206,"lon":9.2572969}],[{"lat":48.9349186,"lon":9.2589865},{"lat":48.9355544,"lon":9.2590368},{"lat":48.9361567,"lon":9.2590259},{"lat":48.9362869,"lon":9.2590357},{"lat":48.9369462,"lon":9.2594719}],[{"lat":48.9389565,"lon":9.2644286},{"lat":48.9392232,"lon":9.2646361},{"lat":48.9397473,"lon":9.2649984},{"lat":48.9401594,"lon":9.2655657},{"lat":48.9404816,"lon":9.26608},{"lat":48.9407589,"lon":9.2665575},{"lat":48.9408966,"lon":9.2670823},{"lat":48.941065,"lon":9.2677448},{"lat":48.9413071,"lon":9.2687303},{"lat":48.9414204,"lon":9.2692843},{"lat":48.9415748,"lon":9.2699056}],[{"lat":48.9375981,"lon":9.2668082},{"lat":48.9378626,"lon":9.2671289},{"lat":48.9379507,"lon":9.2677968},{"lat":48.9379875,"lon":9.2682389},{"lat":48.9379931,"lon":9.268367},{"lat":48.9380156,"lon":9.2688035},{"lat":48.9380175,"lon":9.2689174},{"lat":48.9381032,"lon":9.2696308}],[{"lat":48.9380175,"lon":9.2689174},{"lat":48.9382304,"lon":9.268895},{"lat":48.9382938,"lon":9.2688233},{"lat":48.9386382,"lon":9.2684904},{"lat":48.9387136,"lon":9.2684116},{"lat":48.9388285,"lon":9.2683037},{"lat":48.9391802,"lon":9.2679691},{"lat":48.9392792,"lon":9.2678532},{"lat":48.9397357,"lon":9.2674458},{"lat":48.9401594,"lon":9.2670686},{"lat":48.9402057,"lon":9.2670325},{"lat":48.9406945,"lon":9.2666157},{"lat":48.9407589,"lon":9.2665575}],[{"lat":48.9379507,"lon":9.2677968},{"lat":48.9381339,"lon":9.2676332},{"lat":48.9385647,"lon":9.2672511},{"lat":48.9389204,"lon":9.2669104},{"lat":48.9390272,"lon":9.2667572},{"lat":48.9392708,"lon":9.2661897},{"lat":48.9393667,"lon":9.2659474},{"lat":48.9396461,"lon":9.2652847},{"lat":48.9397473,"lon":9.2649984}],[{"lat":48.9393667,"lon":9.2659474},{"lat":48.9395989,"lon":9.266218},{"lat":48.9398848,"lon":9.2666185},{"lat":48.9402057,"lon":9.2670325},{"lat":48.9402793,"lon":9.2671233},{"lat":48.9403983,"lon":9.267506},{"lat":48.9405378,"lon":9.2680446},{"lat":48.9406767,"lon":9.2685962},{"lat":48.9407828,"lon":9.2690096},{"lat":48.9408434,"lon":9.2694288},{"lat":48.9409283,"lon":9.2700251},{"lat":48.9410046,"lon":9.2705829},{"lat":48.9410408,"lon":9.2709713},{"lat":48.9410807,"lon":9.271299},{"lat":48.9411407,"lon":9.271928},{"lat":48.9411913,"lon":9.2729574}],[{"lat":48.9397357,"lon":9.2674458},{"lat":48.9398077,"lon":9.2678109},{"lat":48.9399429,"lon":9.2683904},{"lat":48.9400761,"lon":9.2689577},{"lat":48.9401706,"lon":9.2693138},{"lat":48.9402484,"lon":9.2697122},{"lat":48.9403617,"lon":9.2703948},{"lat":48.9404191,"lon":9.2709452},{"lat":48.9404582,"lon":9.2712476}],[{"lat":48.9391802,"lon":9.2679691},{"lat":48.9392761,"lon":9.2682368},{"lat":48.939392,"lon":9.2687297},{"lat":48.9394999,"lon":9.2692529},{"lat":48.9395958,"lon":9.2696241},{"lat":48.9397559,"lon":9.2704468},{"lat":48.9398351,"lon":9.2710288},{"lat":48.9398792,"lon":9.2715465},{"lat":48.9399649,"lon":9.272346},{"lat":48.9401166,"lon":9.27352}],[{"lat":48.9387136,"lon":9.2684116},{"lat":48.9390585,"lon":9.2698939},{"lat":48.93934,"lon":9.2718146},{"lat":48.9396114,"lon":9.2737788}],[{"lat":48.9390809,"lon":9.2740472},{"lat":48.9392766,"lon":9.2739652},{"lat":48.9396114,"lon":9.2737788},{"lat":48.9398198,"lon":9.2736804},{"lat":48.9401166,"lon":9.27352},{"lat":48.9404111,"lon":9.2733844},{"lat":48.9406291,"lon":9.2732627},{"lat":48.9407329,"lon":9.2732151},{"lat":48.9410336,"lon":9.2730773},{"lat":48.9411913,"lon":9.2729574},{"lat":48.9413846,"lon":9.2728876},{"lat":48.9417082,"lon":9.2728914}],[{"lat":48.9410336,"lon":9.2730773},{"lat":48.9410926,"lon":9.2735059},{"lat":48.9411467,"lon":9.2738992},{"lat":48.9411999,"lon":9.2742854},{"lat":48.9412521,"lon":9.2746649}],[{"lat":48.9404111,"lon":9.2733844},{"lat":48.9406105,"lon":9.2749523}],[{"lat":48.938553,"lon":9.2652032},{"lat":48.9387233,"lon":9.2659356},{"lat":48.9387605,"lon":9.2662715},{"lat":48.9388524,"lon":9.2667826},{"lat":48.9389204,"lon":9.2669104}],[{"lat":48.9389204,"lon":9.2669104},{"lat":48.9392792,"lon":9.2678532}],[{"lat":48.9382938,"lon":9.2688233},{"lat":48.9385098,"lon":9.2700748},{"lat":48.938622,"lon":9.2709803},{"lat":48.9387615,"lon":9.2721069},{"lat":48.9389927,"lon":9.273621},{"lat":48.9390809,"lon":9.2740472}],[{"lat":48.9385098,"lon":9.2700748},{"lat":48.9390585,"lon":9.2698939},{"lat":48.9395958,"lon":9.2696241},{"lat":48.9401706,"lon":9.2693138},{"lat":48.9407828,"lon":9.2690096},{"lat":48.9413071,"lon":9.2687303}],[{"lat":48.9406722,"lon":9.2640765},{"lat":48.9404651,"lon":9.2643148},{"lat":48.9400105,"lon":9.2647613},{"lat":48.9397473,"lon":9.2649984}],[{"lat":48.9402251,"lon":9.2614093},{"lat":48.9400403,"lon":9.2615462},{"lat":48.9399297,"lon":9.2617624},{"lat":48.9398934,"lon":9.2619486},{"lat":48.9398638,"lon":9.2621007},{"lat":48.9398695,"lon":9.2625304},{"lat":48.9399295,"lon":9.2631867},{"lat":48.940118,"lon":9.263482},{"lat":48.940414,"lon":9.2638233},{"lat":48.9406722,"lon":9.2640765},{"lat":48.9408782,"lon":9.2643411},{"lat":48.9410451,"lon":9.2646239},{"lat":48.941115,"lon":9.2647424},{"lat":48.9412592,"lon":9.2651951},{"lat":48.9413464,"lon":9.2655645}],[{"lat":48.9422248,"lon":9.2705863},{"lat":48.9424129,"lon":9.2705263},{"lat":48.9437717,"lon":9.2693606}],[{"lat":48.942779,"lon":9.259323},{"lat":48.9428596,"lon":9.2592674},{"lat":48.942973,"lon":9.2592308},{"lat":48.9430786,"lon":9.2591837},{"lat":48.9431386,"lon":9.2591478},{"lat":48.9432084,"lon":9.2590989},{"lat":48.9433706,"lon":9.2590669},{"lat":48.9438709,"lon":9.2590358}],[{"lat":48.9365206,"lon":9.2572969},{"lat":48.9362878,"lon":9.2583472},{"lat":48.9361567,"lon":9.2590259}],[{"lat":48.9441022,"lon":9.2701123},{"lat":48.9439872,"lon":9.2702044},{"lat":48.9439624,"lon":9.2702911},{"lat":48.9439599,"lon":9.2706369},{"lat":48.9440665,"lon":9.271433},{"lat":48.9440838,"lon":9.271825},{"lat":48.9440785,"lon":9.2720784},{"lat":48.9439574,"lon":9.2728804},{"lat":48.9438867,"lon":9.2731521},{"lat":48.9438218,"lon":9.2733144}],[{"lat":48.9429579,"lon":9.2760202},{"lat":48.9430313,"lon":9.2760188},{"lat":48.9433699,"lon":9.2758558},{"lat":48.943636,"lon":9.2757107},{"lat":48.9444519,"lon":9.2753858},{"lat":48.9445787,"lon":9.2754353},{"lat":48.945509,"lon":9.2749371}],[{"lat":48.9440785,"lon":9.2720784},{"lat":48.9442012,"lon":9.2724427},{"lat":48.944268,"lon":9.273105},{"lat":48.944338,"lon":9.274129},{"lat":48.944415,"lon":9.274914},{"lat":48.9444519,"lon":9.2753858}],[{"lat":48.9375662,"lon":9.2646596},{"lat":48.9376427,"lon":9.2646511},{"lat":48.9382592,"lon":9.264563},{"lat":48.9387545,"lon":9.264555}],[{"lat":48.9383396,"lon":9.2575895},{"lat":48.9382316,"lon":9.2575431},{"lat":48.9381202,"lon":9.2574519},{"lat":48.9377323,"lon":9.2571291},{"lat":48.9369136,"lon":9.2565092},{"lat":48.9367782,"lon":9.2563897}],[{"lat":48.9380916,"lon":9.2560742},{"lat":48.9380693,"lon":9.2560297},{"lat":48.9380225,"lon":9.2559944}],[{"lat":48.9380916,"lon":9.2560742},{"lat":48.9381717,"lon":9.2562262},{"lat":48.9384313,"lon":9.2562559},{"lat":48.9386371,"lon":9.2562644},{"lat":48.9391588,"lon":9.2564562},{"lat":48.9393583,"lon":9.256545}],[{"lat":48.9377323,"lon":9.2571291},{"lat":48.9378459,"lon":9.2568107},{"lat":48.9379821,"lon":9.2564674},{"lat":48.9380779,"lon":9.2562342},{"lat":48.9380916,"lon":9.2560742},{"lat":48.9381449,"lon":9.255994},{"lat":48.9381931,"lon":9.2559214},{"lat":48.9383951,"lon":9.2557161},{"lat":48.9385137,"lon":9.2555963},{"lat":48.93874,"lon":9.2554254},{"lat":48.9388869,"lon":9.2554438},{"lat":48.9389918,"lon":9.2553707},{"lat":48.9390517,"lon":9.2552554}],[{"lat":48.9420146,"lon":9.2544542},{"lat":48.9419126,"lon":9.2544358},{"lat":48.9418498,"lon":9.2544189}],[{"lat":48.941341,"lon":9.2621592},{"lat":48.9411645,"lon":9.2616478}],[{"lat":48.9399894,"lon":9.2605348},{"lat":48.940053,"lon":9.2605252},{"lat":48.9405737,"lon":9.2606022}],[{"lat":48.9412596,"lon":9.2605853},{"lat":48.941383,"lon":9.2605334},{"lat":48.9414492,"lon":9.2605056},{"lat":48.9416575,"lon":9.2603784}],[{"lat":48.9396547,"lon":9.259891},{"lat":48.9396321,"lon":9.2600133},{"lat":48.9392871,"lon":9.2618818},{"lat":48.9392748,"lon":9.261943},{"lat":48.9391028,"lon":9.2630398},{"lat":48.9390384,"lon":9.2638049},{"lat":48.9390178,"lon":9.2640986},{"lat":48.9389742,"lon":9.2643414},{"lat":48.9389565,"lon":9.2644286}],[{"lat":48.9389565,"lon":9.2644286},{"lat":48.938553,"lon":9.2652032},{"lat":48.9381907,"lon":9.2658102},{"lat":48.9378685,"lon":9.2663519},{"lat":48.9377107,"lon":9.2666153},{"lat":48.9375981,"lon":9.2668082}],[{"lat":48.9373879,"lon":9.2589499},{"lat":48.9373845,"lon":9.2606871},{"lat":48.9373713,"lon":9.2613311},{"lat":48.9374143,"lon":9.2620989},{"lat":48.9374619,"lon":9.26267},{"lat":48.9374688,"lon":9.2628141},{"lat":48.9374984,"lon":9.2634296},{"lat":48.9375619,"lon":9.2645468},{"lat":48.9375662,"lon":9.2646596}],[{"lat":48.9388619,"lon":9.2624624},{"lat":48.9387888,"lon":9.2614938}],[{"lat":48.9387888,"lon":9.2614938},{"lat":48.9386326,"lon":9.261344},{"lat":48.938073,"lon":9.260917},{"lat":48.937775,"lon":9.260751},{"lat":48.9373845,"lon":9.2606871},{"lat":48.9370752,"lon":9.2606705}],[{"lat":48.938246,"lon":9.259664},{"lat":48.9378976,"lon":9.2596076},{"lat":48.9378676,"lon":9.2601032},{"lat":48.9378296,"lon":9.2603894},{"lat":48.937775,"lon":9.260751}],[{"lat":48.936698,"lon":9.2586237},{"lat":48.9369594,"lon":9.2576236}],[{"lat":48.9441374,"lon":9.2590744},{"lat":48.9442496,"lon":9.2591061},{"lat":48.9443471,"lon":9.2591758},{"lat":48.9445075,"lon":9.2594128},{"lat":48.944551,"lon":9.2594841}],[{"lat":48.9446952,"lon":9.2610478},{"lat":48.9447149,"lon":9.2610635},{"lat":48.9447334,"lon":9.2611018},{"lat":48.9447431,"lon":9.2611514},{"lat":48.9447581,"lon":9.2612433},{"lat":48.9448656,"lon":9.2619836},{"lat":48.9449767,"lon":9.2629203},{"lat":48.9451069,"lon":9.2633977},{"lat":48.9452092,"lon":9.263827},{"lat":48.9452692,"lon":9.263996},{"lat":48.9453744,"lon":9.2642002},{"lat":48.9454945,"lon":9.2644717},{"lat":48.9456162,"lon":9.2647496},{"lat":48.945655,"lon":9.2649079},{"lat":48.9456883,"lon":9.2651342},{"lat":48.9457305,"lon":9.265558},{"lat":48.9457648,"lon":9.2659055},{"lat":48.9458627,"lon":9.267005},{"lat":48.9458845,"lon":9.2673105},{"lat":48.9459093,"lon":9.2673852},{"lat":48.9459366,"lon":9.2674986},{"lat":48.9460846,"lon":9.2682496},{"lat":48.9461958,"lon":9.268735},{"lat":48.9463578,"lon":9.2693979},{"lat":48.9464019,"lon":9.2695589},{"lat":48.9464622,"lon":9.2696919},{"lat":48.9465419,"lon":9.2697855},{"lat":48.9467471,"lon":9.2699491},{"lat":48.9468421,"lon":9.2700214},{"lat":48.9469117,"lon":9.2700037},{"lat":48.947031,"lon":9.2700695}],[{"lat":48.9461958,"lon":9.268735},{"lat":48.9456532,"lon":9.2690197},{"lat":48.9451771,"lon":9.2692857}],[{"lat":48.9445299,"lon":9.2665751},{"lat":48.9452028,"lon":9.2661994},{"lat":48.9457648,"lon":9.2659055}],[{"lat":48.9482993,"lon":9.2855921},{"lat":48.9478847,"lon":9.2854749}],[{"lat":48.9419878,"lon":9.2721701},{"lat":48.9424665,"lon":9.2720973},{"lat":48.9427369,"lon":9.2720308},{"lat":48.9429173,"lon":9.2720099},{"lat":48.943346,"lon":9.2719405},{"lat":48.9435918,"lon":9.2718969},{"lat":48.9439598,"lon":9.2718406},{"lat":48.9440838,"lon":9.271825}],[{"lat":48.9427967,"lon":9.2738498},{"lat":48.942841,"lon":9.274975},{"lat":48.9428705,"lon":9.2757583},{"lat":48.9429174,"lon":9.2759667},{"lat":48.9429579,"lon":9.2760202}],[{"lat":48.9435809,"lon":9.2734571},{"lat":48.943636,"lon":9.2757107}],[{"lat":48.9412694,"lon":9.2754827},{"lat":48.9414703,"lon":9.2755933},{"lat":48.9417062,"lon":9.2756085}],[{"lat":48.9424129,"lon":9.2705263},{"lat":48.9426157,"lon":9.2712661},{"lat":48.9427369,"lon":9.2720308}],[{"lat":48.9435918,"lon":9.2718969},{"lat":48.9434931,"lon":9.2727603},{"lat":48.9434161,"lon":9.27354}],[{"lat":48.9439872,"lon":9.2702044},{"lat":48.9439195,"lon":9.2701672},{"lat":48.9438368,"lon":9.2701925},{"lat":48.9435637,"lon":9.2704325}],[{"lat":48.943346,"lon":9.2719405},{"lat":48.9432553,"lon":9.2727714},{"lat":48.9431643,"lon":9.2736556}],[{"lat":48.9424665,"lon":9.2720973},{"lat":48.94235,"lon":9.2729698},{"lat":48.9422493,"lon":9.2737729},{"lat":48.9422157,"lon":9.2741093}],[{"lat":48.9429173,"lon":9.2720099},{"lat":48.9426994,"lon":9.2738937}],[{"lat":48.9438218,"lon":9.2733144},{"lat":48.9437111,"lon":9.2733806},{"lat":48.9435809,"lon":9.2734571},{"lat":48.9434161,"lon":9.27354},{"lat":48.9431643,"lon":9.2736556},{"lat":48.9427967,"lon":9.2738498},{"lat":48.9426994,"lon":9.2738937},{"lat":48.9422157,"lon":9.2741093},{"lat":48.9417625,"lon":9.274241},{"lat":48.9417089,"lon":9.2742424}],[{"lat":48.9375981,"lon":9.2668082},{"lat":48.9375399,"lon":9.266658},{"lat":48.9375205,"lon":9.2665547},{"lat":48.9375488,"lon":9.2664456},{"lat":48.9375942,"lon":9.2663273},{"lat":48.9376079,"lon":9.2662427},{"lat":48.9375742,"lon":9.2661497},{"lat":48.9375311,"lon":9.2660972},{"lat":48.9375129,"lon":9.2660362},{"lat":48.937453,"lon":9.2649177},{"lat":48.9374702,"lon":9.2648031},{"lat":48.9375152,"lon":9.2647389},{"lat":48.9375662,"lon":9.2646596}],[{"lat":48.9390035,"lon":9.2760101},{"lat":48.9394755,"lon":9.275851},{"lat":48.9396811,"lon":9.2757132}],[{"lat":48.9428353,"lon":9.2613565},{"lat":48.942979,"lon":9.2619975},{"lat":48.9429134,"lon":9.2620371}],[{"lat":48.9462258,"lon":9.2704769},{"lat":48.9462652,"lon":9.2705415},{"lat":48.9463068,"lon":9.2705869},{"lat":48.94637,"lon":9.2706414},{"lat":48.9464337,"lon":9.2706808},{"lat":48.9465735,"lon":9.2707179},{"lat":48.946691,"lon":9.2707398},{"lat":48.9468082,"lon":9.2707552},{"lat":48.9468309,"lon":9.2707552},{"lat":48.9468342,"lon":9.2708124},{"lat":48.9468446,"lon":9.2708653},{"lat":48.9468579,"lon":9.270899},{"lat":48.9468811,"lon":9.2709162},{"lat":48.9469071,"lon":9.2709177},{"lat":48.9469342,"lon":9.2709087},{"lat":48.9469549,"lon":9.270878},{"lat":48.9469608,"lon":9.2708413},{"lat":48.9469588,"lon":9.2708031},{"lat":48.9469494,"lon":9.2707776},{"lat":48.9469357,"lon":9.2707574},{"lat":48.9469175,"lon":9.2707492},{"lat":48.9468309,"lon":9.2707552}],[{"lat":48.945685,"lon":9.2697594},{"lat":48.9457334,"lon":9.2697734},{"lat":48.9457783,"lon":9.2698064},{"lat":48.9458118,"lon":9.2698405},{"lat":48.9458365,"lon":9.2698895},{"lat":48.9458814,"lon":9.2700041},{"lat":48.9459577,"lon":9.2702588},{"lat":48.945987,"lon":9.2703354},{"lat":48.9460181,"lon":9.2703976},{"lat":48.9460704,"lon":9.2704614},{"lat":48.9461272,"lon":9.2704917},{"lat":48.9461824,"lon":9.2704925},{"lat":48.9462258,"lon":9.2704769}],[{"lat":48.9449767,"lon":9.2629203},{"lat":48.9443594,"lon":9.2631312},{"lat":48.9437385,"lon":9.2633649}],[{"lat":48.941816,"lon":9.2609332},{"lat":48.9421864,"lon":9.2607164},{"lat":48.942309,"lon":9.2606991},{"lat":48.9424697,"lon":9.2607905},{"lat":48.9425002,"lon":9.2608335},{"lat":48.9425766,"lon":9.2609414},{"lat":48.9427462,"lon":9.2613812}],[{"lat":48.9373579,"lon":9.2579063},{"lat":48.93719,"lon":9.2584545}],[{"lat":48.9399295,"lon":9.2631867},{"lat":48.9398805,"lon":9.2632203},{"lat":48.9396779,"lon":9.263234},{"lat":48.9393604,"lon":9.2631505},{"lat":48.9391028,"lon":9.2630398}],[{"lat":48.9396779,"lon":9.263234},{"lat":48.939539,"lon":9.2641783},{"lat":48.9397918,"lon":9.264345}],[{"lat":48.9392232,"lon":9.2646361},{"lat":48.9389254,"lon":9.2654078},{"lat":48.9387233,"lon":9.2659356}],[{"lat":48.9413464,"lon":9.2655645},{"lat":48.9404816,"lon":9.26608}],[{"lat":48.9468997,"lon":9.280844},{"lat":48.9465357,"lon":9.2790355},{"lat":48.9463448,"lon":9.2781421},{"lat":48.9461857,"lon":9.2773875},{"lat":48.9460562,"lon":9.2768394},{"lat":48.9460001,"lon":9.2766312},{"lat":48.9459219,"lon":9.2763134},{"lat":48.9458058,"lon":9.2759274},{"lat":48.945509,"lon":9.2749371},{"lat":48.9450909,"lon":9.2734489},{"lat":48.9447508,"lon":9.2723087},{"lat":48.9444662,"lon":9.271289},{"lat":48.9442413,"lon":9.2705709},{"lat":48.9441022,"lon":9.2701123},{"lat":48.943995,"lon":9.269834},{"lat":48.9438178,"lon":9.2694476}],[{"lat":48.9474732,"lon":9.2836909},{"lat":48.9473145,"lon":9.2829688},{"lat":48.9472719,"lon":9.2827602},{"lat":48.9472414,"lon":9.282611}],[{"lat":48.9461241,"lon":9.2858658},{"lat":48.9456955,"lon":9.2861062},{"lat":48.9455576,"lon":9.2862209},{"lat":48.9451985,"lon":9.2865974},{"lat":48.944929,"lon":9.2868849},{"lat":48.9446254,"lon":9.2872076},{"lat":48.9441704,"lon":9.2876644},{"lat":48.9440024,"lon":9.288029},{"lat":48.9437105,"lon":9.2886459},{"lat":48.9434055,"lon":9.2890966},{"lat":48.9426364,"lon":9.2899656},{"lat":48.942563,"lon":9.2900162},{"lat":48.9424546,"lon":9.2900477}],[{"lat":48.9405692,"lon":9.2539066},{"lat":48.9409673,"lon":9.2538281},{"lat":48.941221,"lon":9.2537963},{"lat":48.9413956,"lon":9.2537888},{"lat":48.9415653,"lon":9.2538021}],[{"lat":48.9390426,"lon":9.2594597},{"lat":48.9389874,"lon":9.2595936},{"lat":48.9389107,"lon":9.2601271},{"lat":48.9388079,"lon":9.2606634},{"lat":48.9386326,"lon":9.261344}],[{"lat":48.9421764,"lon":9.2660635},{"lat":48.9414692,"lon":9.2662693},{"lat":48.9407589,"lon":9.2665575}],[{"lat":48.9428596,"lon":9.2592674},{"lat":48.9428316,"lon":9.2590019},{"lat":48.9428147,"lon":9.2583508},{"lat":48.9428185,"lon":9.2580157},{"lat":48.9428233,"lon":9.2577421}],[{"lat":48.9421861,"lon":9.2538018},{"lat":48.9422321,"lon":9.2537996},{"lat":48.9424587,"lon":9.2537791},{"lat":48.9426025,"lon":9.2537474}],[{"lat":48.9435621,"lon":9.2568654},{"lat":48.9435726,"lon":9.257059},{"lat":48.9435926,"lon":9.2572312}],[{"lat":48.9452028,"lon":9.2661994},{"lat":48.945027,"lon":9.2654714},{"lat":48.944916,"lon":9.2650102},{"lat":48.9447821,"lon":9.2645091},{"lat":48.9447695,"lon":9.2644688},{"lat":48.944632,"lon":9.26403},{"lat":48.9445149,"lon":9.2635433},{"lat":48.9444318,"lon":9.2632571},{"lat":48.9443594,"lon":9.2631312},{"lat":48.9443048,"lon":9.2630065},{"lat":48.9441418,"lon":9.2622907},{"lat":48.9440603,"lon":9.2619719},{"lat":48.9439147,"lon":9.2617427},{"lat":48.9437827,"lon":9.2615722},{"lat":48.9437019,"lon":9.2614929}],[{"lat":48.9478847,"lon":9.2854749},{"lat":48.9478394,"lon":9.2854631},{"lat":48.9477889,"lon":9.2854364},{"lat":48.9477304,"lon":9.285378},{"lat":48.9476982,"lon":9.2853246},{"lat":48.9476738,"lon":9.2852654},{"lat":48.9476585,"lon":9.2852033}],[{"lat":48.9456278,"lon":9.2724854},{"lat":48.9455081,"lon":9.2725721},{"lat":48.9454234,"lon":9.2726142},{"lat":48.9452941,"lon":9.2726186},{"lat":48.9452015,"lon":9.2726088},{"lat":48.9450941,"lon":9.2725582}],[{"lat":48.9458879,"lon":9.2725992},{"lat":48.9460283,"lon":9.2725529},{"lat":48.9470209,"lon":9.2722422}],[{"lat":48.9468441,"lon":9.2711209},{"lat":48.9469447,"lon":9.2717365},{"lat":48.9470209,"lon":9.2722422}],[{"lat":48.9476363,"lon":9.2762325},{"lat":48.9476947,"lon":9.2761009},{"lat":48.9477019,"lon":9.2759301},{"lat":48.9476285,"lon":9.2750704},{"lat":48.9475513,"lon":9.27427}],[{"lat":48.9428104,"lon":9.2536999},{"lat":48.9429513,"lon":9.2536444},{"lat":48.9434062,"lon":9.2534284},{"lat":48.9436472,"lon":9.2533163},{"lat":48.9438921,"lon":9.253203}],[{"lat":48.9466048,"lon":9.2524956},{"lat":48.9467112,"lon":9.2523915}],[{"lat":48.9417319,"lon":9.2596446},{"lat":48.9417156,"lon":9.2597443},{"lat":48.9417062,"lon":9.2598025},{"lat":48.9416784,"lon":9.2600093},{"lat":48.9416627,"lon":9.2601846},{"lat":48.9416609,"lon":9.2602315}],[{"lat":48.9398198,"lon":9.2736804},{"lat":48.9399817,"lon":9.274821}],[{"lat":48.9420146,"lon":9.2544542},{"lat":48.9420428,"lon":9.2541924},{"lat":48.9420546,"lon":9.2539855},{"lat":48.9420536,"lon":9.2538036}],[{"lat":48.9458845,"lon":9.2673105},{"lat":48.945853,"lon":9.2673665},{"lat":48.9458414,"lon":9.2674251},{"lat":48.9456762,"lon":9.2687924},{"lat":48.9456532,"lon":9.2690197},{"lat":48.9456867,"lon":9.2695918},{"lat":48.945692,"lon":9.2696796},{"lat":48.945685,"lon":9.2697594},{"lat":48.9456682,"lon":9.2698351},{"lat":48.9456374,"lon":9.2699083},{"lat":48.9455493,"lon":9.2700451},{"lat":48.9454049,"lon":9.2701582}],[{"lat":48.9411333,"lon":9.2634877},{"lat":48.9410057,"lon":9.2636529},{"lat":48.9406722,"lon":9.2640765}],[{"lat":48.9335556,"lon":9.252024},{"lat":48.9338179,"lon":9.2521903},{"lat":48.9349142,"lon":9.252667},{"lat":48.9354482,"lon":9.2528948}],[{"lat":48.9438709,"lon":9.2590358},{"lat":48.9440333,"lon":9.2590568},{"lat":48.9441374,"lon":9.2590744}],[{"lat":48.9435926,"lon":9.2572312},{"lat":48.9436253,"lon":9.2576903},{"lat":48.943643,"lon":9.2580838},{"lat":48.9436645,"lon":9.2584853},{"lat":48.9438062,"lon":9.2587766},{"lat":48.9438635,"lon":9.2589001},{"lat":48.9438709,"lon":9.2590358}],[{"lat":48.9422088,"lon":9.2649953},{"lat":48.9423063,"lon":9.2651168}],[{"lat":48.9424342,"lon":9.2662134},{"lat":48.9423698,"lon":9.265992},{"lat":48.942325,"lon":9.2657878}],[{"lat":48.9417082,"lon":9.2728914},{"lat":48.9416328,"lon":9.273474},{"lat":48.9415684,"lon":9.2738647},{"lat":48.9414509,"lon":9.2747363},{"lat":48.9413913,"lon":9.2751042},{"lat":48.9412694,"lon":9.2754827},{"lat":48.9411014,"lon":9.2758411},{"lat":48.9410222,"lon":9.2759746},{"lat":48.9409173,"lon":9.2760797},{"lat":48.9407562,"lon":9.2762254},{"lat":48.9405342,"lon":9.2763139},{"lat":48.9402774,"lon":9.2762942},{"lat":48.9401914,"lon":9.2762456},{"lat":48.9401233,"lon":9.2761962},{"lat":48.9399779,"lon":9.2761112},{"lat":48.9396811,"lon":9.2757132},{"lat":48.939514,"lon":9.2753547},{"lat":48.9394078,"lon":9.2750905},{"lat":48.9393724,"lon":9.2750023},{"lat":48.9392311,"lon":9.2745781},{"lat":48.9390809,"lon":9.2740472}],[{"lat":48.9415748,"lon":9.2699056},{"lat":48.94175,"lon":9.2705794},{"lat":48.9418308,"lon":9.2711291},{"lat":48.9418214,"lon":9.2714822},{"lat":48.9417915,"lon":9.2720554},{"lat":48.9417082,"lon":9.2728914}],[{"lat":48.9390809,"lon":9.2740472},{"lat":48.9387454,"lon":9.2742028}],[{"lat":48.9415653,"lon":9.2538021},{"lat":48.941807,"lon":9.2538073}],[{"lat":48.9353152,"lon":9.2696449},{"lat":48.9353481,"lon":9.2698595},{"lat":48.9353869,"lon":9.2701612},{"lat":48.9355101,"lon":9.2709796}],[{"lat":48.9428004,"lon":9.2645124},{"lat":48.9427884,"lon":9.2644436},{"lat":48.9427411,"lon":9.2642867},{"lat":48.9427008,"lon":9.2641382},{"lat":48.942535,"lon":9.2635273}],[{"lat":48.9354482,"lon":9.2528948},{"lat":48.9357893,"lon":9.2530589}],[{"lat":48.9357893,"lon":9.2530589},{"lat":48.9358323,"lon":9.2530784}],[{"lat":48.9357962,"lon":9.2569004},{"lat":48.9356689,"lon":9.2569723},{"lat":48.9354472,"lon":9.2571186},{"lat":48.9352251,"lon":9.257332},{"lat":48.935164,"lon":9.2575245}],[{"lat":48.9437019,"lon":9.2614929},{"lat":48.9437246,"lon":9.2613684},{"lat":48.9437862,"lon":9.2613013},{"lat":48.9443177,"lon":9.261138},{"lat":48.9446477,"lon":9.2610491},{"lat":48.9446705,"lon":9.2610452},{"lat":48.9446952,"lon":9.2610478}],[{"lat":48.9379931,"lon":9.268367},{"lat":48.9375398,"lon":9.2687516},{"lat":48.9371924,"lon":9.2690366},{"lat":48.9367891,"lon":9.2693675}],[{"lat":48.9420146,"lon":9.2544542},{"lat":48.9420609,"lon":9.2548958},{"lat":48.942177,"lon":9.2556597},{"lat":48.9421904,"lon":9.2558672},{"lat":48.9421839,"lon":9.2561512},{"lat":48.9421422,"lon":9.2566209},{"lat":48.9421001,"lon":9.2570837},{"lat":48.9420824,"lon":9.2572844},{"lat":48.9420512,"lon":9.2576233},{"lat":48.9420438,"lon":9.2577042},{"lat":48.9420221,"lon":9.2579551},{"lat":48.9419653,"lon":9.2583756},{"lat":48.941894,"lon":9.258786}],[{"lat":48.9417785,"lon":9.2541221},{"lat":48.9417627,"lon":9.2540692},{"lat":48.9416835,"lon":9.2539938},{"lat":48.9414582,"lon":9.2538897},{"lat":48.9412527,"lon":9.2538949},{"lat":48.9411342,"lon":9.2539292},{"lat":48.9410206,"lon":9.2540077},{"lat":48.9407257,"lon":9.2541565},{"lat":48.9406562,"lon":9.254185},{"lat":48.940618,"lon":9.2541987}],[{"lat":48.942325,"lon":9.2657878},{"lat":48.9423027,"lon":9.265623},{"lat":48.9422768,"lon":9.2653991}],[{"lat":48.9370636,"lon":9.2555937},{"lat":48.9370189,"lon":9.2556603},{"lat":48.9368973,"lon":9.2560112},{"lat":48.9367782,"lon":9.2563897},{"lat":48.9365206,"lon":9.2572969}],[{"lat":48.9491226,"lon":9.2881232},{"lat":48.9490461,"lon":9.2872094},{"lat":48.9490247,"lon":9.286872},{"lat":48.9490086,"lon":9.2866441},{"lat":48.9489847,"lon":9.286361},{"lat":48.948954,"lon":9.2861998},{"lat":48.9489022,"lon":9.2860461},{"lat":48.9488329,"lon":9.2859207},{"lat":48.9487631,"lon":9.2858394},{"lat":48.9486651,"lon":9.2857524},{"lat":48.9485478,"lon":9.2856919},{"lat":48.9484227,"lon":9.2856335},{"lat":48.9482993,"lon":9.2855921}],[{"lat":48.9438178,"lon":9.2694476},{"lat":48.9437717,"lon":9.2693606},{"lat":48.9433027,"lon":9.268441},{"lat":48.9430884,"lon":9.2679858},{"lat":48.9428166,"lon":9.2672838},{"lat":48.9426758,"lon":9.2668896},{"lat":48.9424342,"lon":9.2662134}],[{"lat":48.9437385,"lon":9.2633649},{"lat":48.943938,"lon":9.2640578},{"lat":48.9439617,"lon":9.2641402},{"lat":48.9439787,"lon":9.2641992},{"lat":48.9441102,"lon":9.2647662},{"lat":48.9445299,"lon":9.2665751},{"lat":48.9447585,"lon":9.267573},{"lat":48.9450803,"lon":9.268898},{"lat":48.9451771,"lon":9.2692857},{"lat":48.9453459,"lon":9.2699575},{"lat":48.9454049,"lon":9.2701582},{"lat":48.945558,"lon":9.2707141},{"lat":48.9455985,"lon":9.270852},{"lat":48.945639,"lon":9.2710014},{"lat":48.9457076,"lon":9.2712846},{"lat":48.9457392,"lon":9.2713985},{"lat":48.9457918,"lon":9.2717162},{"lat":48.945803,"lon":9.2719806},{"lat":48.9457598,"lon":9.2722554},{"lat":48.9457128,"lon":9.2723674},{"lat":48.9456278,"lon":9.2724854}],[{"lat":48.9395444,"lon":9.2771609},{"lat":48.9395966,"lon":9.2775321},{"lat":48.939701,"lon":9.2774652},{"lat":48.9396764,"lon":9.2772992},{"lat":48.9396417,"lon":9.2770641},{"lat":48.9395847,"lon":9.2766649},{"lat":48.9395317,"lon":9.2762688},{"lat":48.9394755,"lon":9.275851}],[{"lat":48.9352533,"lon":9.2719432},{"lat":48.9354919,"lon":9.2714312},{"lat":48.935579,"lon":9.2712443},{"lat":48.9356334,"lon":9.2711276},{"lat":48.9357099,"lon":9.2709751},{"lat":48.9360013,"lon":9.2703819},{"lat":48.9361839,"lon":9.269919},{"lat":48.9363469,"lon":9.2695083},{"lat":48.9364969,"lon":9.2690584},{"lat":48.9367497,"lon":9.2683735},{"lat":48.936897,"lon":9.2680681},{"lat":48.9371239,"lon":9.2676188},{"lat":48.937339,"lon":9.2672605}],[{"lat":48.9373036,"lon":9.259042},{"lat":48.936698,"lon":9.2586237},{"lat":48.9362878,"lon":9.2583472},{"lat":48.9351006,"lon":9.2578733}],[{"lat":48.9432409,"lon":9.2706842},{"lat":48.9435637,"lon":9.2704325}],[{"lat":48.9467112,"lon":9.2523915},{"lat":48.94705,"lon":9.2519947}],[{"lat":48.9464992,"lon":9.2525453},{"lat":48.9465319,"lon":9.2525328},{"lat":48.9466048,"lon":9.2524956}],[{"lat":48.9419696,"lon":9.2538052},{"lat":48.9419582,"lon":9.2539494},{"lat":48.9419545,"lon":9.2541008},{"lat":48.9419599,"lon":9.2542593}],[{"lat":48.9438921,"lon":9.253203},{"lat":48.9443818,"lon":9.2529621},{"lat":48.9451917,"lon":9.2525953},{"lat":48.9452804,"lon":9.2525672},{"lat":48.9454271,"lon":9.2525385},{"lat":48.9455716,"lon":9.2525187},{"lat":48.9457211,"lon":9.2525105},{"lat":48.9459664,"lon":9.2525137},{"lat":48.946219,"lon":9.2525474},{"lat":48.9464283,"lon":9.2525603},{"lat":48.9464992,"lon":9.2525453}],[{"lat":48.9419696,"lon":9.2538052},{"lat":48.9420536,"lon":9.2538036}],[{"lat":48.9426025,"lon":9.2537474},{"lat":48.9428104,"lon":9.2536999}],[{"lat":48.941807,"lon":9.2538073},{"lat":48.9418937,"lon":9.2538092},{"lat":48.9419696,"lon":9.2538052}],[{"lat":48.9375981,"lon":9.2668082},{"lat":48.937339,"lon":9.2672605}],[{"lat":48.9387615,"lon":9.2721069},{"lat":48.93934,"lon":9.2718146},{"lat":48.9398792,"lon":9.2715465},{"lat":48.9404264,"lon":9.2712635},{"lat":48.9404582,"lon":9.2712476},{"lat":48.9410408,"lon":9.2709713},{"lat":48.94175,"lon":9.2705794}],[{"lat":48.9404264,"lon":9.2712635},{"lat":48.9405237,"lon":9.2720596},{"lat":48.940567,"lon":9.2725425},{"lat":48.9406291,"lon":9.2732627}],[{"lat":48.9435884,"lon":9.2865188},{"lat":48.9442212,"lon":9.2857593},{"lat":48.9447148,"lon":9.2850367},{"lat":48.9452184,"lon":9.2843529},{"lat":48.9453972,"lon":9.2840839},{"lat":48.9454786,"lon":9.2839569}],[{"lat":48.9416609,"lon":9.2602315},{"lat":48.9416575,"lon":9.2603784}],[{"lat":48.9418033,"lon":9.2593084},{"lat":48.9417627,"lon":9.2594942},{"lat":48.9417319,"lon":9.2596446}],[{"lat":48.9422768,"lon":9.2653991},{"lat":48.9422768,"lon":9.26522},{"lat":48.9423063,"lon":9.2651168}],[{"lat":48.9416575,"lon":9.2603784},{"lat":48.9416704,"lon":9.2604537},{"lat":48.941816,"lon":9.2609332},{"lat":48.9419495,"lon":9.2613966},{"lat":48.9419862,"lon":9.2615345},{"lat":48.9420168,"lon":9.2616598},{"lat":48.9420662,"lon":9.2618532},{"lat":48.9423636,"lon":9.262943}],[{"lat":48.9375398,"lon":9.2687516},{"lat":48.937444,"lon":9.2684936},{"lat":48.9376246,"lon":9.2681382}],[{"lat":48.9478674,"lon":9.2719206},{"lat":48.9479804,"lon":9.2719172},{"lat":48.9480213,"lon":9.2719604},{"lat":48.9480645,"lon":9.2723398},{"lat":48.9480918,"lon":9.2725353}],[{"lat":48.9476934,"lon":9.2729392},{"lat":48.947574,"lon":9.2720714}],[{"lat":48.9475513,"lon":9.27427},{"lat":48.9476445,"lon":9.2742359},{"lat":48.9477172,"lon":9.2742246},{"lat":48.9477627,"lon":9.274136},{"lat":48.9477468,"lon":9.2739678},{"lat":48.9477195,"lon":9.2734589},{"lat":48.9476934,"lon":9.2729392},{"lat":48.9473514,"lon":9.2730567},{"lat":48.9472423,"lon":9.2729794},{"lat":48.9471174,"lon":9.2730317}],[{"lat":48.9470209,"lon":9.2722422},{"lat":48.9471174,"lon":9.2730317},{"lat":48.947131,"lon":9.2732839},{"lat":48.9472514,"lon":9.2738906},{"lat":48.9472923,"lon":9.2741655},{"lat":48.94734,"lon":9.2742655},{"lat":48.947415,"lon":9.2742905},{"lat":48.9475513,"lon":9.27427}],[{"lat":48.9470209,"lon":9.2722422},{"lat":48.947574,"lon":9.2720714}],[{"lat":48.947574,"lon":9.2720714},{"lat":48.9476452,"lon":9.2720064},{"lat":48.9478674,"lon":9.2719206}],[{"lat":48.9378025,"lon":9.2559321},{"lat":48.9377124,"lon":9.2559611},{"lat":48.937642,"lon":9.2559694},{"lat":48.9375627,"lon":9.255929},{"lat":48.9371748,"lon":9.2556479},{"lat":48.9371102,"lon":9.2556016},{"lat":48.9370636,"lon":9.2555937}],[{"lat":48.9380225,"lon":9.2559944},{"lat":48.9379597,"lon":9.2559664},{"lat":48.9378592,"lon":9.2559383},{"lat":48.9378025,"lon":9.2559321}],[{"lat":48.9462258,"lon":9.2704769},{"lat":48.9462555,"lon":9.2704322},{"lat":48.9462945,"lon":9.2703025},{"lat":48.9463295,"lon":9.2701306},{"lat":48.9463568,"lon":9.2699732},{"lat":48.9463899,"lon":9.2698377},{"lat":48.9464202,"lon":9.2697643},{"lat":48.9464622,"lon":9.2696919}],[{"lat":48.9435637,"lon":9.2704325},{"lat":48.9439598,"lon":9.2718406}],[{"lat":48.9358323,"lon":9.2530784},{"lat":48.9358694,"lon":9.2530932},{"lat":48.9367093,"lon":9.2534083},{"lat":48.9374584,"lon":9.2536141},{"lat":48.938183,"lon":9.2538116},{"lat":48.9388453,"lon":9.2539798},{"lat":48.9390715,"lon":9.254021},{"lat":48.9392928,"lon":9.254043},{"lat":48.9397318,"lon":9.2540459},{"lat":48.9405692,"lon":9.2539066}],[{"lat":48.9387615,"lon":9.2721069},{"lat":48.9384629,"lon":9.2722364}],[{"lat":48.938622,"lon":9.2709803},{"lat":48.9383054,"lon":9.2711262}],[{"lat":48.940618,"lon":9.2541987},{"lat":48.9404712,"lon":9.2542425},{"lat":48.9399895,"lon":9.2542638},{"lat":48.9399369,"lon":9.2542661}],[{"lat":48.9418498,"lon":9.2544189},{"lat":48.9418066,"lon":9.2543148},{"lat":48.9417785,"lon":9.2541221}],[{"lat":48.9419599,"lon":9.2542593},{"lat":48.9420146,"lon":9.2544542}],[{"lat":48.9424767,"lon":9.2633241},{"lat":48.942535,"lon":9.2635273}],[{"lat":48.9409769,"lon":9.2629605},{"lat":48.9411592,"lon":9.2630419},{"lat":48.9412819,"lon":9.2631117},{"lat":48.9413774,"lon":9.2631712},{"lat":48.9414744,"lon":9.2632543},{"lat":48.9415705,"lon":9.2633695},{"lat":48.9416821,"lon":9.2635284},{"lat":48.9417516,"lon":9.26366},{"lat":48.9418666,"lon":9.2639284},{"lat":48.9419838,"lon":9.2642746},{"lat":48.942057,"lon":9.2645178},{"lat":48.9421555,"lon":9.2648451},{"lat":48.9422088,"lon":9.2649953}],[{"lat":48.9396547,"lon":9.259891},{"lat":48.9397386,"lon":9.2599561},{"lat":48.939789,"lon":9.2600161},{"lat":48.9398511,"lon":9.2600964},{"lat":48.9398844,"lon":9.2601599},{"lat":48.9399065,"lon":9.2602102},{"lat":48.9399536,"lon":9.2603894}],[{"lat":48.9365206,"lon":9.2572969},{"lat":48.9361883,"lon":9.2570309},{"lat":48.9360452,"lon":9.2569293},{"lat":48.9359055,"lon":9.2568971},{"lat":48.9357962,"lon":9.2569004}],[{"lat":48.9355101,"lon":9.2709796},{"lat":48.9355929,"lon":9.2710628},{"lat":48.9356334,"lon":9.2711276}],[{"lat":48.9420536,"lon":9.2538036},{"lat":48.9421861,"lon":9.2538018}],[{"lat":48.9472414,"lon":9.282611},{"lat":48.9471776,"lon":9.2823162}],[{"lat":48.9471776,"lon":9.2823162},{"lat":48.9468997,"lon":9.280844}],[{"lat":48.9402251,"lon":9.2614093},{"lat":48.9402832,"lon":9.2616268},{"lat":48.9404456,"lon":9.2621162},{"lat":48.9404898,"lon":9.2622292},{"lat":48.9406027,"lon":9.2625123},{"lat":48.9407062,"lon":9.2627451},{"lat":48.9407499,"lon":9.2628118},{"lat":48.9408033,"lon":9.2628671},{"lat":48.9408762,"lon":9.2629199},{"lat":48.9409769,"lon":9.2629605}],[{"lat":48.9423636,"lon":9.262943},{"lat":48.9424174,"lon":9.2631402},{"lat":48.9424767,"lon":9.2633241}],[{"lat":48.941894,"lon":9.258786},{"lat":48.9418033,"lon":9.2593084}],[{"lat":48.9410451,"lon":9.2646239},{"lat":48.9413431,"lon":9.2643392}]]
-
-/***/ }),
-/* 347 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -112963,7 +112891,7 @@ module.exports = [[{"lat":48.9427967,"lon":9.2646383},{"lat":48.9428016,"lon":9.
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_is_opposed_angle__ = __webpack_require__(129);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_is_opposed_angle___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_is_opposed_angle__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_cars__ = __webpack_require__(133);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__config__ = __webpack_require__(65);
 
 
 
@@ -113112,6 +113040,77 @@ class Car extends __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Sprite {
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Car;
 
+
+/***/ }),
+/* 347 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return World; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_phaser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_phaser__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__street__ = __webpack_require__(130);
+/* global game */
+
+
+
+
+function calculateIntersections(streets) {}
+
+class World {
+  constructor(graphics) {
+    this.graphics = graphics;
+    this.streets = [];
+    this.intersections = [];
+  }
+
+  fromOSM(osmImportJSON) {
+    // transform to from WGS84 to local coordinates
+    // lat = y, lon = x
+    const latMin = Math.min(...osmImportJSON.map(elm => Math.min(elm[0].lat, elm[1].lat)));
+    const latMax = Math.max(...osmImportJSON.map(elm => Math.max(elm[0].lat, elm[1].lat)));
+    const lonMin = Math.min(...osmImportJSON.map(elm => Math.min(elm[0].lon, elm[1].lon)));
+    const lonMax = Math.max(...osmImportJSON.map(elm => Math.max(elm[0].lon, elm[1].lon)));
+
+    const streets = osmImportJSON.map(elm => {
+      return elm.map(point => {
+        const y = __WEBPACK_IMPORTED_MODULE_1__config__["a" /* default */].GAME_SIZE - (point.lat - latMin) / (latMax - latMin) * __WEBPACK_IMPORTED_MODULE_1__config__["a" /* default */].GAME_SIZE;
+        const x = (point.lon - lonMin) / (lonMax - lonMin) * __WEBPACK_IMPORTED_MODULE_1__config__["a" /* default */].GAME_SIZE;
+        return new __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Point(x, y);
+      });
+    }).map(roadpoints => new __WEBPACK_IMPORTED_MODULE_2__street__["a" /* default */](roadpoints));
+
+    this.streets = streets;
+    this.intersections = calculateIntersections(streets);
+  }
+
+  draw() {
+    this.streets.forEach((street, ix) => {
+      let color;
+      if (!street.neighbors.find(n => n.length > 0)) {
+        color = 0xffff00;
+      } else color = 0x666666;
+      street.draw(this.graphics, color);
+      street.drawIntersections(this.graphics);
+      if ([125, 59].indexOf(ix) > -1) {
+        console.log(ix, street.points);
+      }
+      // draw numbers on street
+      const pos = street.getPositionAt(0.13);
+      const text = game.add.text(pos.x, pos.y, ix.toString(), { align: 'center', fill: '#000000', fontSize: '14px' });
+      text.anchor.set(0.5);
+    });
+  }
+}
+
+
+
+/***/ }),
+/* 348 */
+/***/ (function(module, exports) {
+
+module.exports = [[{"lat":48.9427967,"lon":9.2646383},{"lat":48.9428016,"lon":9.264573},{"lat":48.9428004,"lon":9.2645124}],[{"lat":48.9423063,"lon":9.2651168},{"lat":48.9423413,"lon":9.265042},{"lat":48.9424088,"lon":9.2650134},{"lat":48.9426793,"lon":9.2648629},{"lat":48.9427266,"lon":9.2648166},{"lat":48.9427721,"lon":9.264733},{"lat":48.9427967,"lon":9.2646383}],[{"lat":48.9476585,"lon":9.2852033},{"lat":48.9476343,"lon":9.2850051},{"lat":48.9476247,"lon":9.2847199},{"lat":48.9476074,"lon":9.2844846},{"lat":48.9475777,"lon":9.2842483},{"lat":48.9475316,"lon":9.2839776},{"lat":48.9474732,"lon":9.2836909}],[{"lat":48.9399536,"lon":9.2603894},{"lat":48.9399894,"lon":9.2605348},{"lat":48.9402251,"lon":9.2614093}],[{"lat":48.9392528,"lon":9.2573325},{"lat":48.939151,"lon":9.2572944},{"lat":48.9388817,"lon":9.2573593},{"lat":48.9387499,"lon":9.2574016},{"lat":48.9384123,"lon":9.2575101},{"lat":48.9383396,"lon":9.2575895},{"lat":48.9382765,"lon":9.2586143}],[{"lat":48.9407062,"lon":9.2627451},{"lat":48.941341,"lon":9.2621592},{"lat":48.9418028,"lon":9.2616756},{"lat":48.9419862,"lon":9.2615345}],[{"lat":48.9420168,"lon":9.2616598},{"lat":48.9423871,"lon":9.2615175},{"lat":48.9425264,"lon":9.2614639},{"lat":48.9427462,"lon":9.2613812},{"lat":48.9428353,"lon":9.2613565},{"lat":48.9430325,"lon":9.2613019},{"lat":48.943099,"lon":9.2612978},{"lat":48.9431583,"lon":9.2613176},{"lat":48.9432189,"lon":9.2613878},{"lat":48.9432999,"lon":9.2615764},{"lat":48.94336,"lon":9.2618655},{"lat":48.9437385,"lon":9.2633649}],[{"lat":48.9450941,"lon":9.2725582},{"lat":48.9450218,"lon":9.272464},{"lat":48.9449778,"lon":9.2723581},{"lat":48.9449127,"lon":9.272107},{"lat":48.9448131,"lon":9.2715776},{"lat":48.9447499,"lon":9.2712743},{"lat":48.9446475,"lon":9.2711999},{"lat":48.9444662,"lon":9.271289}],[{"lat":48.9432999,"lon":9.2615764},{"lat":48.9437019,"lon":9.2614929}],[{"lat":48.9417319,"lon":9.2596446},{"lat":48.9418782,"lon":9.2596433},{"lat":48.9420595,"lon":9.2596453},{"lat":48.9423241,"lon":9.259562},{"lat":48.9424333,"lon":9.2595101},{"lat":48.9425704,"lon":9.2594152},{"lat":48.942779,"lon":9.259323}],[{"lat":48.943551,"lon":9.2558424},{"lat":48.9435432,"lon":9.2561447},{"lat":48.9435434,"lon":9.2562566},{"lat":48.9435621,"lon":9.2568654}],[{"lat":48.9378221,"lon":9.2585595},{"lat":48.9377987,"lon":9.2583108},{"lat":48.937784,"lon":9.258251},{"lat":48.9377393,"lon":9.2581804},{"lat":48.9376204,"lon":9.2581062},{"lat":48.9373579,"lon":9.2579063},{"lat":48.9369594,"lon":9.2576236},{"lat":48.9365206,"lon":9.2572969}],[{"lat":48.9349186,"lon":9.2589865},{"lat":48.9355544,"lon":9.2590368},{"lat":48.9361567,"lon":9.2590259},{"lat":48.9362869,"lon":9.2590357},{"lat":48.9369462,"lon":9.2594719}],[{"lat":48.9389565,"lon":9.2644286},{"lat":48.9392232,"lon":9.2646361},{"lat":48.9397473,"lon":9.2649984},{"lat":48.9401594,"lon":9.2655657},{"lat":48.9404816,"lon":9.26608},{"lat":48.9407589,"lon":9.2665575},{"lat":48.9408966,"lon":9.2670823},{"lat":48.941065,"lon":9.2677448},{"lat":48.9413071,"lon":9.2687303},{"lat":48.9414204,"lon":9.2692843},{"lat":48.9415748,"lon":9.2699056}],[{"lat":48.9375981,"lon":9.2668082},{"lat":48.9378626,"lon":9.2671289},{"lat":48.9379507,"lon":9.2677968},{"lat":48.9379875,"lon":9.2682389},{"lat":48.9379931,"lon":9.268367},{"lat":48.9380156,"lon":9.2688035},{"lat":48.9380175,"lon":9.2689174},{"lat":48.9381032,"lon":9.2696308}],[{"lat":48.9380175,"lon":9.2689174},{"lat":48.9382304,"lon":9.268895},{"lat":48.9382938,"lon":9.2688233},{"lat":48.9386382,"lon":9.2684904},{"lat":48.9387136,"lon":9.2684116},{"lat":48.9388285,"lon":9.2683037},{"lat":48.9391802,"lon":9.2679691},{"lat":48.9392792,"lon":9.2678532},{"lat":48.9397357,"lon":9.2674458},{"lat":48.9401594,"lon":9.2670686},{"lat":48.9402057,"lon":9.2670325},{"lat":48.9406945,"lon":9.2666157},{"lat":48.9407589,"lon":9.2665575}],[{"lat":48.9379507,"lon":9.2677968},{"lat":48.9381339,"lon":9.2676332},{"lat":48.9385647,"lon":9.2672511},{"lat":48.9389204,"lon":9.2669104},{"lat":48.9390272,"lon":9.2667572},{"lat":48.9392708,"lon":9.2661897},{"lat":48.9393667,"lon":9.2659474},{"lat":48.9396461,"lon":9.2652847},{"lat":48.9397473,"lon":9.2649984}],[{"lat":48.9393667,"lon":9.2659474},{"lat":48.9395989,"lon":9.266218},{"lat":48.9398848,"lon":9.2666185},{"lat":48.9402057,"lon":9.2670325},{"lat":48.9402793,"lon":9.2671233},{"lat":48.9403983,"lon":9.267506},{"lat":48.9405378,"lon":9.2680446},{"lat":48.9406767,"lon":9.2685962},{"lat":48.9407828,"lon":9.2690096},{"lat":48.9408434,"lon":9.2694288},{"lat":48.9409283,"lon":9.2700251},{"lat":48.9410046,"lon":9.2705829},{"lat":48.9410408,"lon":9.2709713},{"lat":48.9410807,"lon":9.271299},{"lat":48.9411407,"lon":9.271928},{"lat":48.9411913,"lon":9.2729574}],[{"lat":48.9397357,"lon":9.2674458},{"lat":48.9398077,"lon":9.2678109},{"lat":48.9399429,"lon":9.2683904},{"lat":48.9400761,"lon":9.2689577},{"lat":48.9401706,"lon":9.2693138},{"lat":48.9402484,"lon":9.2697122},{"lat":48.9403617,"lon":9.2703948},{"lat":48.9404191,"lon":9.2709452},{"lat":48.9404582,"lon":9.2712476}],[{"lat":48.9391802,"lon":9.2679691},{"lat":48.9392761,"lon":9.2682368},{"lat":48.939392,"lon":9.2687297},{"lat":48.9394999,"lon":9.2692529},{"lat":48.9395958,"lon":9.2696241},{"lat":48.9397559,"lon":9.2704468},{"lat":48.9398351,"lon":9.2710288},{"lat":48.9398792,"lon":9.2715465},{"lat":48.9399649,"lon":9.272346},{"lat":48.9401166,"lon":9.27352}],[{"lat":48.9387136,"lon":9.2684116},{"lat":48.9390585,"lon":9.2698939},{"lat":48.93934,"lon":9.2718146},{"lat":48.9396114,"lon":9.2737788}],[{"lat":48.9390809,"lon":9.2740472},{"lat":48.9392766,"lon":9.2739652},{"lat":48.9396114,"lon":9.2737788},{"lat":48.9398198,"lon":9.2736804},{"lat":48.9401166,"lon":9.27352},{"lat":48.9404111,"lon":9.2733844},{"lat":48.9406291,"lon":9.2732627},{"lat":48.9407329,"lon":9.2732151},{"lat":48.9410336,"lon":9.2730773},{"lat":48.9411913,"lon":9.2729574},{"lat":48.9413846,"lon":9.2728876},{"lat":48.9417082,"lon":9.2728914}],[{"lat":48.9410336,"lon":9.2730773},{"lat":48.9410926,"lon":9.2735059},{"lat":48.9411467,"lon":9.2738992},{"lat":48.9411999,"lon":9.2742854},{"lat":48.9412521,"lon":9.2746649}],[{"lat":48.9404111,"lon":9.2733844},{"lat":48.9406105,"lon":9.2749523}],[{"lat":48.938553,"lon":9.2652032},{"lat":48.9387233,"lon":9.2659356},{"lat":48.9387605,"lon":9.2662715},{"lat":48.9388524,"lon":9.2667826},{"lat":48.9389204,"lon":9.2669104}],[{"lat":48.9389204,"lon":9.2669104},{"lat":48.9392792,"lon":9.2678532}],[{"lat":48.9382938,"lon":9.2688233},{"lat":48.9385098,"lon":9.2700748},{"lat":48.938622,"lon":9.2709803},{"lat":48.9387615,"lon":9.2721069},{"lat":48.9389927,"lon":9.273621},{"lat":48.9390809,"lon":9.2740472}],[{"lat":48.9385098,"lon":9.2700748},{"lat":48.9390585,"lon":9.2698939},{"lat":48.9395958,"lon":9.2696241},{"lat":48.9401706,"lon":9.2693138},{"lat":48.9407828,"lon":9.2690096},{"lat":48.9413071,"lon":9.2687303}],[{"lat":48.9406722,"lon":9.2640765},{"lat":48.9404651,"lon":9.2643148},{"lat":48.9400105,"lon":9.2647613},{"lat":48.9397473,"lon":9.2649984}],[{"lat":48.9402251,"lon":9.2614093},{"lat":48.9400403,"lon":9.2615462},{"lat":48.9399297,"lon":9.2617624},{"lat":48.9398934,"lon":9.2619486},{"lat":48.9398638,"lon":9.2621007},{"lat":48.9398695,"lon":9.2625304},{"lat":48.9399295,"lon":9.2631867},{"lat":48.940118,"lon":9.263482},{"lat":48.940414,"lon":9.2638233},{"lat":48.9406722,"lon":9.2640765},{"lat":48.9408782,"lon":9.2643411},{"lat":48.9410451,"lon":9.2646239},{"lat":48.941115,"lon":9.2647424},{"lat":48.9412592,"lon":9.2651951},{"lat":48.9413464,"lon":9.2655645}],[{"lat":48.9422248,"lon":9.2705863},{"lat":48.9424129,"lon":9.2705263},{"lat":48.9437717,"lon":9.2693606}],[{"lat":48.942779,"lon":9.259323},{"lat":48.9428596,"lon":9.2592674},{"lat":48.942973,"lon":9.2592308},{"lat":48.9430786,"lon":9.2591837},{"lat":48.9431386,"lon":9.2591478},{"lat":48.9432084,"lon":9.2590989},{"lat":48.9433706,"lon":9.2590669},{"lat":48.9438709,"lon":9.2590358}],[{"lat":48.9365206,"lon":9.2572969},{"lat":48.9362878,"lon":9.2583472},{"lat":48.9361567,"lon":9.2590259}],[{"lat":48.9441022,"lon":9.2701123},{"lat":48.9439872,"lon":9.2702044},{"lat":48.9439624,"lon":9.2702911},{"lat":48.9439599,"lon":9.2706369},{"lat":48.9440665,"lon":9.271433},{"lat":48.9440838,"lon":9.271825},{"lat":48.9440785,"lon":9.2720784},{"lat":48.9439574,"lon":9.2728804},{"lat":48.9438867,"lon":9.2731521},{"lat":48.9438218,"lon":9.2733144}],[{"lat":48.9429579,"lon":9.2760202},{"lat":48.9430313,"lon":9.2760188},{"lat":48.9433699,"lon":9.2758558},{"lat":48.943636,"lon":9.2757107},{"lat":48.9444519,"lon":9.2753858},{"lat":48.9445787,"lon":9.2754353},{"lat":48.945509,"lon":9.2749371}],[{"lat":48.9440785,"lon":9.2720784},{"lat":48.9442012,"lon":9.2724427},{"lat":48.944268,"lon":9.273105},{"lat":48.944338,"lon":9.274129},{"lat":48.944415,"lon":9.274914},{"lat":48.9444519,"lon":9.2753858}],[{"lat":48.9375662,"lon":9.2646596},{"lat":48.9376427,"lon":9.2646511},{"lat":48.9382592,"lon":9.264563},{"lat":48.9387545,"lon":9.264555}],[{"lat":48.9383396,"lon":9.2575895},{"lat":48.9382316,"lon":9.2575431},{"lat":48.9381202,"lon":9.2574519},{"lat":48.9377323,"lon":9.2571291},{"lat":48.9369136,"lon":9.2565092},{"lat":48.9367782,"lon":9.2563897}],[{"lat":48.9380916,"lon":9.2560742},{"lat":48.9380693,"lon":9.2560297},{"lat":48.9380225,"lon":9.2559944}],[{"lat":48.9380916,"lon":9.2560742},{"lat":48.9381717,"lon":9.2562262},{"lat":48.9384313,"lon":9.2562559},{"lat":48.9386371,"lon":9.2562644},{"lat":48.9391588,"lon":9.2564562},{"lat":48.9393583,"lon":9.256545}],[{"lat":48.9377323,"lon":9.2571291},{"lat":48.9378459,"lon":9.2568107},{"lat":48.9379821,"lon":9.2564674},{"lat":48.9380779,"lon":9.2562342},{"lat":48.9380916,"lon":9.2560742},{"lat":48.9381449,"lon":9.255994},{"lat":48.9381931,"lon":9.2559214},{"lat":48.9383951,"lon":9.2557161},{"lat":48.9385137,"lon":9.2555963},{"lat":48.93874,"lon":9.2554254},{"lat":48.9388869,"lon":9.2554438},{"lat":48.9389918,"lon":9.2553707},{"lat":48.9390517,"lon":9.2552554}],[{"lat":48.9420146,"lon":9.2544542},{"lat":48.9419126,"lon":9.2544358},{"lat":48.9418498,"lon":9.2544189}],[{"lat":48.941341,"lon":9.2621592},{"lat":48.9411645,"lon":9.2616478}],[{"lat":48.9399894,"lon":9.2605348},{"lat":48.940053,"lon":9.2605252},{"lat":48.9405737,"lon":9.2606022}],[{"lat":48.9412596,"lon":9.2605853},{"lat":48.941383,"lon":9.2605334},{"lat":48.9414492,"lon":9.2605056},{"lat":48.9416575,"lon":9.2603784}],[{"lat":48.9396547,"lon":9.259891},{"lat":48.9396321,"lon":9.2600133},{"lat":48.9392871,"lon":9.2618818},{"lat":48.9392748,"lon":9.261943},{"lat":48.9391028,"lon":9.2630398},{"lat":48.9390384,"lon":9.2638049},{"lat":48.9390178,"lon":9.2640986},{"lat":48.9389742,"lon":9.2643414},{"lat":48.9389565,"lon":9.2644286}],[{"lat":48.9389565,"lon":9.2644286},{"lat":48.938553,"lon":9.2652032},{"lat":48.9381907,"lon":9.2658102},{"lat":48.9378685,"lon":9.2663519},{"lat":48.9377107,"lon":9.2666153},{"lat":48.9375981,"lon":9.2668082}],[{"lat":48.9373879,"lon":9.2589499},{"lat":48.9373845,"lon":9.2606871},{"lat":48.9373713,"lon":9.2613311},{"lat":48.9374143,"lon":9.2620989},{"lat":48.9374619,"lon":9.26267},{"lat":48.9374688,"lon":9.2628141},{"lat":48.9374984,"lon":9.2634296},{"lat":48.9375619,"lon":9.2645468},{"lat":48.9375662,"lon":9.2646596}],[{"lat":48.9388619,"lon":9.2624624},{"lat":48.9387888,"lon":9.2614938}],[{"lat":48.9387888,"lon":9.2614938},{"lat":48.9386326,"lon":9.261344},{"lat":48.938073,"lon":9.260917},{"lat":48.937775,"lon":9.260751},{"lat":48.9373845,"lon":9.2606871},{"lat":48.9370752,"lon":9.2606705}],[{"lat":48.938246,"lon":9.259664},{"lat":48.9378976,"lon":9.2596076},{"lat":48.9378676,"lon":9.2601032},{"lat":48.9378296,"lon":9.2603894},{"lat":48.937775,"lon":9.260751}],[{"lat":48.936698,"lon":9.2586237},{"lat":48.9369594,"lon":9.2576236}],[{"lat":48.9441374,"lon":9.2590744},{"lat":48.9442496,"lon":9.2591061},{"lat":48.9443471,"lon":9.2591758},{"lat":48.9445075,"lon":9.2594128},{"lat":48.944551,"lon":9.2594841}],[{"lat":48.9446952,"lon":9.2610478},{"lat":48.9447149,"lon":9.2610635},{"lat":48.9447334,"lon":9.2611018},{"lat":48.9447431,"lon":9.2611514},{"lat":48.9447581,"lon":9.2612433},{"lat":48.9448656,"lon":9.2619836},{"lat":48.9449767,"lon":9.2629203},{"lat":48.9451069,"lon":9.2633977},{"lat":48.9452092,"lon":9.263827},{"lat":48.9452692,"lon":9.263996},{"lat":48.9453744,"lon":9.2642002},{"lat":48.9454945,"lon":9.2644717},{"lat":48.9456162,"lon":9.2647496},{"lat":48.945655,"lon":9.2649079},{"lat":48.9456883,"lon":9.2651342},{"lat":48.9457305,"lon":9.265558},{"lat":48.9457648,"lon":9.2659055},{"lat":48.9458627,"lon":9.267005},{"lat":48.9458845,"lon":9.2673105},{"lat":48.9459093,"lon":9.2673852},{"lat":48.9459366,"lon":9.2674986},{"lat":48.9460846,"lon":9.2682496},{"lat":48.9461958,"lon":9.268735},{"lat":48.9463578,"lon":9.2693979},{"lat":48.9464019,"lon":9.2695589},{"lat":48.9464622,"lon":9.2696919},{"lat":48.9465419,"lon":9.2697855},{"lat":48.9467471,"lon":9.2699491},{"lat":48.9468421,"lon":9.2700214},{"lat":48.9469117,"lon":9.2700037},{"lat":48.947031,"lon":9.2700695}],[{"lat":48.9461958,"lon":9.268735},{"lat":48.9456532,"lon":9.2690197},{"lat":48.9451771,"lon":9.2692857}],[{"lat":48.9445299,"lon":9.2665751},{"lat":48.9452028,"lon":9.2661994},{"lat":48.9457648,"lon":9.2659055}],[{"lat":48.9482993,"lon":9.2855921},{"lat":48.9478847,"lon":9.2854749}],[{"lat":48.9419878,"lon":9.2721701},{"lat":48.9424665,"lon":9.2720973},{"lat":48.9427369,"lon":9.2720308},{"lat":48.9429173,"lon":9.2720099},{"lat":48.943346,"lon":9.2719405},{"lat":48.9435918,"lon":9.2718969},{"lat":48.9439598,"lon":9.2718406},{"lat":48.9440838,"lon":9.271825}],[{"lat":48.9427967,"lon":9.2738498},{"lat":48.942841,"lon":9.274975},{"lat":48.9428705,"lon":9.2757583},{"lat":48.9429174,"lon":9.2759667},{"lat":48.9429579,"lon":9.2760202}],[{"lat":48.9435809,"lon":9.2734571},{"lat":48.943636,"lon":9.2757107}],[{"lat":48.9412694,"lon":9.2754827},{"lat":48.9414703,"lon":9.2755933},{"lat":48.9417062,"lon":9.2756085}],[{"lat":48.9424129,"lon":9.2705263},{"lat":48.9426157,"lon":9.2712661},{"lat":48.9427369,"lon":9.2720308}],[{"lat":48.9435918,"lon":9.2718969},{"lat":48.9434931,"lon":9.2727603},{"lat":48.9434161,"lon":9.27354}],[{"lat":48.9439872,"lon":9.2702044},{"lat":48.9439195,"lon":9.2701672},{"lat":48.9438368,"lon":9.2701925},{"lat":48.9435637,"lon":9.2704325}],[{"lat":48.943346,"lon":9.2719405},{"lat":48.9432553,"lon":9.2727714},{"lat":48.9431643,"lon":9.2736556}],[{"lat":48.9424665,"lon":9.2720973},{"lat":48.94235,"lon":9.2729698},{"lat":48.9422493,"lon":9.2737729},{"lat":48.9422157,"lon":9.2741093}],[{"lat":48.9429173,"lon":9.2720099},{"lat":48.9426994,"lon":9.2738937}],[{"lat":48.9438218,"lon":9.2733144},{"lat":48.9437111,"lon":9.2733806},{"lat":48.9435809,"lon":9.2734571},{"lat":48.9434161,"lon":9.27354},{"lat":48.9431643,"lon":9.2736556},{"lat":48.9427967,"lon":9.2738498},{"lat":48.9426994,"lon":9.2738937},{"lat":48.9422157,"lon":9.2741093},{"lat":48.9417625,"lon":9.274241},{"lat":48.9417089,"lon":9.2742424}],[{"lat":48.9375981,"lon":9.2668082},{"lat":48.9375399,"lon":9.266658},{"lat":48.9375205,"lon":9.2665547},{"lat":48.9375488,"lon":9.2664456},{"lat":48.9375942,"lon":9.2663273},{"lat":48.9376079,"lon":9.2662427},{"lat":48.9375742,"lon":9.2661497},{"lat":48.9375311,"lon":9.2660972},{"lat":48.9375129,"lon":9.2660362},{"lat":48.937453,"lon":9.2649177},{"lat":48.9374702,"lon":9.2648031},{"lat":48.9375152,"lon":9.2647389},{"lat":48.9375662,"lon":9.2646596}],[{"lat":48.9390035,"lon":9.2760101},{"lat":48.9394755,"lon":9.275851},{"lat":48.9396811,"lon":9.2757132}],[{"lat":48.9428353,"lon":9.2613565},{"lat":48.942979,"lon":9.2619975},{"lat":48.9429134,"lon":9.2620371}],[{"lat":48.9462258,"lon":9.2704769},{"lat":48.9462652,"lon":9.2705415},{"lat":48.9463068,"lon":9.2705869},{"lat":48.94637,"lon":9.2706414},{"lat":48.9464337,"lon":9.2706808},{"lat":48.9465735,"lon":9.2707179},{"lat":48.946691,"lon":9.2707398},{"lat":48.9468082,"lon":9.2707552},{"lat":48.9468309,"lon":9.2707552},{"lat":48.9468342,"lon":9.2708124},{"lat":48.9468446,"lon":9.2708653},{"lat":48.9468579,"lon":9.270899},{"lat":48.9468811,"lon":9.2709162},{"lat":48.9469071,"lon":9.2709177},{"lat":48.9469342,"lon":9.2709087},{"lat":48.9469549,"lon":9.270878},{"lat":48.9469608,"lon":9.2708413},{"lat":48.9469588,"lon":9.2708031},{"lat":48.9469494,"lon":9.2707776},{"lat":48.9469357,"lon":9.2707574},{"lat":48.9469175,"lon":9.2707492},{"lat":48.9468309,"lon":9.2707552}],[{"lat":48.945685,"lon":9.2697594},{"lat":48.9457334,"lon":9.2697734},{"lat":48.9457783,"lon":9.2698064},{"lat":48.9458118,"lon":9.2698405},{"lat":48.9458365,"lon":9.2698895},{"lat":48.9458814,"lon":9.2700041},{"lat":48.9459577,"lon":9.2702588},{"lat":48.945987,"lon":9.2703354},{"lat":48.9460181,"lon":9.2703976},{"lat":48.9460704,"lon":9.2704614},{"lat":48.9461272,"lon":9.2704917},{"lat":48.9461824,"lon":9.2704925},{"lat":48.9462258,"lon":9.2704769}],[{"lat":48.9449767,"lon":9.2629203},{"lat":48.9443594,"lon":9.2631312},{"lat":48.9437385,"lon":9.2633649}],[{"lat":48.941816,"lon":9.2609332},{"lat":48.9421864,"lon":9.2607164},{"lat":48.942309,"lon":9.2606991},{"lat":48.9424697,"lon":9.2607905},{"lat":48.9425002,"lon":9.2608335},{"lat":48.9425766,"lon":9.2609414},{"lat":48.9427462,"lon":9.2613812}],[{"lat":48.9373579,"lon":9.2579063},{"lat":48.93719,"lon":9.2584545}],[{"lat":48.9399295,"lon":9.2631867},{"lat":48.9398805,"lon":9.2632203},{"lat":48.9396779,"lon":9.263234},{"lat":48.9393604,"lon":9.2631505},{"lat":48.9391028,"lon":9.2630398}],[{"lat":48.9396779,"lon":9.263234},{"lat":48.939539,"lon":9.2641783},{"lat":48.9397918,"lon":9.264345}],[{"lat":48.9392232,"lon":9.2646361},{"lat":48.9389254,"lon":9.2654078},{"lat":48.9387233,"lon":9.2659356}],[{"lat":48.9413464,"lon":9.2655645},{"lat":48.9404816,"lon":9.26608}],[{"lat":48.9468997,"lon":9.280844},{"lat":48.9465357,"lon":9.2790355},{"lat":48.9463448,"lon":9.2781421},{"lat":48.9461857,"lon":9.2773875},{"lat":48.9460562,"lon":9.2768394},{"lat":48.9460001,"lon":9.2766312},{"lat":48.9459219,"lon":9.2763134},{"lat":48.9458058,"lon":9.2759274},{"lat":48.945509,"lon":9.2749371},{"lat":48.9450909,"lon":9.2734489},{"lat":48.9447508,"lon":9.2723087},{"lat":48.9444662,"lon":9.271289},{"lat":48.9442413,"lon":9.2705709},{"lat":48.9441022,"lon":9.2701123},{"lat":48.943995,"lon":9.269834},{"lat":48.9438178,"lon":9.2694476}],[{"lat":48.9474732,"lon":9.2836909},{"lat":48.9473145,"lon":9.2829688},{"lat":48.9472719,"lon":9.2827602},{"lat":48.9472414,"lon":9.282611}],[{"lat":48.9461241,"lon":9.2858658},{"lat":48.9456955,"lon":9.2861062},{"lat":48.9455576,"lon":9.2862209},{"lat":48.9451985,"lon":9.2865974},{"lat":48.944929,"lon":9.2868849},{"lat":48.9446254,"lon":9.2872076},{"lat":48.9441704,"lon":9.2876644},{"lat":48.9440024,"lon":9.288029},{"lat":48.9437105,"lon":9.2886459},{"lat":48.9434055,"lon":9.2890966},{"lat":48.9426364,"lon":9.2899656},{"lat":48.942563,"lon":9.2900162},{"lat":48.9424546,"lon":9.2900477}],[{"lat":48.9405692,"lon":9.2539066},{"lat":48.9409673,"lon":9.2538281},{"lat":48.941221,"lon":9.2537963},{"lat":48.9413956,"lon":9.2537888},{"lat":48.9415653,"lon":9.2538021}],[{"lat":48.9390426,"lon":9.2594597},{"lat":48.9389874,"lon":9.2595936},{"lat":48.9389107,"lon":9.2601271},{"lat":48.9388079,"lon":9.2606634},{"lat":48.9386326,"lon":9.261344}],[{"lat":48.9421764,"lon":9.2660635},{"lat":48.9414692,"lon":9.2662693},{"lat":48.9407589,"lon":9.2665575}],[{"lat":48.9428596,"lon":9.2592674},{"lat":48.9428316,"lon":9.2590019},{"lat":48.9428147,"lon":9.2583508},{"lat":48.9428185,"lon":9.2580157},{"lat":48.9428233,"lon":9.2577421}],[{"lat":48.9421861,"lon":9.2538018},{"lat":48.9422321,"lon":9.2537996},{"lat":48.9424587,"lon":9.2537791},{"lat":48.9426025,"lon":9.2537474}],[{"lat":48.9435621,"lon":9.2568654},{"lat":48.9435726,"lon":9.257059},{"lat":48.9435926,"lon":9.2572312}],[{"lat":48.9452028,"lon":9.2661994},{"lat":48.945027,"lon":9.2654714},{"lat":48.944916,"lon":9.2650102},{"lat":48.9447821,"lon":9.2645091},{"lat":48.9447695,"lon":9.2644688},{"lat":48.944632,"lon":9.26403},{"lat":48.9445149,"lon":9.2635433},{"lat":48.9444318,"lon":9.2632571},{"lat":48.9443594,"lon":9.2631312},{"lat":48.9443048,"lon":9.2630065},{"lat":48.9441418,"lon":9.2622907},{"lat":48.9440603,"lon":9.2619719},{"lat":48.9439147,"lon":9.2617427},{"lat":48.9437827,"lon":9.2615722},{"lat":48.9437019,"lon":9.2614929}],[{"lat":48.9478847,"lon":9.2854749},{"lat":48.9478394,"lon":9.2854631},{"lat":48.9477889,"lon":9.2854364},{"lat":48.9477304,"lon":9.285378},{"lat":48.9476982,"lon":9.2853246},{"lat":48.9476738,"lon":9.2852654},{"lat":48.9476585,"lon":9.2852033}],[{"lat":48.9456278,"lon":9.2724854},{"lat":48.9455081,"lon":9.2725721},{"lat":48.9454234,"lon":9.2726142},{"lat":48.9452941,"lon":9.2726186},{"lat":48.9452015,"lon":9.2726088},{"lat":48.9450941,"lon":9.2725582}],[{"lat":48.9458879,"lon":9.2725992},{"lat":48.9460283,"lon":9.2725529},{"lat":48.9470209,"lon":9.2722422}],[{"lat":48.9468441,"lon":9.2711209},{"lat":48.9469447,"lon":9.2717365},{"lat":48.9470209,"lon":9.2722422}],[{"lat":48.9476363,"lon":9.2762325},{"lat":48.9476947,"lon":9.2761009},{"lat":48.9477019,"lon":9.2759301},{"lat":48.9476285,"lon":9.2750704},{"lat":48.9475513,"lon":9.27427}],[{"lat":48.9428104,"lon":9.2536999},{"lat":48.9429513,"lon":9.2536444},{"lat":48.9434062,"lon":9.2534284},{"lat":48.9436472,"lon":9.2533163},{"lat":48.9438921,"lon":9.253203}],[{"lat":48.9466048,"lon":9.2524956},{"lat":48.9467112,"lon":9.2523915}],[{"lat":48.9417319,"lon":9.2596446},{"lat":48.9417156,"lon":9.2597443},{"lat":48.9417062,"lon":9.2598025},{"lat":48.9416784,"lon":9.2600093},{"lat":48.9416627,"lon":9.2601846},{"lat":48.9416609,"lon":9.2602315}],[{"lat":48.9398198,"lon":9.2736804},{"lat":48.9399817,"lon":9.274821}],[{"lat":48.9420146,"lon":9.2544542},{"lat":48.9420428,"lon":9.2541924},{"lat":48.9420546,"lon":9.2539855},{"lat":48.9420536,"lon":9.2538036}],[{"lat":48.9458845,"lon":9.2673105},{"lat":48.945853,"lon":9.2673665},{"lat":48.9458414,"lon":9.2674251},{"lat":48.9456762,"lon":9.2687924},{"lat":48.9456532,"lon":9.2690197},{"lat":48.9456867,"lon":9.2695918},{"lat":48.945692,"lon":9.2696796},{"lat":48.945685,"lon":9.2697594},{"lat":48.9456682,"lon":9.2698351},{"lat":48.9456374,"lon":9.2699083},{"lat":48.9455493,"lon":9.2700451},{"lat":48.9454049,"lon":9.2701582}],[{"lat":48.9411333,"lon":9.2634877},{"lat":48.9410057,"lon":9.2636529},{"lat":48.9406722,"lon":9.2640765}],[{"lat":48.9335556,"lon":9.252024},{"lat":48.9338179,"lon":9.2521903},{"lat":48.9349142,"lon":9.252667},{"lat":48.9354482,"lon":9.2528948}],[{"lat":48.9438709,"lon":9.2590358},{"lat":48.9440333,"lon":9.2590568},{"lat":48.9441374,"lon":9.2590744}],[{"lat":48.9435926,"lon":9.2572312},{"lat":48.9436253,"lon":9.2576903},{"lat":48.943643,"lon":9.2580838},{"lat":48.9436645,"lon":9.2584853},{"lat":48.9438062,"lon":9.2587766},{"lat":48.9438635,"lon":9.2589001},{"lat":48.9438709,"lon":9.2590358}],[{"lat":48.9422088,"lon":9.2649953},{"lat":48.9423063,"lon":9.2651168}],[{"lat":48.9424342,"lon":9.2662134},{"lat":48.9423698,"lon":9.265992},{"lat":48.942325,"lon":9.2657878}],[{"lat":48.9417082,"lon":9.2728914},{"lat":48.9416328,"lon":9.273474},{"lat":48.9415684,"lon":9.2738647},{"lat":48.9414509,"lon":9.2747363},{"lat":48.9413913,"lon":9.2751042},{"lat":48.9412694,"lon":9.2754827},{"lat":48.9411014,"lon":9.2758411},{"lat":48.9410222,"lon":9.2759746},{"lat":48.9409173,"lon":9.2760797},{"lat":48.9407562,"lon":9.2762254},{"lat":48.9405342,"lon":9.2763139},{"lat":48.9402774,"lon":9.2762942},{"lat":48.9401914,"lon":9.2762456},{"lat":48.9401233,"lon":9.2761962},{"lat":48.9399779,"lon":9.2761112},{"lat":48.9396811,"lon":9.2757132},{"lat":48.939514,"lon":9.2753547},{"lat":48.9394078,"lon":9.2750905},{"lat":48.9393724,"lon":9.2750023},{"lat":48.9392311,"lon":9.2745781},{"lat":48.9390809,"lon":9.2740472}],[{"lat":48.9415748,"lon":9.2699056},{"lat":48.94175,"lon":9.2705794},{"lat":48.9418308,"lon":9.2711291},{"lat":48.9418214,"lon":9.2714822},{"lat":48.9417915,"lon":9.2720554},{"lat":48.9417082,"lon":9.2728914}],[{"lat":48.9390809,"lon":9.2740472},{"lat":48.9387454,"lon":9.2742028}],[{"lat":48.9415653,"lon":9.2538021},{"lat":48.941807,"lon":9.2538073}],[{"lat":48.9353152,"lon":9.2696449},{"lat":48.9353481,"lon":9.2698595},{"lat":48.9353869,"lon":9.2701612},{"lat":48.9355101,"lon":9.2709796}],[{"lat":48.9428004,"lon":9.2645124},{"lat":48.9427884,"lon":9.2644436},{"lat":48.9427411,"lon":9.2642867},{"lat":48.9427008,"lon":9.2641382},{"lat":48.942535,"lon":9.2635273}],[{"lat":48.9354482,"lon":9.2528948},{"lat":48.9357893,"lon":9.2530589}],[{"lat":48.9357893,"lon":9.2530589},{"lat":48.9358323,"lon":9.2530784}],[{"lat":48.9357962,"lon":9.2569004},{"lat":48.9356689,"lon":9.2569723},{"lat":48.9354472,"lon":9.2571186},{"lat":48.9352251,"lon":9.257332},{"lat":48.935164,"lon":9.2575245}],[{"lat":48.9437019,"lon":9.2614929},{"lat":48.9437246,"lon":9.2613684},{"lat":48.9437862,"lon":9.2613013},{"lat":48.9443177,"lon":9.261138},{"lat":48.9446477,"lon":9.2610491},{"lat":48.9446705,"lon":9.2610452},{"lat":48.9446952,"lon":9.2610478}],[{"lat":48.9379931,"lon":9.268367},{"lat":48.9375398,"lon":9.2687516},{"lat":48.9371924,"lon":9.2690366},{"lat":48.9367891,"lon":9.2693675}],[{"lat":48.9420146,"lon":9.2544542},{"lat":48.9420609,"lon":9.2548958},{"lat":48.942177,"lon":9.2556597},{"lat":48.9421904,"lon":9.2558672},{"lat":48.9421839,"lon":9.2561512},{"lat":48.9421422,"lon":9.2566209},{"lat":48.9421001,"lon":9.2570837},{"lat":48.9420824,"lon":9.2572844},{"lat":48.9420512,"lon":9.2576233},{"lat":48.9420438,"lon":9.2577042},{"lat":48.9420221,"lon":9.2579551},{"lat":48.9419653,"lon":9.2583756},{"lat":48.941894,"lon":9.258786}],[{"lat":48.9417785,"lon":9.2541221},{"lat":48.9417627,"lon":9.2540692},{"lat":48.9416835,"lon":9.2539938},{"lat":48.9414582,"lon":9.2538897},{"lat":48.9412527,"lon":9.2538949},{"lat":48.9411342,"lon":9.2539292},{"lat":48.9410206,"lon":9.2540077},{"lat":48.9407257,"lon":9.2541565},{"lat":48.9406562,"lon":9.254185},{"lat":48.940618,"lon":9.2541987}],[{"lat":48.942325,"lon":9.2657878},{"lat":48.9423027,"lon":9.265623},{"lat":48.9422768,"lon":9.2653991}],[{"lat":48.9370636,"lon":9.2555937},{"lat":48.9370189,"lon":9.2556603},{"lat":48.9368973,"lon":9.2560112},{"lat":48.9367782,"lon":9.2563897},{"lat":48.9365206,"lon":9.2572969}],[{"lat":48.9491226,"lon":9.2881232},{"lat":48.9490461,"lon":9.2872094},{"lat":48.9490247,"lon":9.286872},{"lat":48.9490086,"lon":9.2866441},{"lat":48.9489847,"lon":9.286361},{"lat":48.948954,"lon":9.2861998},{"lat":48.9489022,"lon":9.2860461},{"lat":48.9488329,"lon":9.2859207},{"lat":48.9487631,"lon":9.2858394},{"lat":48.9486651,"lon":9.2857524},{"lat":48.9485478,"lon":9.2856919},{"lat":48.9484227,"lon":9.2856335},{"lat":48.9482993,"lon":9.2855921}],[{"lat":48.9438178,"lon":9.2694476},{"lat":48.9437717,"lon":9.2693606},{"lat":48.9433027,"lon":9.268441},{"lat":48.9430884,"lon":9.2679858},{"lat":48.9428166,"lon":9.2672838},{"lat":48.9426758,"lon":9.2668896},{"lat":48.9424342,"lon":9.2662134}],[{"lat":48.9437385,"lon":9.2633649},{"lat":48.943938,"lon":9.2640578},{"lat":48.9439617,"lon":9.2641402},{"lat":48.9439787,"lon":9.2641992},{"lat":48.9441102,"lon":9.2647662},{"lat":48.9445299,"lon":9.2665751},{"lat":48.9447585,"lon":9.267573},{"lat":48.9450803,"lon":9.268898},{"lat":48.9451771,"lon":9.2692857},{"lat":48.9453459,"lon":9.2699575},{"lat":48.9454049,"lon":9.2701582},{"lat":48.945558,"lon":9.2707141},{"lat":48.9455985,"lon":9.270852},{"lat":48.945639,"lon":9.2710014},{"lat":48.9457076,"lon":9.2712846},{"lat":48.9457392,"lon":9.2713985},{"lat":48.9457918,"lon":9.2717162},{"lat":48.945803,"lon":9.2719806},{"lat":48.9457598,"lon":9.2722554},{"lat":48.9457128,"lon":9.2723674},{"lat":48.9456278,"lon":9.2724854}],[{"lat":48.9395444,"lon":9.2771609},{"lat":48.9395966,"lon":9.2775321},{"lat":48.939701,"lon":9.2774652},{"lat":48.9396764,"lon":9.2772992},{"lat":48.9396417,"lon":9.2770641},{"lat":48.9395847,"lon":9.2766649},{"lat":48.9395317,"lon":9.2762688},{"lat":48.9394755,"lon":9.275851}],[{"lat":48.9352533,"lon":9.2719432},{"lat":48.9354919,"lon":9.2714312},{"lat":48.935579,"lon":9.2712443},{"lat":48.9356334,"lon":9.2711276},{"lat":48.9357099,"lon":9.2709751},{"lat":48.9360013,"lon":9.2703819},{"lat":48.9361839,"lon":9.269919},{"lat":48.9363469,"lon":9.2695083},{"lat":48.9364969,"lon":9.2690584},{"lat":48.9367497,"lon":9.2683735},{"lat":48.936897,"lon":9.2680681},{"lat":48.9371239,"lon":9.2676188},{"lat":48.937339,"lon":9.2672605}],[{"lat":48.9373036,"lon":9.259042},{"lat":48.936698,"lon":9.2586237},{"lat":48.9362878,"lon":9.2583472},{"lat":48.9351006,"lon":9.2578733}],[{"lat":48.9432409,"lon":9.2706842},{"lat":48.9435637,"lon":9.2704325}],[{"lat":48.9467112,"lon":9.2523915},{"lat":48.94705,"lon":9.2519947}],[{"lat":48.9464992,"lon":9.2525453},{"lat":48.9465319,"lon":9.2525328},{"lat":48.9466048,"lon":9.2524956}],[{"lat":48.9419696,"lon":9.2538052},{"lat":48.9419582,"lon":9.2539494},{"lat":48.9419545,"lon":9.2541008},{"lat":48.9419599,"lon":9.2542593}],[{"lat":48.9438921,"lon":9.253203},{"lat":48.9443818,"lon":9.2529621},{"lat":48.9451917,"lon":9.2525953},{"lat":48.9452804,"lon":9.2525672},{"lat":48.9454271,"lon":9.2525385},{"lat":48.9455716,"lon":9.2525187},{"lat":48.9457211,"lon":9.2525105},{"lat":48.9459664,"lon":9.2525137},{"lat":48.946219,"lon":9.2525474},{"lat":48.9464283,"lon":9.2525603},{"lat":48.9464992,"lon":9.2525453}],[{"lat":48.9419696,"lon":9.2538052},{"lat":48.9420536,"lon":9.2538036}],[{"lat":48.9426025,"lon":9.2537474},{"lat":48.9428104,"lon":9.2536999}],[{"lat":48.941807,"lon":9.2538073},{"lat":48.9418937,"lon":9.2538092},{"lat":48.9419696,"lon":9.2538052}],[{"lat":48.9375981,"lon":9.2668082},{"lat":48.937339,"lon":9.2672605}],[{"lat":48.9387615,"lon":9.2721069},{"lat":48.93934,"lon":9.2718146},{"lat":48.9398792,"lon":9.2715465},{"lat":48.9404264,"lon":9.2712635},{"lat":48.9404582,"lon":9.2712476},{"lat":48.9410408,"lon":9.2709713},{"lat":48.94175,"lon":9.2705794}],[{"lat":48.9404264,"lon":9.2712635},{"lat":48.9405237,"lon":9.2720596},{"lat":48.940567,"lon":9.2725425},{"lat":48.9406291,"lon":9.2732627}],[{"lat":48.9435884,"lon":9.2865188},{"lat":48.9442212,"lon":9.2857593},{"lat":48.9447148,"lon":9.2850367},{"lat":48.9452184,"lon":9.2843529},{"lat":48.9453972,"lon":9.2840839},{"lat":48.9454786,"lon":9.2839569}],[{"lat":48.9416609,"lon":9.2602315},{"lat":48.9416575,"lon":9.2603784}],[{"lat":48.9418033,"lon":9.2593084},{"lat":48.9417627,"lon":9.2594942},{"lat":48.9417319,"lon":9.2596446}],[{"lat":48.9422768,"lon":9.2653991},{"lat":48.9422768,"lon":9.26522},{"lat":48.9423063,"lon":9.2651168}],[{"lat":48.9416575,"lon":9.2603784},{"lat":48.9416704,"lon":9.2604537},{"lat":48.941816,"lon":9.2609332},{"lat":48.9419495,"lon":9.2613966},{"lat":48.9419862,"lon":9.2615345},{"lat":48.9420168,"lon":9.2616598},{"lat":48.9420662,"lon":9.2618532},{"lat":48.9423636,"lon":9.262943}],[{"lat":48.9375398,"lon":9.2687516},{"lat":48.937444,"lon":9.2684936},{"lat":48.9376246,"lon":9.2681382}],[{"lat":48.9478674,"lon":9.2719206},{"lat":48.9479804,"lon":9.2719172},{"lat":48.9480213,"lon":9.2719604},{"lat":48.9480645,"lon":9.2723398},{"lat":48.9480918,"lon":9.2725353}],[{"lat":48.9476934,"lon":9.2729392},{"lat":48.947574,"lon":9.2720714}],[{"lat":48.9475513,"lon":9.27427},{"lat":48.9476445,"lon":9.2742359},{"lat":48.9477172,"lon":9.2742246},{"lat":48.9477627,"lon":9.274136},{"lat":48.9477468,"lon":9.2739678},{"lat":48.9477195,"lon":9.2734589},{"lat":48.9476934,"lon":9.2729392},{"lat":48.9473514,"lon":9.2730567},{"lat":48.9472423,"lon":9.2729794},{"lat":48.9471174,"lon":9.2730317}],[{"lat":48.9470209,"lon":9.2722422},{"lat":48.9471174,"lon":9.2730317},{"lat":48.947131,"lon":9.2732839},{"lat":48.9472514,"lon":9.2738906},{"lat":48.9472923,"lon":9.2741655},{"lat":48.94734,"lon":9.2742655},{"lat":48.947415,"lon":9.2742905},{"lat":48.9475513,"lon":9.27427}],[{"lat":48.9470209,"lon":9.2722422},{"lat":48.947574,"lon":9.2720714}],[{"lat":48.947574,"lon":9.2720714},{"lat":48.9476452,"lon":9.2720064},{"lat":48.9478674,"lon":9.2719206}],[{"lat":48.9378025,"lon":9.2559321},{"lat":48.9377124,"lon":9.2559611},{"lat":48.937642,"lon":9.2559694},{"lat":48.9375627,"lon":9.255929},{"lat":48.9371748,"lon":9.2556479},{"lat":48.9371102,"lon":9.2556016},{"lat":48.9370636,"lon":9.2555937}],[{"lat":48.9380225,"lon":9.2559944},{"lat":48.9379597,"lon":9.2559664},{"lat":48.9378592,"lon":9.2559383},{"lat":48.9378025,"lon":9.2559321}],[{"lat":48.9462258,"lon":9.2704769},{"lat":48.9462555,"lon":9.2704322},{"lat":48.9462945,"lon":9.2703025},{"lat":48.9463295,"lon":9.2701306},{"lat":48.9463568,"lon":9.2699732},{"lat":48.9463899,"lon":9.2698377},{"lat":48.9464202,"lon":9.2697643},{"lat":48.9464622,"lon":9.2696919}],[{"lat":48.9435637,"lon":9.2704325},{"lat":48.9439598,"lon":9.2718406}],[{"lat":48.9358323,"lon":9.2530784},{"lat":48.9358694,"lon":9.2530932},{"lat":48.9367093,"lon":9.2534083},{"lat":48.9374584,"lon":9.2536141},{"lat":48.938183,"lon":9.2538116},{"lat":48.9388453,"lon":9.2539798},{"lat":48.9390715,"lon":9.254021},{"lat":48.9392928,"lon":9.254043},{"lat":48.9397318,"lon":9.2540459},{"lat":48.9405692,"lon":9.2539066}],[{"lat":48.9387615,"lon":9.2721069},{"lat":48.9384629,"lon":9.2722364}],[{"lat":48.938622,"lon":9.2709803},{"lat":48.9383054,"lon":9.2711262}],[{"lat":48.940618,"lon":9.2541987},{"lat":48.9404712,"lon":9.2542425},{"lat":48.9399895,"lon":9.2542638},{"lat":48.9399369,"lon":9.2542661}],[{"lat":48.9418498,"lon":9.2544189},{"lat":48.9418066,"lon":9.2543148},{"lat":48.9417785,"lon":9.2541221}],[{"lat":48.9419599,"lon":9.2542593},{"lat":48.9420146,"lon":9.2544542}],[{"lat":48.9424767,"lon":9.2633241},{"lat":48.942535,"lon":9.2635273}],[{"lat":48.9409769,"lon":9.2629605},{"lat":48.9411592,"lon":9.2630419},{"lat":48.9412819,"lon":9.2631117},{"lat":48.9413774,"lon":9.2631712},{"lat":48.9414744,"lon":9.2632543},{"lat":48.9415705,"lon":9.2633695},{"lat":48.9416821,"lon":9.2635284},{"lat":48.9417516,"lon":9.26366},{"lat":48.9418666,"lon":9.2639284},{"lat":48.9419838,"lon":9.2642746},{"lat":48.942057,"lon":9.2645178},{"lat":48.9421555,"lon":9.2648451},{"lat":48.9422088,"lon":9.2649953}],[{"lat":48.9396547,"lon":9.259891},{"lat":48.9397386,"lon":9.2599561},{"lat":48.939789,"lon":9.2600161},{"lat":48.9398511,"lon":9.2600964},{"lat":48.9398844,"lon":9.2601599},{"lat":48.9399065,"lon":9.2602102},{"lat":48.9399536,"lon":9.2603894}],[{"lat":48.9365206,"lon":9.2572969},{"lat":48.9361883,"lon":9.2570309},{"lat":48.9360452,"lon":9.2569293},{"lat":48.9359055,"lon":9.2568971},{"lat":48.9357962,"lon":9.2569004}],[{"lat":48.9355101,"lon":9.2709796},{"lat":48.9355929,"lon":9.2710628},{"lat":48.9356334,"lon":9.2711276}],[{"lat":48.9420536,"lon":9.2538036},{"lat":48.9421861,"lon":9.2538018}],[{"lat":48.9472414,"lon":9.282611},{"lat":48.9471776,"lon":9.2823162}],[{"lat":48.9471776,"lon":9.2823162},{"lat":48.9468997,"lon":9.280844}],[{"lat":48.9402251,"lon":9.2614093},{"lat":48.9402832,"lon":9.2616268},{"lat":48.9404456,"lon":9.2621162},{"lat":48.9404898,"lon":9.2622292},{"lat":48.9406027,"lon":9.2625123},{"lat":48.9407062,"lon":9.2627451},{"lat":48.9407499,"lon":9.2628118},{"lat":48.9408033,"lon":9.2628671},{"lat":48.9408762,"lon":9.2629199},{"lat":48.9409769,"lon":9.2629605}],[{"lat":48.9423636,"lon":9.262943},{"lat":48.9424174,"lon":9.2631402},{"lat":48.9424767,"lon":9.2633241}],[{"lat":48.941894,"lon":9.258786},{"lat":48.9418033,"lon":9.2593084}],[{"lat":48.9410451,"lon":9.2646239},{"lat":48.9413431,"lon":9.2643392}]]
 
 /***/ })
 /******/ ]);
