@@ -7,7 +7,6 @@ import config from './lib/config'
 import CarManager from './lib/carmanager'
 import World from './lib/world'
 import {loadSprites as loadCars} from './assets/cars'
-import osmImport from './assets/marbach-city-simple.json'
 
 // Initialize Phaser
 const game = new Phaser.Game(config.GAME_SIZE, config.GAME_SIZE)
@@ -25,8 +24,7 @@ class MainState {
     game.stage.backgroundColor = '#ececec'
     game.physics.startSystem(Phaser.Physics.ARCADE)
     const world = new World(this.graphics)
-    world.fromOSM(osmImport)
-    world.draw()
+    world.init()
     const spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
     spaceKey.onDown.add(this.carManager.addCar.bind(this.carManager))
     // init the world with 3 cars
