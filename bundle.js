@@ -3993,7 +3993,7 @@ class World {
     const is = this.intersections[70];
     this.graphics.drawCircle(is.x, is.y, 20);
     console.log('getting angle for ', is.id, is.streets);
-    is.getAngle(is.streets[0], is.streets[1]);
+    console.log(is.getAngle(is.streets[0], is.streets[1]).map(e => e.angle));
   }
   purge() {
     this.streets.forEach((s, ix) => {
@@ -4001,6 +4001,10 @@ class World {
       if (!s.intersections.find(e => e)) {
         this.streets.splice(ix, 1);
       }
+    });
+    this.intersections.forEach((is, ix) => {
+      // TODO: figure out which intersections (with only 2 streets) have close to 180 angles and remove them
+      // need to be able to merge street objects :thinking:, maybe put into import instead...
     });
   }
 }
@@ -113185,23 +113189,57 @@ class Intersection extends __WEBPACK_IMPORTED_MODULE_1_phaser___default.a.Point 
       return points; // 2-3 points
     };
 
-    const getAngle = (points1, points2) => {
-      if (points1.length !== 2 || points2.length !== 2) {
-        throw new Error('Need to input arrays with length of 2 each', points1, points2);
-      }
-      const m1 = (points1[1].y - points1[0].y) / (points1[1].x - points1[0].x);
-      const m2 = (points2[1].y - points2[0].y) / (points2[1].x - points2[0].x);
-      console.log('m1, m2', m1, m2);
-      return Math.atan(Math.abs((m2 - m1) / (1 + m1 * m2)));
+    const getAngle = (p1, p2, p3) => {
+      // https://stackoverflow.com/questions/2946327/inner-angle-between-two-lines
+      const dx21 = p2.x - p1.x;
+      const dx31 = p3.x - p1.x;
+      const dy21 = p2.y - p1.y;
+      const dy31 = p3.y - p1.y;
+      const m12 = Math.sqrt(dx21 * dx21 + dy21 * dy21);
+      const m13 = Math.sqrt(dx31 * dx31 + dy31 * dy31);
+      return Math.acos((dx21 * dx31 + dy21 * dy31) / (m12 * m13));
     };
     const p1 = getPoints(street1);
     const p2 = getPoints(street2);
-    console.log(p1.length, p2.length, p1, p2);
-    console.log(getAngle(p1.slice(0, 2), p2) * 180 / Math.PI);
+    // figure out which point is the actual intersection (common point)
+    let p1Ix, p2Ix;
+    if (p1.length === 2) {
+      if (p1[0].equals(this)) {
+        p1Ix = 0;
+      } else p1Ix = 1;
+    } else p1Ix = 1;
+
+    if (p2.length === 2) {
+      if (p2[0].equals(this)) {
+        p2Ix = 0;
+      } else p2Ix = 1;
+    } else p2Ix = 1;
+
+    const angles = [];
+    for (let i = 1; i < p1.length; i++) {
+      for (let o = 1; o < p2.length; o++) {
+        angles.push({
+          angle: getAngle(p1[p1Ix], p1[i * (i - p1Ix)], p2[o * (o - p2Ix)]), // rad
+          street1: p1[i * (i - p1Ix)],
+          street2: p2[o * (o - p2Ix)]
+        });
+      }
+    }
+
+    return angles;
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Intersection;
 
+/*
+float dx21 = x2-x1;
+float dx31 = x3-x1;
+float dy21 = y2-y1;
+float dy31 = y3-y1;
+float m12 = sqrt( dx21*dx21 + dy21*dy21 );
+float m13 = sqrt( dx31*dx31 + dy31*dy31 );
+float theta = acos( (dx21*dx31 + dy21*dy31) / (m12 * m13) );
+*/
 
 /***/ }),
 /* 353 */
