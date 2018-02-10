@@ -3913,12 +3913,14 @@ function calculateIntersections(streets) {
   const start = new Date();
   // identify all points where a street ends on another one
   streets.forEach((street, ix) => {
-    [street.start, street.end].forEach(point => {
+    street.points.forEach(point => {
       streets.forEach(s => {
         const samePoints = s.points.filter(p => {
           return __WEBPACK_IMPORTED_MODULE_0_phaser___default.a.Point.equals(p, point);
         });
         if (s.id !== street.id && samePoints.length) {
+          // check if 'intersection' is between two road segments that are almost in the same direction
+
           const newIs = new __WEBPACK_IMPORTED_MODULE_3__intersection__["a" /* default */](point.x, point.y);
           let intersection;
           const existingIs = intersections.find(e => e.id === newIs.id);
@@ -3988,6 +3990,10 @@ class World {
     this.fromOSM(__WEBPACK_IMPORTED_MODULE_4__assets_marbach_city_simple_json___default.a);
     this.purge();
     this.draw();
+    const is = this.intersections[70];
+    this.graphics.drawCircle(is.x, is.y, 20);
+    console.log('getting angle for ', is.id, is.streets);
+    is.getAngle(is.streets[0], is.streets[1]);
   }
   purge() {
     this.streets.forEach((s, ix) => {
@@ -112823,13 +112829,13 @@ class Street {
     this.intersections = new Array(this.points.length);
     this.start = this.points[0];
     this.end = this.points.slice(-1)[0];
+    this.graphic = [];
     this.length = totalLength(this);
     this.id = Object(__WEBPACK_IMPORTED_MODULE_0_shortid__["generate"])();
     this.ix = cnt++;
   }
 
   draw(graphics, color = 0x666666) {
-    this.graphic = [];
     // if (this.ix === 109) color = 0x00ff00 // debug coloring
     graphics.lineStyle(__WEBPACK_IMPORTED_MODULE_1__config__["a" /* default */].STREET_WIDTH, color, 0.5);
     graphics.moveTo(this.start.x, this.start.y);
@@ -113142,6 +113148,7 @@ class Intersection extends __WEBPACK_IMPORTED_MODULE_1_phaser___default.a.Point 
   constructor(x, y) {
     super(x, y);
     this.streets = [];
+    this.graphic = null;
     this.id = __WEBPACK_IMPORTED_MODULE_0_object_hash___default.a.sha1({
       x,
       y
@@ -113161,6 +113168,36 @@ class Intersection extends __WEBPACK_IMPORTED_MODULE_1_phaser___default.a.Point 
   // check if an intersection is on a specific street
   onStreet(street) {
     return this.streets.find(s => s.id === street.id) !== undefined;
+  }
+
+  // get the angle between two streets on an intersection
+  getAngle(street1, street2) {
+    // get the points surrounding an intersection (if existent)
+    const getPoints = street => {
+      // use arrow to preserve 'this'
+      const iIx = street.intersections.indexOf(this);
+      const l = street.points.length; // allow slice to step over the max index
+      console.log(street, iIx, l, Math.max(iIx - 1, 0), Math.min(l, iIx + 2));
+      const points = street.points.slice(Math.max(iIx - 1, 0), Math.min(l, iIx + 2));
+      if (points.length < 2) {
+        throw new Error('Calculating angle returns less than 2 points', street);
+      }
+      return points; // 2-3 points
+    };
+
+    const getAngle = (points1, points2) => {
+      if (points1.length !== 2 || points2.length !== 2) {
+        throw new Error('Need to input arrays with length of 2 each', points1, points2);
+      }
+      const m1 = (points1[1].y - points1[0].y) / (points1[1].x - points1[0].x);
+      const m2 = (points2[1].y - points2[0].y) / (points2[1].x - points2[0].x);
+      console.log('m1, m2', m1, m2);
+      return Math.atan(Math.abs((m2 - m1) / (1 + m1 * m2)));
+    };
+    const p1 = getPoints(street1);
+    const p2 = getPoints(street2);
+    console.log(p1.length, p2.length, p1, p2);
+    console.log(getAngle(p1.slice(0, 2), p2) * 180 / Math.PI);
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Intersection;
