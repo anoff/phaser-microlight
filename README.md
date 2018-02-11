@@ -2,6 +2,9 @@ phaser-microlight
 ===
 > vehicle behavior / traffic light simulation based on phaser 🚦🚗
 
+<img src="./assets/logo.png" width="320px"/>
+
+
 [![screenshot](./screenshot.png)](https://anoff.github.io/phaser-microlight)
 
 >**Note:**
@@ -13,7 +16,7 @@ You can find the latest version running on my [github pages](https://anoff.githu
 ## Features
 
 * es6 module loader using webpack
-* draw street layout based on `(x,y)` intersections
+* draw street layout based on OSM imports
 * spawn cars at random positions on the street
 * add additional cars by hitting the `SPACE` key
 * cars accelerate and decelerate into intersections
@@ -26,8 +29,9 @@ You can find the latest version running on my [github pages](https://anoff.githu
 
 * [ ] introduce traffic lights that _block_ intersections
 * [ ] make cars stop if another car is in front
-* [ ] grab street layouts from real world cities via OSM/gmaps API
+* [x] grab street layouts from real world cities via OSM/gmaps API
 * [ ] interactive mode to create street layout
+* [ ] adapt 
 
 ## Getting started
 
@@ -45,6 +49,9 @@ npm start
 ```sh
 # download a dumpy (lower left corner lng,lat -> top right lng,lat)
 curl "https://api.openstreetmap.org/api/0.6/map?bbox=9.2055000,48.9407000,9.2643,48.9582" > marbach.osm
+
+# turn import into a JSON file to load into the game (adapt filename in code)
+node map-import.js > map.json
 ```
 
 ## Credits
