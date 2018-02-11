@@ -88,7 +88,6 @@ getWays(filepath, filterFn)
     return w.coordinates
   })
   console.log(JSON.stringify(streets, null, 2))
-  return ways
 })
 
 module.exports = {
