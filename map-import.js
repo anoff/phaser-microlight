@@ -48,37 +48,35 @@ function waysToGeoJSON (ways) {
   console.log(JSON.stringify(geojson))
 }
 
-function getWays (filepath, filterFn) {
-  return getElements(filepath, filterFn) // residential for inner city, tertiary/secondary/primary for outer city
-  .then(ways => {
-    // w = w.filter(e => e.nodes.length === 2) // filter for ways with only 2 points
-    const wayNodes = ways
-    .map(e => e.nodes)
-    .reduce((p, c) => {
-      c.forEach(e => p.push(e))
-      return p
-    }, [])
-    const wayNodeSelectorFn = d => d.type === 'node' && wayNodes.indexOf(d.id) > -1
-    // get all nodes that are on the selected ways
-    return getElements(filepath, wayNodeSelectorFn)
-    .then(nodes => {
-      ways = ways.map(w => {
-        // create an array of node positions {lat, lon} for each way
-        const pos = w.nodes.map(wn => {
-          const node = nodes.find(n => n.id === wn)
-          if (!node) {
-            console.error(`no node information found for ${wn}`)
-            return {lat: undefined, lon: undefined}
-          } else {
-            return {lat: node.lat, lon: node.lon}
-          }
-        })
-        w.coordinates = pos
-        return w
-      })
-      return ways
+async function getWays (filepath, filterFn) {
+  // get unique ways in this area
+  const ways = await getElements(filepath, filterFn) // residential for inner city, tertiary/secondary/primary for outer city
+  const wayNodes = ways
+  .map(e => e.nodes)
+  .reduce((p, c) => {
+    c.forEach(e => p.push(e))
+    return p
+  }, [])
+  const wayNodeSelectorFn = d => d.type === 'node' && wayNodes.indexOf(d.id) > -1
+  // get all nodes that are on the selected ways
+  const nodes = await getElements(filepath, wayNodeSelectorFn)
+  // merge all individual nodes into the 'way' aggregation
+  const roadElements = ways.map(w => {
+    // create an array of node positions {lat, lon} for each way
+    const pos = w.nodes.map(wn => {
+      const node = nodes.find(n => n.id === wn)
+      if (!node) {
+        console.error(`no node information found for ${wn}`)
+        return {lat: undefined, lon: undefined}
+      } else {
+        return {lat: node.lat, lon: node.lon}
+      }
     })
+    w.coordinates = pos
+    return w
   })
+
+  return roadElements
 }
 
 const filepath = path.normalize(path.join(__dirname, './marbach-city.osm'))
