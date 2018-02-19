@@ -46,7 +46,7 @@
     "osm2obj": "^3.0.0",
     "phaser": "^2.6.2",
     "shortid": "^2.2.8",
-    "standard": "^10.0.3",
+    "standard": "^11.0.0",
     "stream-to-array": "^2.3.0",
     "through2": "^2.0.3",
     "uuid": "^3.0.1"
