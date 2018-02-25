@@ -36,7 +36,7 @@
     "expose-loader": "^0.7.1",
     "pre-commit": "^1.2.2",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.3.0"
+    "webpack-dev-server": "^3.0.0"
   },
   "dependencies": {
     "event-stream": "^3.3.4",
