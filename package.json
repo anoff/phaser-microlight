@@ -44,7 +44,7 @@
     "node-osm-stream": "^0.2.2",
     "object-hash": "^1.2.0",
     "osm2obj": "^3.0.0",
-    "phaser": "^2.6.2",
+    "phaser": "^3.0.0",
     "shortid": "^2.2.8",
     "standard": "^11.0.0",
     "stream-to-array": "^2.3.0",
